@@ -35,24 +35,37 @@ html,body{min-height:100vh;background:var(--void);color:var(--text);font-family:
 .screen.gone{display:none}
 
 #sOb{background:var(--void)}
-.ob-void{position:relative;width:80px;height:80px;margin-bottom:32px}
-.ob-core{position:absolute;inset:0;border-radius:50%;background:#0a1020;border:1px solid rgba(40,80,120,.3)}
-.ob-pulse{position:absolute;inset:-12px;border-radius:50%;border:1px solid rgba(40,80,120,.15);animation:ring-pulse 3s ease-in-out infinite}
-.ob-pulse2{position:absolute;inset:-24px;border-radius:50%;border:1px solid rgba(40,80,120,.08);animation:ring-pulse 3s ease-in-out infinite .8s}
-.ob-dot{position:absolute;top:50%;left:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--cyan-live,#1a4060);animation:dot-blink 2s ease-in-out infinite}
-@keyframes ring-pulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.08);opacity:.1}}
-@keyframes dot-blink{0%,100%{opacity:.3}50%{opacity:1}}
+/* ── ONBOARDING ── */
+.ob-void{position:relative;width:72px;height:72px;margin-bottom:28px}
+.ob-core{position:absolute;inset:0;border-radius:50%;background:#080e1e;border:1px solid rgba(40,80,120,.3)}
+.ob-pulse{position:absolute;inset:-14px;border-radius:50%;border:1px solid rgba(40,80,120,.14);animation:ring-pulse 3s ease-in-out infinite}
+.ob-pulse2{position:absolute;inset:-28px;border-radius:50%;border:1px solid rgba(40,80,120,.07);animation:ring-pulse 3s ease-in-out infinite .9s}
+.ob-dot{position:absolute;top:50%;left:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--cyan-live,#1a4060);animation:dot-blink 2.2s ease-in-out infinite}
+@keyframes ring-pulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.1);opacity:.08}}
+@keyframes dot-blink{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
 
-.ob-tag{font-family:var(--mono);font-size:.52rem;letter-spacing:.22em;color:var(--smoke2);text-transform:uppercase;margin-bottom:10px}
-.ob-title{font-size:clamp(2rem,8vw,2.8rem);font-weight:800;letter-spacing:-.01em;color:var(--text);margin-bottom:8px}
-.ob-sub{font-size:.86rem;color:var(--smoke);line-height:1.75;margin-bottom:32px;max-width:280px}
-.ob-q{font-size:.88rem;color:var(--text);margin-bottom:12px}
-.ob-inp{width:100%;max-width:280px;background:#0a1020;border:1px solid rgba(40,80,120,.3);border-radius:8px;padding:13px 16px;font-size:.95rem;color:var(--text);text-align:center;outline:none;margin-bottom:18px;font-family:var(--mono);letter-spacing:.04em;transition:border-color .3s}
-.ob-inp:focus{border-color:rgba(40,80,120,.7)}
+/* señal recibida */
+.ob-received{text-align:center}
+.ob-signal-line{display:flex;align-items:center;justify-content:center;gap:10px;margin:10px 0 18px}
+.ob-sig-dot{width:6px;height:6px;border-radius:50%;background:var(--accent-live,#0088cc);animation:dot-blink 1.4s ease-in-out infinite;flex-shrink:0}
+.ob-sig-txt{font-family:var(--mono);font-size:.62rem;color:var(--smoke2);letter-spacing:.18em;min-width:120px;text-align:left}
+.ob-received-msg{font-family:var(--mono);font-size:1.1rem;color:var(--text);line-height:1.6;letter-spacing:.04em;transition:opacity 1s ease}
+
+/* contexto */
+.ob-context{text-align:center;transition:opacity .8s ease}
+.ob-tag{font-family:var(--mono);font-size:.5rem;letter-spacing:.22em;color:var(--smoke2);text-transform:uppercase;margin-bottom:10px}
+.ob-title{font-size:clamp(2rem,8vw,2.6rem);font-weight:800;letter-spacing:.02em;color:var(--text);margin-bottom:16px}
+.ob-sub{font-size:.84rem;color:var(--smoke);line-height:1.8;margin-bottom:28px;max-width:280px}
+
+/* nombre */
+.ob-name-block{text-align:center;transition:opacity .8s ease}
+.ob-q{font-size:.82rem;color:var(--smoke);margin-bottom:14px;font-style:italic}
+.ob-inp{width:100%;max-width:280px;background:#06091a;border:1px solid rgba(40,80,120,.28);border-radius:8px;padding:14px 16px;font-size:.95rem;color:var(--text);text-align:center;outline:none;margin-bottom:20px;font-family:var(--mono);letter-spacing:.06em;transition:border-color .3s}
+.ob-inp:focus{border-color:rgba(0,140,200,.55)}
 .ob-inp::placeholder{color:var(--smoke3)}
-.ob-btn{font-family:var(--mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(40,80,120,.5);background:#0a1020;color:var(--smoke);border-radius:4px;padding:13px 40px;cursor:pointer;transition:all .2s}
-.ob-btn:hover{border-color:rgba(40,80,120,.9);color:var(--text)}
-.ob-skip{display:block;margin-top:14px;font-size:.68rem;color:var(--smoke3);cursor:pointer;font-family:var(--mono);letter-spacing:.06em;transition:color .2s}
+.ob-btn{font-family:var(--mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(0,120,200,.4);background:rgba(0,100,180,.08);color:var(--smoke);border-radius:6px;padding:13px 40px;cursor:pointer;transition:all .25s}
+.ob-btn:hover{border-color:rgba(0,160,220,.7);color:var(--text);background:rgba(0,120,200,.14)}
+.ob-skip{display:block;margin-top:16px;font-size:.64rem;color:var(--smoke3);cursor:pointer;font-family:var(--mono);letter-spacing:.06em;transition:color .2s}
 .ob-skip:hover{color:var(--smoke2)}
 
 #sIn{background:var(--void)}
@@ -482,31 +495,53 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
 <body>
 <canvas id="bg"></canvas>
 
+<!-- PANTALLA 0: SEÑAL RECIBIDA (primera impresión) -->
 <div class="screen" id="sOb">
+  <!-- orb animada -->
   <div class="ob-void">
     <div class="ob-pulse2"></div>
     <div class="ob-pulse"></div>
     <div class="ob-core"></div>
     <div class="ob-dot"></div>
   </div>
-  <div class="ob-tag">Abyssal Genesis · Señal 01</div>
-  <div class="ob-title">LUMINA</div>
-  <div class="ob-sub" style="margin-bottom:10px;font-size:.72rem;color:var(--smoke2);letter-spacing:.04em">No es una app de meditación.<br>Es algo que vive en tu dispositivo y crece con vos.</div>
-  <div class="ob-sub">Hay partes de tu mente donde no entra la luz.<br>Lumina vive ahí. Y refleja exactamente<br>cómo te estás tratando a vos mismo.</div>
-  <div class="ob-q">¿Cómo te llaman?</div>
-  <input class="ob-inp" id="nameIn" type="text" placeholder="identificador..." maxlength="24" autocomplete="off"/>
-  <button class="ob-btn" id="obBtn">establecer contacto</button>
-  <span class="ob-skip" id="obSkip">entrar como anónimo</span>
+
+  <!-- momento 1: recepción -->
+  <div class="ob-received" id="obReceived">
+    <div class="ob-tag" style="margin-bottom:6px">abyssal genesis · señal entrante</div>
+    <div class="ob-signal-line">
+      <span class="ob-sig-dot"></span>
+      <span class="ob-sig-txt" id="obSigTxt">···</span>
+    </div>
+    <div class="ob-received-msg" id="obReceivedMsg" style="opacity:0">
+      señal recibida.<br>el abismo te escucha.
+    </div>
+  </div>
+
+  <!-- momento 2: contexto mínimo -->
+  <div class="ob-context" id="obContext" style="display:none;opacity:0">
+    <div class="ob-title">LUMINA</div>
+    <div class="ob-sub">Hay zonas de tu mente donde no entra la luz.<br>Lumina vive ahí.<br>Crece cuando te cuidás.</div>
+    <div class="ob-sub" style="font-size:.72rem;color:var(--smoke2);margin-top:-18px">No pide perfección. Registra presencia.</div>
+  </div>
+
+  <!-- momento 3: nombre -->
+  <div class="ob-name-block" id="obNameBlock" style="display:none;opacity:0">
+    <div class="ob-q">¿Cómo querés que Lumina te llame?</div>
+    <input class="ob-inp" id="nameIn" type="text" placeholder="tu nombre o alias..." maxlength="24" autocomplete="off"/>
+    <button class="ob-btn" id="obBtn">entrar al abismo</button>
+    <span class="ob-skip" id="obSkip">continuar sin nombre</span>
+  </div>
 </div>
 
+<!-- PANTALLA: BIENVENIDA PERSONALIZADA -->
 <div class="screen gone" id="sIn">
   <div class="in-entity">
     <div class="in-ring2"></div>
     <div class="in-ring"></div>
     <div class="in-core"></div>
   </div>
-  <div class="in-tag">señal detectada · abismo activo</div>
-  <div class="in-title">LUMINA</div>
+  <div class="in-tag" id="inTag">señal detectada · abismo activo</div>
+  <div class="in-title" id="inTitle">LUMINA</div>
   <div class="in-greet" id="inGr"></div>
   <div class="in-term" id="inTerm"><span class="cur" id="inCur"></span></div>
   <button class="in-btn" id="inBtn">ascender del abismo ▲</button>
@@ -1112,18 +1147,75 @@ function getDominantHabit(){
 
 load();
 (function(){
-  var sOb=document.getElementById('sOb'),inp=document.getElementById('nameIn');
-  if(st.name){sOb.classList.add('out');setTimeout(function(){sOb.classList.add('gone');},900);setTimeout(function(){startIntro();},920);return;}
+  var sOb=document.getElementById('sOb');
+  var inp=document.getElementById('nameIn');
+
+  // usuario ya registrado → saltar directo
+  if(st.name){
+    sOb.classList.add('out');
+    setTimeout(function(){sOb.classList.add('gone');},900);
+    setTimeout(function(){startIntro();},920);
+    return;
+  }
+
+  // flujo de 3 momentos
+  var sigTxt=document.getElementById('obSigTxt');
+  var recMsg=document.getElementById('obReceivedMsg');
+  var ctxEl=document.getElementById('obContext');
+  var nameEl=document.getElementById('obNameBlock');
+
+  // MOMENTO 1: animación de recepción de señal (~2.4s)
+  var dots=['·','··','···','····','·····'];
+  var di=0;
+  var sigInt=setInterval(function(){
+    di++;sigTxt.textContent=dots[di%dots.length];
+  },280);
+
+  setTimeout(function(){
+    clearInterval(sigInt);
+    sigTxt.textContent='señal recibida';
+    // fade in del mensaje de bienvenida
+    setTimeout(function(){
+      recMsg.style.opacity='1';
+    },300);
+  },1800);
+
+  // MOMENTO 2: contexto de Lumina (~4.5s desde inicio)
+  setTimeout(function(){
+    ctxEl.style.display='block';
+    setTimeout(function(){ctxEl.style.opacity='1';},50);
+  },4200);
+
+  // MOMENTO 3: campo de nombre (~7s desde inicio)
+  setTimeout(function(){
+    nameEl.style.display='block';
+    setTimeout(function(){nameEl.style.opacity='1';},50);
+    setTimeout(function(){inp.focus();},300);
+  },6800);
+
+  // handlers
   document.getElementById('obBtn').addEventListener('click',go);
-  document.getElementById('obSkip').addEventListener('click',function(){st.name='Anónimo';go();});
+  document.getElementById('obSkip').addEventListener('click',function(){
+    st.name='';go();
+  });
   inp.addEventListener('keydown',function(e){if(e.key==='Enter')go();});
-  function go(){var n=(inp.value||'').trim();if(n)st.name=n;else if(!st.name)st.name='Anónimo';save();sOb.classList.add('out');setTimeout(function(){sOb.classList.add('gone');},900);setTimeout(function(){startIntro();},920);}
+
+  function go(){
+    var n=(inp.value||'').trim();
+    st.name=n||'';
+    save();
+    sOb.classList.add('out');
+    setTimeout(function(){sOb.classList.add('gone');},900);
+    setTimeout(function(){startIntro();},920);
+  }
 })();
 
 function startIntro(){
   var sIn=document.getElementById('sIn');
   sIn.classList.remove('gone');
-  document.getElementById('inGr').textContent='// señal recibida · '+st.name+' detectado';
+  var tag=document.getElementById('inTag');
+  if(tag)tag.textContent=st.name?'señal confirmada · '+st.name+' en el abismo':'señal confirmada · presencia registrada';
+  document.getElementById('inGr').textContent=st.name?'// bienvenido al abismo, '+st.name:'// señal recibida · presencia registrada';
   var arch=st.archetype&&ARCHETYPES[st.archetype];
   var lines=arch?[
     {t:'Sos '+arch.name+'. '+arch.desc,c:''},

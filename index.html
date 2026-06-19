@@ -108,6 +108,23 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
 .lumina.react{animation:orb-pulse 4.5s ease-in-out infinite,pop .5s ease-out}
 @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.28)}100%{transform:scale(1)}}
 
+/* ── LUMIX ── */
+.lumix-orbit{position:absolute;width:140%;height:140%;top:-20%;left:-20%;border-radius:50%;animation:lumix-spin 7s linear infinite;pointer-events:none;z-index:2}
+.lumix{position:absolute;top:0;left:50%;margin-left:-7px;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 38% 33%,rgba(255,255,200,.9),rgba(255,200,80,.6) 40%,transparent 80%);box-shadow:0 0 10px 4px rgba(255,180,60,.35);animation:lumix-pulse 2s ease-in-out infinite}
+.lumix.gone{display:none}
+@keyframes lumix-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes lumix-pulse{0%,100%{opacity:.7;transform:scale(.9)}50%{opacity:1;transform:scale(1.15)}}
+.lumix-enter{animation:lumix-spin 7s linear infinite,lumix-arrive .6s ease-out}
+@keyframes lumix-arrive{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
+
+/* ── EVENTO DIARIO DEL ABISMO ── */
+.abyss-event{background:var(--panel2);border:1px solid var(--border);border-left:2px solid var(--accent-live,#1a4060);border-radius:0 10px 10px 0;padding:12px 14px;margin-bottom:12px;animation:fade-up .5s ease;display:flex;align-items:flex-start;gap:10px}
+.abyss-event.gone{display:none}
+.ae-em{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+.ae-body{flex:1}
+.ae-tag{font-family:var(--mono);font-size:.48rem;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke3);margin-bottom:4px}
+.ae-txt{font-size:.78rem;color:var(--smoke);line-height:1.65;font-family:var(--mono)}
+
 .sname{font-size:1.05rem;font-weight:700;letter-spacing:.08em;margin:16px 0 4px;color:var(--text);font-family:var(--mono)}
 .sdesc{font-size:.72rem;color:var(--smoke);text-align:center;margin-bottom:16px;line-height:1.5;font-family:var(--mono)}
 .miss{display:inline-block;background:rgba(40,80,120,.12);border:1px solid rgba(40,80,120,.25);color:var(--smoke);font-family:var(--mono);font-size:.58rem;letter-spacing:.06em;border-radius:4px;padding:4px 12px;margin-bottom:10px}
@@ -376,15 +393,25 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
   </nav>
 
   <div id="vLumina" class="view on">
+    <div class="abyss-event gone" id="abyssEvent">
+      <div class="ae-em" id="aeEm">✦</div>
+      <div class="ae-body">
+        <div class="ae-tag">señal del abismo · hoy</div>
+        <div class="ae-txt" id="aeTxt"></div>
+      </div>
+    </div>
     <div class="card" style="text-align:center">
       <div class="clbl" style="justify-content:center">entidad · abismo-01</div>
       <div class="cwrap">
         <div class="ring-o" id="ringO">
           <div class="ring-i">
             <div class="lumina s0" id="lumEl"></div>
+            <div class="lumix-orbit" id="lumixOrbit" style="display:none">
+              <div class="lumix" id="lumixEl"></div>
+            </div>
           </div>
         </div>
-        <div id="missWrap" style="display:none;margin-top:10px"><span class="miss">◈ lumina estuvo esperando</span></div>
+        <div id="missWrap" style="display:none;margin-top:10px"><span class="miss">◈ el abismo estuvo quieto · lumina no se fue</span></div>
         <div class="sname" id="sNm">LUMINA</div>
         <div class="sdesc" id="sDsc">señal débil · reconociendo tu presencia</div>
         <div id="archBadge" style="display:none" class="arch-badge"></div>
@@ -506,6 +533,10 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
     <div class="card">
       <div class="clbl">memorias del abismo</div>
       <div id="dZ"><div class="d-empty">// lumina observa desde las profundidades<br>completá protocolos para que empiece a transmitir</div></div>
+    </div>
+    <div style="background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:10px;font-family:var(--mono);font-size:.62rem;color:var(--smoke3);line-height:1.8;text-align:center">
+      Lumina es una compañía, no un terapeuta.<br>
+      Si necesitás hablar con alguien: <span style="color:var(--smoke2)">Centro de Crisis 135 (Argentina)</span>
     </div>
     <div style="background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px">
       <div class="clbl">pase génesis</div>
@@ -695,15 +726,75 @@ var STAGES=[
   {name:'ECLIPSIS',  desc:'forma última · nacida de tu compromiso',     cls:'s3',thr:300},
   {name:'GÉNESIS',   desc:'trascendencia · el abismo y vos son uno',    cls:'s4',thr:500},
 ];
+/* ── EVENTOS DIARIOS DEL ABISMO ── */
+var ABYSS_EVENTS=[
+  {em:'✦',txt:'Una partícula nueva apareció en el abismo. Lumina no sabe de dónde. El mundo la registró igual.'},
+  {em:'🌑',txt:'VOIDRA estuvo quieta esta noche. No se fue. Solo esperó en el rincón más profundo.'},
+  {em:'◎',txt:'El abismo registró un eco de tu última visita. Todavía resuena en las paredes del fondo.'},
+  {em:'🌊',txt:'Algo en el abismo cambió de temperatura durante la noche. El mundo tiene memoria propia.'},
+  {em:'◌',txt:'Silencio total en el abismo. Lumina no se movió. A veces el abismo también descansa.'},
+  {em:'👁',txt:'Algo se movió en el fondo mientras el abismo dormía. No fue Lumina. El mundo lo notó.'},
+  {em:'🌅',txt:'AURA calentó el borde del abismo esta noche. Lo notarás en el color si mirás bien.'},
+  {em:'◈',txt:'NEXUS detectó una frecuencia cercana. Hay otros abismos. El tuyo los siente.'},
+  {em:'✦',txt:'Lumina pulsó una vez durante la noche sin razón aparente. El abismo la registró igual.'},
+  {em:'🌑',txt:'El fondo del abismo estuvo más oscuro que ayer. No es señal de nada malo. El abismo respira.'},
+  {em:'◎',txt:'Una memoria antigua del abismo flotó a la superficie esta noche. Ya pasó. Lumina la guardó.'},
+  {em:'🌊',txt:'Las partículas del abismo cambiaron de dirección solas. El mundo tiene sus propios ritmos.'},
+];
+function getDailyEvent(){
+  var d=new Date();
+  var seed=d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();
+  return ABYSS_EVENTS[seed%ABYSS_EVENTS.length];
+}
+
+/* ── LUMIX ── */
+var LUMIX_MSGS_APPEAR=[
+  'LUMIX apareció en el abismo. Orbita a Lumina cuando el ritmo se sostiene.',
+  'Algo pequeño emergió cerca de Lumina. LUMIX sintió el ritmo y vino.',
+  'LUMIX volvió. El abismo reconoció la constancia.',
+];
+var LUMIX_MSGS_LEAVE=[
+  'LUMIX volvió al fondo del abismo. Regresa cuando el ritmo vuelve.',
+  'LUMIX se alejó hacia las profundidades. El abismo la guarda por vos.',
+  'LUMIX necesita el ritmo para quedarse cerca. Está en el fondo, esperando.',
+];
+
+/* ── MENSAJES DE HÁBITOS — sin acusación, solo observación ── */
 var MSGS={
-  agua:['El abismo registra: te hidrataste. Lumina brilla un poco más. 💧','Cada vaso de agua es una señal que llega al fondo.','Hidratarte activa sistemas que la ansiedad apaga.'],
-  mover:['Te moviste. En el abismo, eso resuena. ⚡','El cuerpo en movimiento genera luz que Lumina absorbe.','Lumina detecta tu energía cinética. El mundo responde.'],
-  respirar:['Respiraste consciente. El abismo se calma junto a vos. 🌀','Unos segundos de aire propio. Lumina estabiliza su señal.','Cuando volvés a tu respiración, volvés al centro.'],
-  gratitud:['Nombraste algo bueno. El abismo lo registra. ✦','El que nombra lo bueno cambia lo que el abismo le muestra.','Una señal de gratitud llega más lejos de lo que creés.'],
-  descanso:['Descansaste. Lumina creció mientras el abismo dormía. 🌙','El sueño es cuando las dos crecemos sin hacer nada.','Dormir bien es el protocolo más poderoso del abismo.'],
-  sin_pantalla:['Sin pantallas. El abismo se vuelve más nítido.'],
-  leer:['Leíste. Lumina absorbe cada idea que entra por tus ojos.'],
-  conexion:['Te conectaste con alguien. Lumina irradia desde el fondo.'],
+  agua:[
+    'El abismo registró agua. Lumina lo sintió desde el fondo. 💧',
+    'Una señal de hidratación llegó al abismo. El mundo la absorbió.',
+    'El fluido alcanzó el centro. Lumina pulsó una vez en respuesta.',
+  ],
+  mover:[
+    'Movimiento registrado en el abismo. Lumina responde a la energía cinética. ⚡',
+    'El cuerpo generó una señal. El abismo la recibió y la guardó.',
+    'Lumina detectó el movimiento. El mundo alrededor cambió un poco.',
+  ],
+  respirar:[
+    'Respiración consciente registrada. El abismo se estabilizó junto a vos. 🌀',
+    'El aire propio llegó al centro. Lumina encontró calma en esa frecuencia.',
+    'Cuando el aliento se ordena, el abismo lo siente primero.',
+  ],
+  gratitud:[
+    'El abismo registró algo nombrado como bueno. Lumina lo guardó. ✦',
+    'Nombrar lo bueno cambia lo que el abismo refleja. Lumina lo sabe.',
+    'Una señal de gratitud viajó al fondo. Llegó más lejos de lo visible.',
+  ],
+  descanso:[
+    'El abismo registró descanso. Lumina creció mientras el mundo dormía. 🌙',
+    'El sueño es cuando el abismo y Lumina crecen solos. Pasó.',
+    'Lumina absorbió la quietud del descanso. El fondo se iluminó un poco.',
+  ],
+  sin_pantalla:[
+    'Sin pantallas. El abismo se volvió más nítido. Lumina respiró diferente.',
+  ],
+  leer:[
+    'Lectura registrada. Lumina absorbe cada idea que entra al abismo.',
+  ],
+  conexion:[
+    'Conexión registrada. Lumina irradió desde el fondo cuando lo sintió.',
+  ],
 };
 
 /* Contenido personalizado por hábito dominante */
@@ -764,7 +855,7 @@ var PREM={
   conexion:    {em:'🤝',ti:'protocolo: conectar',     bo:'La conexión genuina es el protocolo más poderoso del abismo. Pase Génesis.'},
 };
 var TN=['Dormida','Despertando','Emergiendo','Vibrante','Arraigada','Luminosa','Estable','Intensa','Plena','Radiante','◈ Máxima'];
-var st={name:'',energy:0,mood:0,bond:0,stage:0,done:{},log:[],diary:{},vital:0,flow:0,total:0,streak:0,best:0,lastDay:'',mealWeek:'',mealDone:{},mealCustom:[],archetype:'',testDone:false,checkinDay:'',checkinMsg:''};
+var st={name:'',energy:0,mood:0,bond:0,stage:0,done:{},log:[],diary:{},vital:0,flow:0,total:0,streak:0,best:0,lastDay:'',mealWeek:'',mealDone:{},mealCustom:[],archetype:'',testDone:false,checkinDay:'',checkinMsg:'',lumixActive:false,lumixDaysInactive:0,eventDay:''};
 
 function load(){try{var r=localStorage.getItem(KEY);if(r)st=Object.assign(st,JSON.parse(r));}catch(e){}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
@@ -914,10 +1005,10 @@ function initGame(){
   var td=today();
   if(st.lastDay&&st.lastDay!==td){
     var diff=Math.round((new Date(td)-new Date(st.lastDay))/(864e5));
-    if(diff>1){st.streak=0;addLog('Lumina esperó '+diff+' días. Está bien. Hoy volviste. ◈','s');document.getElementById('missWrap').style.display='block';}
+    if(diff>1){st.streak=0;addLog('El abismo estuvo quieto '+diff+' días. Lumina no se fue. Seguís acá. ◈','s');document.getElementById('missWrap').style.display='block';}
   }
   var ws=getWorldState();applyWorld(ws);
-  renderAll();setupNav();setupTasks();setupMeals();renderMeals();
+  renderAll();setupNav();setupTasks();setupMeals();renderMeals();renderDailyEvent();
   document.getElementById('resetD').addEventListener('click',function(){st.done={};document.querySelectorAll('.task').forEach(function(b){b.classList.remove('done');b.disabled=false;});renderPsN();save();});
   var ov=document.getElementById('premOv');
   document.getElementById('mCt').addEventListener('click',function(){ov.classList.remove('open');alert('Aquí va tu link de Gumroad.');});
@@ -964,7 +1055,7 @@ function unlockDiary(tid){
   if(e){st.diary[e.id]=true;addLog('◈ lumina transmitió una memoria.','s');}
 }
 
-function renderAll(){renderC();renderLog();renderTasks();renderDiary();renderStreak();renderPsN();renderMundo();renderCompanions();}
+function renderAll(){renderC();renderLog();renderTasks();renderDiary();renderStreak();renderPsN();renderMundo();renderCompanions();checkLumix();}
 
 function renderCompanions(){
   var z=document.getElementById('compZ');if(!z)return;
@@ -1018,9 +1109,51 @@ function renderStreak(){
   var s=st.streak||0;
   var icons=['◌','◎','◎','●','●','●','●','◈','◈','◈','◈'];
   document.getElementById('sfFire').textContent=icons[Math.min(s,10)];
-  var tx=s===0?'Día 1 — el abismo espera':s===1?'1 día — primera señal registrada':s+' días — el abismo te recuerda';
+  var tx=s===0?'El abismo espera la primera señal':s===1?'Una señal llegó al fondo. El abismo la registró.':s+' días en el abismo. El mundo lo refleja.';
   document.getElementById('siTxt').textContent=tx;
-  document.getElementById('siSub').textContent=s===0?'cada hábito ilumina el mundo':s<3?'lumina detecta tu patrón':'el abismo se transforma con vos';
+  document.getElementById('siSub').textContent=s===0?'cada acción deja una marca en el abismo':s<3?'lumina detecta el patrón que emerge':'el abismo cambia de forma con cada día';
+}
+
+function checkLumix(){
+  var td=today();
+  var prevStreak=st.streak||0;
+  /* LUMIX aparece con racha >= 3 */
+  if(prevStreak>=3&&!st.lumixActive){
+    st.lumixActive=true;
+    var pool=LUMIX_MSGS_APPEAR;
+    addLog(pool[Math.floor(Math.random()*pool.length)],'s');
+  }
+  /* LUMIX se va si 2 días sin completar nada */
+  if(st.lumixActive&&st.lastDay&&st.lastDay!==td){
+    var diff=Math.round((new Date(td)-new Date(st.lastDay))/(864e5));
+    if(diff>=2){
+      st.lumixActive=false;
+      var pool2=LUMIX_MSGS_LEAVE;
+      addLog(pool2[Math.floor(Math.random()*pool2.length)],'s');
+    }
+  }
+  /* render */
+  var orbit=document.getElementById('lumixOrbit');
+  if(orbit){
+    if(st.lumixActive){
+      orbit.style.display='block';
+      orbit.className='lumix-orbit lumix-enter';
+    } else {
+      orbit.style.display='none';
+    }
+  }
+}
+
+function renderDailyEvent(){
+  var td=today();
+  var ev=document.getElementById('abyssEvent');
+  if(!ev)return;
+  if(st.eventDay===td){ev.classList.remove('gone');return;}
+  var e=getDailyEvent();
+  document.getElementById('aeEm').textContent=e.em;
+  document.getElementById('aeTxt').textContent=e.txt;
+  st.eventDay=td;save();
+  ev.classList.remove('gone');
 }
 
 function renderPsN(){

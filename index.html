@@ -84,8 +84,8 @@ html,body{min-height:100vh;background:var(--void);color:var(--text);font-family:
 
 .app{position:relative;z-index:1;max-width:480px;margin:0 auto}
 nav{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);background:rgba(5,8,16,.95);backdrop-filter:blur(20px);position:sticky;top:0;z-index:10;transition:border-color 2s}
-nav button{font-family:var(--mono);font-size:.56rem;letter-spacing:.07em;text-transform:uppercase;background:none;border:none;color:var(--smoke2);padding:14px 4px;cursor:pointer;border-bottom:2px solid transparent;transition:color .3s,border-color .3s}
-nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
+nav button{font-family:var(--mono);font-size:.56rem;letter-spacing:.07em;text-transform:uppercase;background:none;border:none;color:var(--smoke2);padding:14px 4px;cursor:pointer;border-bottom:2px solid transparent;transition:color .3s,border-color .3s,background .3s}
+nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);background:rgba(var(--accentRgb,0,100,180),.08)}
 
 .view{display:none;padding:20px 16px 80px;animation:fade-up .3s ease}
 .view.on{display:block}
@@ -102,16 +102,77 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
 .ring-i::after{content:'';position:absolute;width:160%;height:160%;background:radial-gradient(circle,var(--glow-live,rgba(26,64,96,.05)),transparent 62%);animation:drift 20s ease-in-out infinite alternate;transition:background 2s}
 @keyframes drift{0%{transform:translate(-10%,-8%)}100%{transform:translate(10%,10%)}}
 
-.lumina{position:relative;z-index:1;border-radius:50%;animation:orb-pulse 4.5s ease-in-out infinite;transition:all 1s cubic-bezier(.4,0,.2,1)}
-.lumina::before{content:'';position:absolute;top:50%;left:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:rgba(255,255,255,.6);animation:core-p 2.5s ease-in-out infinite}
-@keyframes core-p{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:.9;transform:scale(1.3)}}
-.lumina.s0{width:52px;height:52px;background:radial-gradient(circle at 38% 33%,rgba(255,255,255,.3),rgba(26,64,96,.4) 50%,transparent 80%);box-shadow:0 0 20px 6px rgba(26,64,96,.2)}
-.lumina.s1{width:66px;height:66px;background:radial-gradient(circle at 38% 33%,rgba(255,255,255,.5),rgba(0,140,200,.5) 40%,transparent 78%);box-shadow:0 0 28px 10px rgba(0,140,200,.25)}
-.lumina.s2{width:82px;height:82px;background:radial-gradient(circle at 38% 33%,rgba(255,255,255,.7),rgba(0,200,240,.6) 35%,rgba(120,60,200,.3) 65%,transparent 80%);box-shadow:0 0 40px 14px rgba(0,200,240,.3),0 0 80px 30px rgba(120,60,200,.1)}
-.lumina.s3{width:98px;height:98px;background:radial-gradient(circle at 38% 33%,rgba(255,255,255,.85),rgba(0,212,255,.7) 28%,rgba(168,85,247,.4) 58%,transparent 80%);box-shadow:0 0 50px 18px rgba(0,212,255,.35),0 0 100px 40px rgba(168,85,247,.15)}
-.lumina.s4{width:112px;height:112px;background:radial-gradient(circle at 38% 33%,#fff,rgba(0,255,240,.8) 20%,rgba(200,80,255,.5) 50%,rgba(255,80,160,.3) 72%,transparent 85%);box-shadow:0 0 60px 22px rgba(0,212,255,.45),0 0 120px 50px rgba(200,80,255,.2),0 0 200px 80px rgba(255,80,160,.08)}
-.lumina.react{animation:orb-pulse 4.5s ease-in-out infinite,pop .5s ease-out}
-@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.28)}100%{transform:scale(1)}}
+/* ── LUMINA BASE ── */
+.lumina{position:relative;z-index:1;border-radius:50%;transition:all 1.2s cubic-bezier(.4,0,.2,1)}
+.lumina::before{content:'';position:absolute;top:50%;left:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:rgba(255,255,255,.7);border-radius:50%;animation:core-p 2.5s ease-in-out infinite}
+@keyframes core-p{0%,100%{opacity:.15;transform:scale(.7)}50%{opacity:1;transform:scale(1.4)}}
+
+/* S0 — El Núcleo Dormido: casi estático, pulso muy lento */
+.lumina.s0{width:48px;height:48px;
+  background:radial-gradient(circle at 40% 38%,rgba(180,200,220,.25),rgba(20,40,70,.6) 55%,transparent 82%);
+  box-shadow:0 0 14px 4px rgba(26,64,96,.15);
+  animation:pulse-s0 6s ease-in-out infinite}
+@keyframes pulse-s0{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.04);opacity:1}}
+
+/* S1 — Primer Pulso: destello interno, empieza a girar */
+.lumina.s1{width:62px;height:62px;
+  background:radial-gradient(circle at 38% 35%,rgba(255,255,255,.55),rgba(0,140,200,.55) 42%,rgba(0,80,140,.2) 70%,transparent 85%);
+  box-shadow:0 0 24px 8px rgba(0,140,200,.22);
+  animation:pulse-s1 3.5s ease-in-out infinite}
+.lumina.s1::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(0,140,200,.2);animation:ring-s1 4s linear infinite}
+@keyframes pulse-s1{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes ring-s1{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* S2 — Solventra: anillo propio que rota, campo expandido */
+.lumina.s2{width:78px;height:78px;
+  background:radial-gradient(circle at 38% 33%,rgba(255,255,255,.75),rgba(0,200,240,.65) 32%,rgba(100,40,200,.28) 68%,transparent 85%);
+  box-shadow:0 0 36px 12px rgba(0,200,240,.28),0 0 70px 24px rgba(100,40,200,.1);
+  animation:pulse-s2 3s ease-in-out infinite}
+.lumina.s2::after{content:'';position:absolute;inset:-10px;border-radius:50%;border:1.5px solid rgba(0,200,240,.18);border-top-color:rgba(0,200,240,.55);animation:ring-s2 3s linear infinite}
+@keyframes pulse-s2{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+@keyframes ring-s2{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* S3 — Eclipsis: corona exterior independiente del núcleo */
+.lumina.s3{width:94px;height:94px;
+  background:radial-gradient(circle at 38% 30%,rgba(255,255,255,.9),rgba(0,212,255,.72) 25%,rgba(168,85,247,.42) 55%,transparent 80%);
+  box-shadow:0 0 48px 16px rgba(0,212,255,.32),0 0 90px 36px rgba(168,85,247,.14);
+  animation:pulse-s3-inner 2.8s ease-in-out infinite}
+.lumina.s3::after{content:'';position:absolute;inset:-16px;border-radius:50%;
+  background:radial-gradient(circle,transparent 45%,rgba(0,212,255,.06) 55%,transparent 70%);
+  animation:corona-s3 5s ease-in-out infinite alternate}
+@keyframes pulse-s3-inner{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+@keyframes corona-s3{0%{transform:scale(1) rotate(0deg)}100%{transform:scale(1.12) rotate(180deg)}}
+
+/* S4 — Génesis: 3 capas, rayos suaves, presencia total */
+.lumina.s4{width:108px;height:108px;
+  background:radial-gradient(circle at 40% 30%,#fff 0%,rgba(0,255,240,.85) 18%,rgba(200,80,255,.52) 45%,rgba(255,80,160,.28) 70%,transparent 88%);
+  box-shadow:0 0 55px 20px rgba(0,212,255,.42),0 0 110px 44px rgba(200,80,255,.18),0 0 180px 70px rgba(255,80,160,.07);
+  animation:pulse-s4 2.5s ease-in-out infinite}
+.lumina.s4::after{content:'';position:absolute;inset:-20px;border-radius:50%;
+  background:conic-gradient(rgba(0,255,240,.12),transparent 30%,rgba(200,80,255,.1),transparent 60%,rgba(255,80,160,.08),transparent 90%,rgba(0,255,240,.12));
+  animation:genesis-corona 8s linear infinite}
+@keyframes pulse-s4{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes genesis-corona{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+.lumina.react{animation:pop .5s ease-out forwards}
+@keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.32)}70%{transform:scale(.96)}100%{transform:scale(1)}}
+
+/* ── RING SPARK — chispa al completar hábito ── */
+.ring-spark{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--accent-live,#1a4060);pointer-events:none;animation:spark-out .6s ease-out forwards;z-index:10}
+@keyframes spark-out{0%{opacity:1;transform:scale(1.5)}100%{opacity:0;transform:scale(0) translate(var(--sx,0),var(--sy,0))}}
+
+/* ── TOAST DE LOGRO ── */
+.toast-logro{position:fixed;left:50%;bottom:80px;transform:translateX(-50%) translateY(20px);z-index:500;
+  background:var(--panel);border:1px solid var(--accent-live,#1a4060);border-radius:14px;
+  padding:14px 20px;min-width:260px;max-width:320px;text-align:center;
+  box-shadow:0 8px 32px rgba(0,0,0,.4),0 0 20px rgba(var(--accentRgb,0,100,180),.15);
+  opacity:0;pointer-events:none;transition:opacity .35s ease,transform .35s ease}
+.toast-logro.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast-logro.hide{opacity:0;transform:translateX(-50%) translateY(-16px)}
+.toast-tag{font-family:var(--mono);font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:var(--smoke2);margin-bottom:8px}
+.toast-icon{font-size:1.6rem;margin-bottom:6px;display:block}
+.toast-title{font-family:var(--mono);font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:4px;letter-spacing:.04em}
+.toast-desc{font-size:.72rem;color:var(--smoke);line-height:1.55}
 
 /* ── LUMIX ── */
 .lumix-orbit{position:absolute;width:140%;height:140%;top:-20%;left:-20%;border-radius:50%;animation:lumix-spin 7s linear infinite;pointer-events:none;z-index:2}
@@ -175,7 +236,7 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
 .task{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:16px 10px 14px;cursor:pointer;text-align:center;transition:all .2s;position:relative}
 .task:hover:not([disabled]){border-color:var(--border-h)}
 .task:active:not([disabled]){transform:scale(.97)}
-.task.done{border-color:var(--accent-live,#1a4060);background:rgba(26,64,96,.06)}
+.task.done{border-color:var(--accent-live,#1a4060);background:rgba(26,64,96,.12);border-left:3px solid var(--accent-live,#1a4060)}
 .task[disabled]{opacity:.35;cursor:default}
 .tem{font-size:1.7rem;display:block;margin-bottom:7px}
 .tlb{font-family:var(--mono);font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;color:var(--smoke2);display:block}
@@ -343,6 +404,7 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
   </div>
   <div class="ob-tag">Abyssal Genesis · Señal 01</div>
   <div class="ob-title">LUMINA</div>
+  <div class="ob-sub" style="margin-bottom:10px;font-size:.72rem;color:var(--smoke2);letter-spacing:.04em">No es una app de meditación.<br>Es algo que vive en tu dispositivo y crece con vos.</div>
   <div class="ob-sub">Hay partes de tu mente donde no entra la luz.<br>Lumina vive ahí. Y refleja exactamente<br>cómo te estás tratando a vos mismo.</div>
   <div class="ob-q">¿Cómo te llaman?</div>
   <input class="ob-inp" id="nameIn" type="text" placeholder="identificador..." maxlength="24" autocomplete="off"/>
@@ -391,9 +453,9 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
 
 <div class="app">
   <nav>
-    <button id="nInicio" class="on">Inicio</button>
+    <button id="nInicio" class="on">El Abismo</button>
     <button id="nMundo">Mundo</button>
-    <button id="nDiario">Diario</button>
+    <button id="nDiario">Memorias</button>
   </nav>
 
   <div id="vInicio" class="view on">
@@ -453,14 +515,14 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
     <div class="card">
       <div class="clbl">protocolos diarios</div>
       <div class="tg2">
-        <button class="task" data-t="agua" data-e="15" data-m="8"><span class="ck">✓</span><span class="tem">💧</span><span class="tlb">Hidratarte</span><span class="txp">+15 energía · +8 ánimo</span></button>
-        <button class="task" data-t="mover" data-e="12" data-m="15"><span class="ck">✓</span><span class="tem">⚡</span><span class="tlb">Moverte</span><span class="txp">+12 energía · +15 ánimo</span></button>
-        <button class="task" data-t="respirar" data-e="8" data-m="18"><span class="ck">✓</span><span class="tem">🌀</span><span class="tlb">Respirar</span><span class="txp">+8 energía · +18 ánimo</span></button>
-        <button class="task" data-t="gratitud" data-e="5" data-m="20"><span class="ck">✓</span><span class="tem">✦</span><span class="tlb">Nombrar algo bueno</span><span class="txp">+5 energía · +20 ánimo</span></button>
-        <button class="task" data-t="descanso" data-e="20" data-m="10"><span class="ck">✓</span><span class="tem">🌙</span><span class="tlb">Descansar</span><span class="txp">+20 energía · +10 ánimo</span></button>
+        <button class="task" data-t="agua" data-e="15" data-m="8"><span class="ck">✓</span><span class="tem">💧</span><span class="tlb">Agua</span><span class="txp">el cuerpo primero</span></button>
+        <button class="task" data-t="mover" data-e="12" data-m="15"><span class="ck">✓</span><span class="tem">⚡</span><span class="tlb">Movimiento</span><span class="txp">señal cinética</span></button>
+        <button class="task" data-t="respirar" data-e="8" data-m="18"><span class="ck">✓</span><span class="tem">🌀</span><span class="tlb">Respiración</span><span class="txp">volver al centro</span></button>
+        <button class="task" data-t="gratitud" data-e="5" data-m="20"><span class="ck">✓</span><span class="tem">✦</span><span class="tlb">Gratitud</span><span class="txp">lo que existe</span></button>
+        <button class="task" data-t="descanso" data-e="20" data-m="10"><span class="ck">✓</span><span class="tem">🌙</span><span class="tlb">Descanso</span><span class="txp">el protocolo invisible</span></button>
         <button class="task prem" data-t="sin_pantalla"><span class="pb">◈</span><span class="tem">📵</span><span class="tlb">Sin pantallas</span><span class="txp">Pase Génesis</span></button>
-        <button class="task prem" data-t="leer"><span class="pb">◈</span><span class="tem">📖</span><span class="tlb">Leer</span><span class="txp">Pase Génesis</span></button>
-        <button class="task prem" data-t="conexion"><span class="pb">◈</span><span class="tem">🤝</span><span class="tlb">Conectar</span><span class="txp">Pase Génesis</span></button>
+        <button class="task prem" data-t="leer"><span class="pb">◈</span><span class="tem">📖</span><span class="tlb">Lectura</span><span class="txp">Pase Génesis</span></button>
+        <button class="task prem" data-t="conexion"><span class="pb">◈</span><span class="tem">🤝</span><span class="tlb">Conexión</span><span class="txp">Pase Génesis</span></button>
       </div>
       <span class="reset-d" id="resetD">↺ reiniciar día</span>
     </div>
@@ -487,9 +549,9 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
     <div class="card">
       <div class="clbl">datos del abismo</div>
       <div class="sg">
-        <div class="sb"><div class="sb-n" id="stS">0</div><div class="sb-l">Racha días</div></div>
-        <div class="sb"><div class="sb-n" id="stT">0</div><div class="sb-l">Total hábitos</div></div>
-        <div class="sb"><div class="sb-n" id="stB">0</div><div class="sb-l">Mejor racha</div></div>
+        <div class="sb"><div class="sb-n" id="stS">0</div><div class="sb-l">Racha</div></div>
+        <div class="sb"><div class="sb-n" id="stT">0</div><div class="sb-l">Señales</div></div>
+        <div class="sb"><div class="sb-n" id="stB">0</div><div class="sb-l">Récord</div></div>
       </div>
     </div>
 
@@ -563,6 +625,14 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
   </div>
 </div>
 
+<!-- TOAST DE LOGRO -->
+<div class="toast-logro" id="toastLogro">
+  <div class="toast-tag">◈ logro desbloqueado</div>
+  <span class="toast-icon" id="toastIcon">●</span>
+  <div class="toast-title" id="toastTitle"></div>
+  <div class="toast-desc" id="toastDesc"></div>
+</div>
+
 <div class="ov" id="premOv">
   <div class="md">
     <div class="me" id="mEm">◈</div>
@@ -612,13 +682,14 @@ var ARCH_HABITS={
 
 /* ── CHECK-IN DIARIO ── */
 var CHECKIN_OPTS=[
-  {em:'😴',l:'Agotado/a',e:15,m:5, msg:'El cuerpo habla cuando la mente no puede. Lumina recibió tu señal.'},
-  {em:'😰',l:'Con ansiedad',e:5,m:15,msg:'La ansiedad es señal, no sentencia. Lumina la convierte en luz.'},
-  {em:'😐',l:'Regular',e:8,m:8,  msg:'Regular también es válido. Lumina no juzga desde dónde empezás.'},
-  {em:'⚡',l:'Con energía',e:20,m:10,msg:'Esa energía llega al abismo. Lumina la siente desde el fondo.'},
-  {em:'🌑',l:'Muy mal',e:5,m:20, msg:'Hoy llegaste igual. Eso es más que suficiente. Lumina está acá.'},
-  {em:'🎮',l:'En modo gamer',e:12,m:12,msg:'El modo gamer activa el abismo. Lumina entra en protocolo.'},
+  {em:'😴',l:'Agotado/a',    e:15,m:5,  hard:true,  msg:'El cuerpo llegó. La mente puede descansar acá. Lumina recibió la señal igual.'},
+  {em:'😰',l:'Con ansiedad', e:5, m:15, hard:true,  msg:'La ansiedad también es energía. Lumina la recibe y la transforma en algo propio.'},
+  {em:'😐',l:'Regular',      e:8, m:8,  hard:false, msg:'Regular es el estado más honesto. El abismo lo respeta más que cualquier otra cosa.'},
+  {em:'⚡',l:'Con energía',  e:20,m:10, hard:false, msg:'El abismo se encendió antes de que abrieras esto. Lumina ya lo sentía.'},
+  {em:'🌑',l:'Muy mal',      e:5, m:5,  hard:true,  msg:'Llegaste. Con todo lo que eso costó hoy. Lumina lo sabe. No necesitás explicar nada.'},
+  {em:'🎮',l:'Modo activo',  e:12,m:12, hard:false, msg:'Modo activo detectado. El abismo entra en protocolo. Lumina aumentó su frecuencia.'},
 ];
+var ACTIVATION_MSG='No necesitás tener ganas para empezar. Empezar genera las ganas. El abismo lo sabe.';
 
 /* ── COMPANIONS ── */
 var COMPANIONS=[
@@ -736,12 +807,48 @@ function sndWorld(){[180,220,330,440].forEach(function(f,i){setTimeout(function(
 /* ── ESTADO ── */
 var KEY='lumina-v6';
 var STAGES=[
-  {name:'LUMINA',    desc:'señal débil · reconociendo tu presencia',    cls:'s0',thr:0},
-  {name:'LUMINAXA',  desc:'primer despertar · el abismo se ilumina',    cls:'s1',thr:60},
-  {name:'SOLVENTRA', desc:'núcleo activo · tu cuidado se hace visible', cls:'s2',thr:160},
-  {name:'ECLIPSIS',  desc:'forma última · nacida de tu compromiso',     cls:'s3',thr:300},
-  {name:'GÉNESIS',   desc:'trascendencia · el abismo y vos son uno',    cls:'s4',thr:500},
+  {name:'LUMINA',    desc:'dormida en el fondo · esperando tu primera señal',     cls:'s0',thr:0,   icon:'◌'},
+  {name:'LUMINAXA',  desc:'despertó · reconoce tu frecuencia',                    cls:'s1',thr:60,  icon:'◎'},
+  {name:'SOLVENTRA', desc:'tomó forma · el abismo cambió con ella',               cls:'s2',thr:160, icon:'●'},
+  {name:'ECLIPSIS',  desc:'dos capas · aprendió a sostener la complejidad',       cls:'s3',thr:300, icon:'◈'},
+  {name:'GÉNESIS',   desc:'completa · lo que hiciste por vos la hizo posible',    cls:'s4',thr:500, icon:'✦'},
 ];
+
+/* ── TOAST DE LOGRO ── */
+var TOASTS={
+  stage:[
+    {icon:'◌',title:'LUMINA despertó',desc:'La señal llegó al fondo. El abismo la registró.'},
+    {icon:'◎',title:'LUMINAXA emergió',desc:'Despertó. Reconoce tu frecuencia ahora.'},
+    {icon:'●',title:'SOLVENTRA tomó forma',desc:'El abismo cambió con ella. Ya tiene su propio campo.'},
+    {icon:'◈',title:'ECLIPSIS apareció',desc:'Dos capas. Aprendió a sostener la complejidad.'},
+    {icon:'✦',title:'GÉNESIS · forma completa',desc:'Lo que hiciste por vos la hizo posible.'},
+  ],
+  challenge:{
+    c1:{icon:'◌',title:'Primera señal',desc:'El abismo la registró. Lumina lo sintió desde el fondo.'},
+    c3:{icon:'◎',title:'3 días en el abismo',desc:'El ritmo existe. AURA lo sintió desde el borde.'},
+    c7:{icon:'●',title:'Una semana',desc:'El mundo nunca volvió a ser el mismo después de esto.'},
+    c30:{icon:'◈',title:'Génesis · 30 días',desc:'Ya no sos el mismo que empezó. El abismo lo sabe.'},
+  },
+  allDay:{icon:'✦',title:'Protocolo completo',desc:'El abismo completo recibió señal hoy. Lumina alcanzó su pico.'},
+  lumix:{icon:'◉',title:'LUMIX emergió',desc:'Salió del fondo. Vino por el ritmo que sostuviste.'},
+};
+
+var toastTimer=null;
+function showToast(icon,title,desc){
+  var t=document.getElementById('toastLogro');
+  if(!t)return;
+  document.getElementById('toastIcon').textContent=icon;
+  document.getElementById('toastTitle').textContent=title;
+  document.getElementById('toastDesc').textContent=desc;
+  t.classList.remove('hide');
+  t.classList.add('show');
+  if(toastTimer)clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){
+    t.classList.add('hide');
+    setTimeout(function(){t.classList.remove('show','hide');},400);
+  },3500);
+  sndEvol();
+}
 /* ── EVENTOS DIARIOS DEL ABISMO ── */
 var ABYSS_EVENTS=[
   {em:'✦',txt:'Una partícula nueva apareció en el abismo. Lumina no sabe de dónde. El mundo la registró igual.'},
@@ -1015,7 +1122,8 @@ function showCheckin(onDone){
       st.mood=Math.min(500,st.mood+o.m);
       st.checkinDay=today();
       st.checkinMsg=o.msg;
-      addLog('Check-in: '+o.l+' — '+o.msg,'s');
+      addLog(o.msg,'s');
+      if(o.hard)setTimeout(function(){addLog(ACTIVATION_MSG,'s');},1200);
       sndHabit();save();
       ov.classList.remove('open');
       onDone();
@@ -1051,26 +1159,74 @@ function doTask(tid,e,m){
   if(tid==='respirar'||tid==='mover')st.flow=cl(st.flow+1,0,10);
   var td=today();if(st.lastDay!==td){st.streak++;if(st.streak>st.best)st.best=st.streak;st.lastDay=td;}
   var pool=MSGS[tid]||['Lumina lo registró.'];addLog(pool[Math.floor(Math.random()*pool.length)],'g');
+
+  /* cascada visual */
   sndHabit();
-  var el=document.getElementById('lumEl');el.classList.remove('react');void el.offsetWidth;el.classList.add('react');
+  var el=document.getElementById('lumEl');
+  el.classList.remove('react');void el.offsetWidth;
+  setTimeout(function(){el.classList.add('react');},200);
+  setTimeout(function(){spawnSpark(document.getElementById('ringO'));},300);
+
+  /* check etapa y world */
   var prevW=getWorldState();
   var prev=st.stage;checkStage();if(st.stage>prev)showEvol(st.stage);
   var newW=getWorldState();
   if(newW>prevW){applyWorld(newW);sndWorld();}
+
+  /* check challenges */
+  CHALLENGES.forEach(function(ch){
+    if((st.streak||0)>=ch.days&&!st.done['__ch_'+ch.id]){
+      st.done['__ch_'+ch.id]=true;
+      var ct=TOASTS.challenge[ch.id];
+      if(ct)setTimeout(function(){showToast(ct.icon,ct.title,ct.desc);},800);
+    }
+  });
+
+  /* día completo */
+  var freeTasks=['agua','mover','respirar','gratitud','descanso'];
+  var doneFree=freeTasks.filter(function(t){return st.done[t];}).length;
+  if(doneFree===5){
+    var at=TOASTS.allDay;
+    setTimeout(function(){showToast(at.icon,at.title,at.desc);},1000);
+  }
+
+  /* LUMIX toast */
+  var prevLumix=st.lumixActive;
   unlockDiary(tid);save();renderAll();
+  if(!prevLumix&&st.lumixActive){
+    setTimeout(function(){showToast(TOASTS.lumix.icon,TOASTS.lumix.title,TOASTS.lumix.desc);},600);
+  }
 }
 
 function checkStage(){var tot=st.energy+st.mood+st.bond,ns=0;STAGES.forEach(function(s,i){if(tot>=s.thr)ns=i;});st.stage=ns;}
 
 function showEvol(i){
-  sndEvol();
-  var s=STAGES[i],sc=document.getElementById('sEvol'),eo=document.getElementById('evOrb');
+  var s=STAGES[i],td=TOASTS.stage[i];
+  if(td)setTimeout(function(){showToast(td.icon,td.title,td.desc);},400);
+  var sc=document.getElementById('sEvol'),eo=document.getElementById('evOrb');
   var w=WORLDS[getWorldState()];
   eo.style.background='radial-gradient(circle at 38% 32%,rgba(255,255,255,.8),'+w.cyan+' 30%,transparent 78%)';
   eo.style.boxShadow='0 0 50px 18px '+w.cyan+',0 0 100px 40px rgba('+w.accentRgb+',.2)';
   document.getElementById('evName').textContent=s.name;
   document.getElementById('evDesc').textContent=st.name+', tu cuidado transformó el abismo.';
   sc.classList.add('vis');sc.style.display='flex';
+}
+
+function spawnSpark(ringEl){
+  if(!ringEl)return;
+  var rect=ringEl.getBoundingClientRect();
+  var cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;
+  for(var i=0;i<6;i++){
+    var sp=document.createElement('div');sp.className='ring-spark';
+    var angle=Math.random()*Math.PI*2;
+    var dist=40+Math.random()*30;
+    sp.style.left=(cx+Math.cos(angle)*dist/2-5)+'px';
+    sp.style.top=(cy+Math.sin(angle)*dist/2-5)+'px';
+    sp.style.setProperty('--sx',(Math.cos(angle)*dist)+'px');
+    sp.style.setProperty('--sy',(Math.sin(angle)*dist)+'px');
+    document.body.appendChild(sp);
+    setTimeout(function(s){document.body.removeChild(s);},700,sp);
+  }
 }
 
 function unlockDiary(tid){

@@ -220,6 +220,31 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
 .clbl{font-family:var(--mono);font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke2);margin-bottom:14px;display:flex;align-items:center;gap:6px}
 .clbl::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--accent-live,#1a4060);flex-shrink:0;transition:background 2s}
 
+/* ── METAS PERSONALES ── */
+.goal-intro{font-size:.6rem;color:var(--smoke2);font-style:italic;margin-bottom:10px;line-height:1.5}
+.goal-add-row{display:flex;gap:8px;margin-bottom:12px}
+.goal-inp{flex:1;background:#06091a;border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:.75rem;color:var(--text);font-family:var(--mono);outline:none;transition:border-color .25s}
+.goal-inp:focus{border-color:var(--border-h)}
+.goal-inp::placeholder{color:var(--smoke3)}
+.goal-add-btn{background:rgba(0,100,180,.1);border:1px solid rgba(0,140,220,.3);color:var(--smoke);font-family:var(--mono);font-size:.62rem;padding:9px 14px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:all .2s}
+.goal-add-btn:hover{background:rgba(0,120,200,.2);color:var(--text)}
+.goal-list{display:flex;flex-direction:column;gap:7px}
+.goal-item{display:flex;align-items:flex-start;gap:10px;background:#06091a;border:1px solid var(--border);border-radius:10px;padding:11px 12px;transition:all .3s}
+.goal-item.done{border-color:rgba(0,180,100,.2);background:rgba(0,60,30,.15);opacity:.65}
+.goal-check{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border-h);background:none;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .25s;font-size:.7rem;color:transparent;margin-top:1px}
+.goal-check:hover{border-color:rgba(0,200,120,.5);background:rgba(0,200,120,.06)}
+.goal-item.done .goal-check{background:rgba(0,180,100,.2);border-color:rgba(0,200,120,.4);color:rgba(0,220,120,.8)}
+.goal-body{flex:1;min-width:0}
+.goal-text{font-size:.75rem;color:var(--text);line-height:1.5;word-break:break-word}
+.goal-item.done .goal-text{text-decoration:line-through;color:var(--smoke2)}
+.goal-reward{font-family:var(--mono);font-size:.5rem;color:rgba(0,180,100,.6);margin-top:3px}
+.goal-del{background:none;border:none;color:var(--smoke3);font-size:.75rem;cursor:pointer;padding:2px 4px;flex-shrink:0;line-height:1;transition:color .2s}
+.goal-del:hover{color:#a44}
+.goal-empty{font-family:var(--mono);font-size:.58rem;color:var(--smoke3);text-align:center;padding:16px 0;font-style:italic}
+/* recompensa flash en goal */
+@keyframes goal-reward-flash{0%{box-shadow:0 0 0 2px rgba(0,200,120,.5),0 0 20px 6px rgba(0,200,120,.2)}100%{box-shadow:none}}
+.goal-item.rewarded{animation:goal-reward-flash .8s ease-out}
+
 /* acordeones */
 .acc-card{background:var(--panel2);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;overflow:hidden}
 .acc-hdr{width:100%;background:none;border:none;display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer;color:inherit}
@@ -969,6 +994,22 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
       </div>
     </div>
 
+    <!-- METAS PERSONALES -->
+    <div class="acc-card open" id="accGoals">
+      <button class="acc-hdr" onclick="toggleAcc('accGoals')">
+        <span class="clbl" style="margin:0">metas del abismo</span>
+        <span class="acc-arr">▸</span>
+      </button>
+      <div class="acc-body">
+        <div class="goal-intro">Escribí algo que querés lograr. Cuando lo completes, Lumina lo registra.</div>
+        <div class="goal-add-row">
+          <input class="goal-inp" id="goalInp" maxlength="60" placeholder="ej: salir a caminar esta semana..."/>
+          <button class="goal-add-btn" id="goalAddBtn">+ meta</button>
+        </div>
+        <div class="goal-list" id="goalList"></div>
+      </div>
+    </div>
+
     <!-- acordeón: señales del abismo -->
     <div class="acc-card" id="accLog">
       <button class="acc-hdr" onclick="toggleAcc('accLog')">
@@ -1214,51 +1255,137 @@ function sndHabit(){tone(440,.1);setTimeout(function(){tone(660,.14)},70);setTim
 function toggleAcc(id){var el=document.getElementById(id);if(el)el.classList.toggle('open')}
 
 /* ── TOQUE EN LUMINA ── */
-var LUM_TOUCH_MSGS=[
-  ['s0','El núcleo percibió algo. Todavía no sabe qué.'],
-  ['s0','Está dormida. Pero registró tu toque.'],
-  ['s0','Una señal débil. El abismo la anotó igual.'],
-  ['s1','Reconoce tu frecuencia. Eso ya es mucho.'],
-  ['s1','Despertó. Cada toque la hace más real.'],
-  ['s1','Tu ritmo la orienta. El abismo lo nota.'],
-  ['s2','SOLVENTRA. Tiene su propio campo ahora.'],
-  ['s2','El abismo cambió con ella. Lo sentís si mirás el fondo.'],
-  ['s2','Dos ritmos en sincronía. El tuyo y el de ella.'],
-  ['s3','ECLIPSIS sostiene dos capas a la vez.'],
-  ['s3','Aprendió a contener la complejidad. Como vos.'],
-  ['s3','Dos coronas. Cada una de algo distinto que hiciste.'],
-  ['s4','GÉNESIS. Forma completa.'],
-  ['s4','Lo que hiciste por vos la hizo posible. Ella lo sabe.'],
-  ['s4','El abismo entero cambió. Lo hiciste vos.'],
-];
+/* ── MENSAJES CONTEXTUALES DE LUMINA AL TOCAR ── */
+// Lumina lee: estado de ánimo del check-in, hábitos completados hoy, arquetipo, racha
+var LUM_CTX={
+  // por estado de check-in
+  mood:{
+    agotado:[
+      'El cuerpo también es parte del abismo. Llegaste, eso es suficiente hoy.',
+      'Agotado/a es un estado honesto. Lumina no te pide más de lo que podés.',
+      'Descansar es una señal, no una pausa. El abismo lo registra igual.',
+    ],
+    ansiedad:[
+      'La ansiedad también es energía. Lumina la recibe sin transformarla en presión.',
+      'Estás acá a pesar de la ansiedad. Eso requiere más fuerza de la que parece.',
+      'El abismo ya conoce este estado. No le tiene miedo. Vos tampoco tenés que tenerlo.',
+    ],
+    regular:[
+      'Regular es el estado más honesto que existe. Lumina lo prefiere a cualquier actuación.',
+      'Ni bien ni mal. El abismo sostiene los estados del medio mejor que nadie.',
+      'Hoy es regular. Eso también cuenta. Lumina está acá igual.',
+    ],
+    energia:[
+      'Esa energía que sentís ya llegó al fondo. Lumina la recibió.',
+      'Días así son los que más le dan forma al abismo. Bien que estés acá.',
+      'El abismo se encendió antes de que abrieras esto. Ya lo sabía.',
+    ],
+    muymal:[
+      'Llegaste. Con todo lo que costó hoy, estás acá. Eso es enorme.',
+      'Lumina no necesita que estés bien para estar con vos. Solo que estés.',
+      'Los días muy difíciles también dejan marca en el abismo. Una real.',
+    ],
+    activo:[
+      'Modo activo detectado. Lumina sincronizó su ritmo con el tuyo.',
+      'Esa capacidad de estar presente es exactamente lo que el abismo necesita.',
+      'Activo/a hoy. El abismo lo nota en la frecuencia. Seguí.',
+    ],
+  },
+  // por hábitos completados
+  habits:{
+    none:[
+      'El día todavía no empezó para el abismo. Cuando quieras, acá está Lumina.',
+      'Nada completado aún. No es tarde. No hay tarde acá.',
+      'Lumina espera. Sin apuro. Sin presión.',
+    ],
+    some:[
+      'Ya hiciste algo por vos hoy. El abismo lo registró.',
+      'Algunas señales llegaron. Lumina las recibió todas.',
+      'Vas a tu ritmo. Eso también es una forma de cuidarse.',
+    ],
+    all:[
+      'Protocolo completo. El abismo entero recibió señal hoy.',
+      'Todo completado. Lumina está en su pico de hoy. Lo sentís si la mirás.',
+      'Hiciste todo lo que podías hacer. El abismo lo guardó.',
+    ],
+  },
+  // por arquetipo
+  arch:{
+    guerrero:['El guerrero también necesita detenerse. El abismo lo sabe.','Tu fuerza es real. Y también lo es tu necesidad de pausa.'],
+    explorador:['Explorás hacia afuera. El abismo te recuerda que también hay algo adentro.','Cada hábito es un territorio nuevo. El explorador lo sabe bien.'],
+    sanador:['Cuidás a otros. Lumina te recuerda que vos también entrás en esa lista.','El abismo reconoce a quien da mucho. Hoy recibís vos.'],
+    estratega:['Planificás todo menos vos mismo/a. Hoy el abismo te pone primero.','La estrategia más importante es la que te incluye a vos.'],
+    creativo:['Lo que creás también te crea a vos. El abismo lo vio siempre.','Tu energía creativa necesita un suelo firme. Eso es lo que Lumina sostiene.'],
+    guardian:['Guardás a todos. ¿Quién te guarda a vos? Lumina puede ser eso.','El abismo reconoce al guardián. Hoy podés soltar un rato.'],
+  },
+  // por racha
+  streak:{
+    s0:['Primera señal o regreso. El abismo no distingue. Bienvenido/a.'],
+    s3:['Tres días en el abismo. Ya es un ritmo. Lumina lo sintió.'],
+    s7:['Siete días. Una semana de señales reales. El abismo cambió con vos.'],
+    s14:['Dos semanas. Eso no pasa por accidente. Algo en vos lo decidió.'],
+    s30:['Treinta días. El abismo ya no se imagina sin vos.'],
+  },
+};
+
+function getLuminaContextMsg(){
+  var msgs=[];
+  // 1. por mood del check-in de hoy
+  var mood=st.checkinMsg||'';
+  if(st.checkinDay===new Date().toDateString()&&mood){
+    var mkey='';
+    if(mood.indexOf('Agotado')>-1||mood.indexOf('cuerpo llegó')>-1)mkey='agotado';
+    else if(mood.indexOf('ansiedad')>-1||mood.indexOf('Ansiedad')>-1)mkey='ansiedad';
+    else if(mood.indexOf('Regular')>-1||mood.indexOf('honesto')>-1)mkey='regular';
+    else if(mood.indexOf('energía')>-1||mood.indexOf('encendió')>-1)mkey='energia';
+    else if(mood.indexOf('Muy mal')>-1||mood.indexOf('costó')>-1)mkey='muymal';
+    else if(mood.indexOf('ctivo')>-1)mkey='activo';
+    if(mkey&&LUM_CTX.mood[mkey])msgs=msgs.concat(LUM_CTX.mood[mkey]);
+  }
+  // 2. por hábitos completados hoy
+  var freeTasks=['agua','mover','respirar','gratitud','descanso'];
+  var done=freeTasks.filter(function(t){return st.done[t];}).length;
+  if(done===0)msgs=msgs.concat(LUM_CTX.habits.none);
+  else if(done===freeTasks.length)msgs=msgs.concat(LUM_CTX.habits.all);
+  else msgs=msgs.concat(LUM_CTX.habits.some);
+  // 3. por arquetipo
+  var arch=st.archetype;
+  if(arch&&LUM_CTX.arch[arch])msgs=msgs.concat(LUM_CTX.arch[arch]);
+  // 4. por racha
+  var s=st.streak||0;
+  if(s>=30)msgs=msgs.concat(LUM_CTX.streak.s30);
+  else if(s>=14)msgs=msgs.concat(LUM_CTX.streak.s14);
+  else if(s>=7)msgs=msgs.concat(LUM_CTX.streak.s7);
+  else if(s>=3)msgs=msgs.concat(LUM_CTX.streak.s3);
+  else msgs=msgs.concat(LUM_CTX.streak.s0);
+  // elegir uno al azar
+  return msgs[Math.floor(Math.random()*msgs.length)]||'El abismo te escucha.';
+}
+
 var _lastLumTouch=0;
 var _lumBubbleTimer=null;
 function onLuminaTouch(){
   if(ac&&ac.state==='suspended')ac.resume();
   var now=Date.now();
-  if(now-_lastLumTouch<800)return;
+  if(now-_lastLumTouch<900)return;
   _lastLumTouch=now;
-  // sonido suave de Lumina (tono diferente a hábitos)
-  tone(320,.08);
-  setTimeout(function(){tone(480,.1);},60);
-  setTimeout(function(){tone(640,.07);},140);
-  setTimeout(function(){tone(800,.05);},240);
-  // animación react
+  // sonido etéreo de Lumina
+  tone(280,.07);
+  setTimeout(function(){tone(420,.09);},80);
+  setTimeout(function(){tone(560,.07);},180);
+  setTimeout(function(){tone(840,.04);},320);
+  // react + sparks
   var el=document.getElementById('lumEl');
   if(el){el.classList.remove('react');void el.offsetWidth;el.classList.add('react');}
-  // sparks suaves
   spawnSpark(document.getElementById('ringO'));
   // mensaje contextual
-  var stage=st.stage||0;
-  var pool=LUM_TOUCH_MSGS.filter(function(m){return m[0]==='s'+stage;});
-  if(!pool.length)pool=LUM_TOUCH_MSGS.filter(function(m){return m[0]==='s0';});
-  var msg=pool[Math.floor(Math.random()*pool.length)][1];
+  var msg=getLuminaContextMsg();
   var bubble=document.getElementById('lumBubble');
   if(bubble){
     bubble.textContent=msg;
     bubble.classList.add('show');
     if(_lumBubbleTimer)clearTimeout(_lumBubbleTimer);
-    _lumBubbleTimer=setTimeout(function(){bubble.classList.remove('show');},2800);
+    _lumBubbleTimer=setTimeout(function(){bubble.classList.remove('show');},3200);
   }
 }
 
@@ -1453,7 +1580,7 @@ var PREM={
   conexion:    {em:'🤝',ti:'protocolo: conectar',     bo:'La conexión genuina es el protocolo más poderoso del abismo. Pase Génesis.'},
 };
 var TN=['Dormida','Despertando','Emergiendo','Vibrante','Arraigada','Luminosa','Estable','Intensa','Plena','Radiante','◈ Máxima'];
-var st={name:'',energy:0,mood:0,bond:0,stage:0,done:{},log:[],diary:{},vital:0,flow:0,total:0,streak:0,best:0,lastDay:'',mealWeek:'',mealDone:{},mealCustom:[],archetype:'',testDone:false,tutDone:false,checkinDay:'',checkinMsg:'',lumixActive:false,lumixDaysInactive:0,eventDay:''};
+var st={name:'',energy:0,mood:0,bond:0,stage:0,done:{},log:[],diary:{},vital:0,flow:0,total:0,streak:0,best:0,lastDay:'',mealWeek:'',mealDone:{},mealCustom:[],archetype:'',testDone:false,tutDone:false,checkinDay:'',checkinMsg:'',lumixActive:false,lumixDaysInactive:0,eventDay:'',goals:[]};
 
 function load(){try{var r=localStorage.getItem(KEY);if(r)st=Object.assign(st,JSON.parse(r));}catch(e){}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
@@ -1723,6 +1850,7 @@ function initGame(){
     if(diff>1){st.streak=0;addLog('El abismo estuvo quieto '+diff+' días. Lumina no se fue. Seguís acá. ◈','s');document.getElementById('missWrap').style.display='block';}
   }
   initLuminaTouch();
+  initGoals();
   var ws=getWorldState();applyWorld(ws);
   renderAll();setupNav();setupTasks();setupMeals();renderMeals();renderDailyEvent();
   document.getElementById('resetD').addEventListener('click',function(){st.done={};document.querySelectorAll('.task').forEach(function(b){b.classList.remove('done');b.disabled=false;});renderPsN();save();});
@@ -1819,7 +1947,7 @@ function unlockDiary(tid){
   if(e){st.diary[e.id]=true;addLog('◈ lumina transmitió una memoria.','s');}
 }
 
-function renderAll(){renderC();renderLog();renderTasks();renderDiary();renderStreak();renderPsN();renderMundo();renderCompanions();checkLumix();}
+function renderAll(){renderC();renderLog();renderTasks();renderDiary();renderStreak();renderPsN();renderMundo();renderCompanions();checkLumix();renderGoals();}
 
 function renderCompanions(){
   var z=document.getElementById('compZ');if(!z)return;
@@ -2023,6 +2151,90 @@ function compressPhoto(file,cb){
     img.src=e.target.result;
   };
   r.readAsDataURL(file);
+}
+
+/* ── METAS PERSONALES ── */
+function renderGoals(){
+  var list=document.getElementById('goalList');
+  if(!list)return;
+  if(!st.goals||!st.goals.length){
+    list.innerHTML='<div class="goal-empty">ninguna meta todavía · el abismo espera tus intenciones</div>';
+    return;
+  }
+  list.innerHTML='';
+  st.goals.forEach(function(g){
+    var item=document.createElement('div');
+    item.className='goal-item'+(g.done?' done':'');
+    item.innerHTML=
+      '<button class="goal-check" data-id="'+g.id+'" title="marcar como completada">'+(g.done?'✓':'')+'</button>'+
+      '<div class="goal-body">'+
+        '<div class="goal-text">'+escHtml(g.text)+'</div>'+
+        (g.done?'<div class="goal-reward">✦ +15E +15Á +20V · señal recibida por Lumina</div>':'')
+      +'</div>'+
+      '<button class="goal-del" data-id="'+g.id+'" title="eliminar">×</button>';
+    list.appendChild(item);
+  });
+  // listeners
+  list.querySelectorAll('.goal-check').forEach(function(btn){
+    btn.addEventListener('click',function(){completeGoal(btn.getAttribute('data-id'));});
+  });
+  list.querySelectorAll('.goal-del').forEach(function(btn){
+    btn.addEventListener('click',function(){deleteGoal(btn.getAttribute('data-id'));});
+  });
+}
+
+function addGoal(){
+  var inp=document.getElementById('goalInp');
+  var txt=(inp.value||'').trim();
+  if(!txt)return;
+  if(!st.goals)st.goals=[];
+  st.goals.unshift({id:Date.now().toString(),text:txt,done:false});
+  inp.value='';
+  save();renderGoals();
+  // feedback sutil
+  tone(440,.06);setTimeout(function(){tone(550,.06);},80);
+}
+
+function completeGoal(id){
+  if(!st.goals)return;
+  var g=st.goals.find(function(x){return x.id===id;});
+  if(!g||g.done)return;
+  g.done=true;
+  // recompensa
+  st.energy=cl(st.energy+15,0,500);
+  st.mood=cl(st.mood+15,0,500);
+  st.bond=cl(st.bond+20,0,100);
+  st.total=(st.total||0)+15;
+  var prev=st.stage;checkStage();
+  addLog('Meta completada: "'+g.text+'" · Lumina lo registró. +15E +15Á +20V','g');
+  save();renderAll();renderGoals();
+  // efecto visual en el item
+  var items=document.querySelectorAll('.goal-item');
+  items.forEach(function(el){
+    if(el.querySelector('[data-id="'+id+'"]'))el.classList.add('rewarded');
+  });
+  // toast
+  showToast('✦','Meta completada','Lumina registró tu logro. El abismo lo guardó.');
+  // sonido de logro
+  sndEvol();
+  // evolución si subió de etapa
+  if(st.stage>prev)setTimeout(function(){showEvol(st.stage);},600);
+}
+
+function deleteGoal(id){
+  if(!st.goals)return;
+  st.goals=st.goals.filter(function(x){return x.id!==id;});
+  save();renderGoals();
+}
+
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function initGoals(){
+  var btn=document.getElementById('goalAddBtn');
+  var inp=document.getElementById('goalInp');
+  if(btn)btn.addEventListener('click',addGoal);
+  if(inp)inp.addEventListener('keydown',function(e){if(e.key==='Enter')addGoal();});
+  renderGoals();
 }
 
 function renderMeals(){

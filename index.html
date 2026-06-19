@@ -3,375 +3,308 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Abyssal Genesis — Lumira</title>
+<title>Abyssal Genesis — Lumina</title>
 <style>
 :root {
-  --void:    #050810;
-  --deep:    #0a1628;
-  --panel:   #0d1f3c;
-  --panel2:  #0f2444;
-  --border:  rgba(0,212,255,0.10);
-  --border-h:rgba(0,212,255,0.28);
-  --cyan:    #00d4ff;
-  --violet:  #7c3aed;
-  --violet2: #a855f7;
-  --rose:    #f472b6;
-  --amber:   #fbbf24;
-  --smoke:   #e8eaf0;
-  --smoke2:  #8892a4;
-  --smoke3:  #3d4a5c;
+  --void:   #050810;
+  --panel:  #0a1020;
+  --panel2: #0d1428;
+  --border: rgba(40,80,120,0.25);
+  --border-h: rgba(40,80,120,0.5);
+  --accent: #1a2a40;
+  --cyan:   #1a4060;
+  --violet: #1a1a3a;
+  --smoke:  #8892a4;
+  --smoke2: #4a5568;
+  --smoke3: #2a3040;
+  --text:   #c8d0dc;
   --mono: ui-monospace,'SF Mono',Menlo,monospace;
   --sans: -apple-system,'Segoe UI',Roboto,Arial,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{min-height:100vh;background:var(--void);color:var(--smoke);font-family:var(--sans);overflow-x:hidden}
-
-/* ── CANVAS ── */
+html,body{min-height:100vh;background:var(--void);color:var(--text);font-family:var(--sans);overflow-x:hidden;transition:background 2s ease}
 #bg{position:fixed;inset:0;z-index:0;pointer-events:none}
 
-/* ── PANTALLAS ── */
-.screen{
-  position:fixed;inset:0;z-index:100;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:40px 28px;text-align:center;
-  transition:opacity .9s ease,transform .9s ease;
-}
+.screen{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px;text-align:center;transition:opacity 1s ease,transform 1s ease}
 .screen.out{opacity:0;transform:scale(.96);pointer-events:none}
 .screen.gone{display:none}
 
-/* ── ONBOARDING ── */
-#sOb{background:radial-gradient(ellipse at 50% 42%,rgba(124,58,237,.14),var(--void) 68%)}
-.ob-void{
-  position:relative;width:96px;height:96px;margin-bottom:36px;
-}
-.ob-core{
-  position:absolute;inset:0;border-radius:50%;
-  background:radial-gradient(circle at 40% 36%,rgba(168,85,247,.8),rgba(0,212,255,.3) 50%,transparent 76%);
-  box-shadow:0 0 40px 12px rgba(124,58,237,.4),0 0 80px 30px rgba(0,212,255,.12);
-  animation:pulse 4s ease-in-out infinite;
-}
-.ob-ring{
-  position:absolute;inset:-14px;border-radius:50%;
-  border:1px solid rgba(0,212,255,.2);
-  animation:ring-expand 3s ease-in-out infinite;
-}
-.ob-ring2{
-  position:absolute;inset:-28px;border-radius:50%;
-  border:1px solid rgba(124,58,237,.12);
-  animation:ring-expand 3s ease-in-out infinite .8s;
-}
-@keyframes pulse{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.08);filter:brightness(1.2)}}
-@keyframes ring-expand{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.1);opacity:.1}}
+#sOb{background:var(--void)}
+.ob-void{position:relative;width:80px;height:80px;margin-bottom:32px}
+.ob-core{position:absolute;inset:0;border-radius:50%;background:#0a1020;border:1px solid rgba(40,80,120,.3)}
+.ob-pulse{position:absolute;inset:-12px;border-radius:50%;border:1px solid rgba(40,80,120,.15);animation:ring-pulse 3s ease-in-out infinite}
+.ob-pulse2{position:absolute;inset:-24px;border-radius:50%;border:1px solid rgba(40,80,120,.08);animation:ring-pulse 3s ease-in-out infinite .8s}
+.ob-dot{position:absolute;top:50%;left:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--cyan-live,#1a4060);animation:dot-blink 2s ease-in-out infinite}
+@keyframes ring-pulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.08);opacity:.1}}
+@keyframes dot-blink{0%,100%{opacity:.3}50%{opacity:1}}
 
-.ob-eyrie{font-family:var(--mono);font-size:.56rem;letter-spacing:.25em;color:var(--cyan);text-transform:uppercase;margin-bottom:10px;opacity:.7}
-.ob-title{font-size:clamp(2.2rem,9vw,3rem);font-weight:800;letter-spacing:-.02em;color:var(--smoke);margin-bottom:6px}
-.ob-title span{color:var(--cyan)}
-.ob-sub{font-size:.9rem;color:var(--smoke2);line-height:1.7;margin-bottom:36px;max-width:290px}
-.ob-q{font-size:.92rem;color:var(--smoke);font-weight:500;margin-bottom:14px}
-.ob-inp{
-  width:100%;max-width:300px;
-  background:rgba(0,212,255,.04);
-  border:1px solid rgba(0,212,255,.25);
-  border-radius:12px;padding:14px 18px;
-  font-size:1rem;color:var(--smoke);text-align:center;
-  outline:none;margin-bottom:20px;
-  transition:border-color .2s,box-shadow .2s;
-  font-family:var(--mono);letter-spacing:.04em;
-}
-.ob-inp:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,212,255,.08)}
+.ob-tag{font-family:var(--mono);font-size:.52rem;letter-spacing:.22em;color:var(--smoke2);text-transform:uppercase;margin-bottom:10px}
+.ob-title{font-size:clamp(2rem,8vw,2.8rem);font-weight:800;letter-spacing:-.01em;color:var(--text);margin-bottom:8px}
+.ob-sub{font-size:.86rem;color:var(--smoke);line-height:1.75;margin-bottom:32px;max-width:280px}
+.ob-q{font-size:.88rem;color:var(--text);margin-bottom:12px}
+.ob-inp{width:100%;max-width:280px;background:#0a1020;border:1px solid rgba(40,80,120,.3);border-radius:8px;padding:13px 16px;font-size:.95rem;color:var(--text);text-align:center;outline:none;margin-bottom:18px;font-family:var(--mono);letter-spacing:.04em;transition:border-color .3s}
+.ob-inp:focus{border-color:rgba(40,80,120,.7)}
 .ob-inp::placeholder{color:var(--smoke3)}
-.ob-btn{
-  font-family:var(--mono);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;
-  border:none;
-  background:linear-gradient(135deg,var(--violet),var(--cyan));
-  color:#fff;border-radius:50px;padding:15px 48px;
-  cursor:pointer;font-weight:700;
-  box-shadow:0 4px 28px rgba(124,58,237,.4),0 0 60px rgba(0,212,255,.08);
-  transition:transform .15s,box-shadow .15s,filter .15s;
-}
-.ob-btn:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(124,58,237,.5);filter:brightness(1.1)}
-.ob-btn:active{transform:scale(.97)}
-.ob-skip{display:block;margin-top:16px;font-size:.7rem;color:var(--smoke3);cursor:pointer;font-family:var(--mono);letter-spacing:.06em;transition:color .2s}
+.ob-btn{font-family:var(--mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(40,80,120,.5);background:#0a1020;color:var(--smoke);border-radius:4px;padding:13px 40px;cursor:pointer;transition:all .2s}
+.ob-btn:hover{border-color:rgba(40,80,120,.9);color:var(--text)}
+.ob-skip{display:block;margin-top:14px;font-size:.68rem;color:var(--smoke3);cursor:pointer;font-family:var(--mono);letter-spacing:.06em;transition:color .2s}
 .ob-skip:hover{color:var(--smoke2)}
 
-/* ── INTRO ── */
-#sIn{background:radial-gradient(ellipse at 50% 38%,rgba(0,212,255,.07),var(--void) 65%)}
-.in-entity{
-  position:relative;width:120px;height:120px;margin-bottom:32px;
-}
-.in-core{
-  position:absolute;inset:0;border-radius:50%;
-  background:radial-gradient(circle at 38% 32%,rgba(255,255,255,.9),rgba(0,212,255,.6) 30%,rgba(124,58,237,.4) 60%,transparent 80%);
-  box-shadow:0 0 50px 16px rgba(0,212,255,.3),0 0 100px 40px rgba(124,58,237,.15);
-  animation:pulse 4s ease-in-out infinite;
-}
-.in-glitch{
-  position:absolute;inset:0;border-radius:50%;
-  background:rgba(0,212,255,.15);
-  animation:glitch 6s ease-in-out infinite;
-  mix-blend-mode:screen;
-}
-@keyframes glitch{
-  0%,90%,100%{transform:translate(0,0);opacity:0}
-  91%{transform:translate(-3px,1px);opacity:.8}
-  92%{transform:translate(3px,-1px);opacity:.6}
-  93%{transform:translate(-1px,2px);opacity:.9}
-  94%{transform:translate(0,0);opacity:0}
-}
-.in-ring{position:absolute;inset:-18px;border-radius:50%;border:1px solid rgba(0,212,255,.18);animation:ring-expand 3.5s ease-in-out infinite}
-.in-ring2{position:absolute;inset:-34px;border-radius:50%;border:1px solid rgba(124,58,237,.1);animation:ring-expand 3.5s ease-in-out infinite .7s}
-
-.in-tag{font-family:var(--mono);font-size:.54rem;letter-spacing:.2em;color:var(--cyan);text-transform:uppercase;margin-bottom:10px;opacity:.7}
-.in-title{font-size:clamp(2.4rem,9vw,3.2rem);font-weight:800;letter-spacing:-.02em;color:var(--smoke);margin-bottom:8px}
-.in-greet{font-size:.92rem;color:var(--cyan);margin-bottom:6px;font-weight:500;min-height:1.4rem;font-family:var(--mono)}
-.in-sub{font-size:.84rem;color:var(--smoke2);line-height:1.7;margin-bottom:28px;max-width:280px}
-
-.in-term{
-  max-width:360px;width:100%;
-  background:rgba(0,212,255,.03);
-  border:1px solid rgba(0,212,255,.12);
-  border-radius:12px;padding:20px 18px;
-  margin-bottom:28px;min-height:100px;text-align:left;
-}
-.in-line{font-family:var(--mono);font-size:.78rem;line-height:1.85;color:var(--smoke2);display:block}
-.in-line.hi{color:var(--cyan)}
-.cur{display:inline-block;width:7px;height:13px;background:var(--cyan);vertical-align:middle;margin-left:2px;animation:blink 1s step-end infinite;opacity:.8}
-@keyframes blink{0%,100%{opacity:.8}50%{opacity:0}}
-
-.in-btn{
-  font-family:var(--mono);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;
-  border:1px solid rgba(0,212,255,.4);
-  background:rgba(0,212,255,.08);
-  color:var(--cyan);border-radius:50px;padding:14px 46px;
-  cursor:pointer;font-weight:700;
-  box-shadow:0 0 30px rgba(0,212,255,.1);
-  opacity:0;transition:opacity .6s,transform .15s,box-shadow .15s,background .2s;
-}
+#sIn{background:var(--void)}
+.in-entity{position:relative;width:100px;height:100px;margin-bottom:28px}
+.in-core{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(255,255,255,.4),var(--cyan-live,rgba(26,64,96,.8)) 45%,transparent 80%);transition:all 1.5s ease}
+.in-ring{position:absolute;inset:-14px;border-radius:50%;border:1px solid rgba(40,80,120,.2);animation:ring-pulse 3.5s ease-in-out infinite}
+.in-ring2{position:absolute;inset:-28px;border-radius:50%;border:1px solid rgba(40,80,120,.1);animation:ring-pulse 3.5s ease-in-out infinite .7s}
+.in-tag{font-family:var(--mono);font-size:.52rem;letter-spacing:.2em;color:var(--smoke2);text-transform:uppercase;margin-bottom:10px}
+.in-title{font-size:clamp(2.2rem,9vw,3rem);font-weight:800;letter-spacing:-.02em;color:var(--text);margin-bottom:8px}
+.in-greet{font-size:.88rem;color:var(--smoke);margin-bottom:6px;font-family:var(--mono);min-height:1.4rem}
+.in-term{max-width:340px;width:100%;background:#0a1020;border:1px solid rgba(40,80,120,.2);border-radius:8px;padding:18px 16px;margin-bottom:24px;min-height:96px;text-align:left}
+.in-line{font-family:var(--mono);font-size:.76rem;line-height:1.9;color:var(--smoke);display:block}
+.in-line.hi{color:var(--text)}
+.cur{display:inline-block;width:6px;height:12px;background:var(--smoke2);vertical-align:middle;margin-left:2px;animation:blink 1s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.in-btn{font-family:var(--mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(40,80,120,.4);background:#0a1020;color:var(--smoke);border-radius:4px;padding:13px 40px;cursor:pointer;opacity:0;transition:opacity .6s,border-color .2s,color .2s}
 .in-btn.show{opacity:1}
-.in-btn:hover{background:rgba(0,212,255,.14);transform:translateY(-2px);box-shadow:0 0 40px rgba(0,212,255,.2)}
-.in-btn:active{transform:scale(.97)}
+.in-btn:hover{border-color:rgba(40,80,120,.8);color:var(--text)}
 
-/* ── EVOLUCIÓN ── */
-#sEvol{background:rgba(5,8,16,.96);z-index:250;display:none;flex-direction:column;align-items:center;justify-content:center}
+#sEvol{background:rgba(5,8,16,.97);z-index:250;display:none;flex-direction:column;align-items:center;justify-content:center}
 #sEvol.vis{display:flex}
-.ev-orb{border-radius:50%;animation:pulse 2s ease-in-out infinite;margin-bottom:28px}
-.ev-tag{font-family:var(--mono);font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--smoke2);margin-bottom:10px}
-.ev-name{font-size:2.6rem;font-weight:800;letter-spacing:.04em;color:var(--smoke);margin-bottom:10px}
-.ev-desc{font-size:.88rem;color:var(--smoke2);line-height:1.65;max-width:280px;margin-bottom:32px}
-.ev-btn{
-  font-family:var(--mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
-  border:1px solid rgba(0,212,255,.35);background:rgba(0,212,255,.08);
-  color:var(--cyan);border-radius:50px;padding:13px 46px;cursor:pointer;
-  transition:background .2s;
-}
-.ev-btn:hover{background:rgba(0,212,255,.16)}
+.ev-orb{border-radius:50%;animation:orb-pulse 2s ease-in-out infinite;margin-bottom:24px;transition:all 1.5s ease}
+@keyframes orb-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.ev-tag{font-family:var(--mono);font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:var(--smoke2);margin-bottom:10px}
+.ev-name{font-size:2.4rem;font-weight:800;letter-spacing:.04em;color:var(--text);margin-bottom:10px}
+.ev-desc{font-size:.86rem;color:var(--smoke);line-height:1.65;max-width:280px;margin-bottom:30px}
+.ev-btn{font-family:var(--mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(40,80,120,.4);background:#0a1020;color:var(--smoke);border-radius:4px;padding:12px 40px;cursor:pointer;transition:all .2s}
+.ev-btn:hover{border-color:rgba(40,80,120,.8);color:var(--text)}
 
-/* ── APP ── */
 .app{position:relative;z-index:1;max-width:480px;margin:0 auto}
-nav{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  border-bottom:1px solid var(--border);
-  background:rgba(5,8,16,.92);backdrop-filter:blur(20px);
-  position:sticky;top:0;z-index:10;
-}
-nav button{
-  font-family:var(--mono);font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;
-  background:none;border:none;color:var(--smoke3);padding:14px 4px;cursor:pointer;
-  border-bottom:2px solid transparent;transition:color .2s,border-color .2s;
-}
-nav button.on{color:var(--cyan);border-bottom-color:var(--cyan)}
+nav{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);background:rgba(5,8,16,.95);backdrop-filter:blur(20px);position:sticky;top:0;z-index:10;transition:border-color 2s}
+nav button{font-family:var(--mono);font-size:.56rem;letter-spacing:.07em;text-transform:uppercase;background:none;border:none;color:var(--smoke2);padding:14px 4px;cursor:pointer;border-bottom:2px solid transparent;transition:color .3s,border-color .3s}
+nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
 
-.view{display:none;padding:20px 16px 80px;animation:fade-in .28s ease}
+.view{display:none;padding:20px 16px 80px;animation:fade-up .3s ease}
 .view.on{display:block}
-@keyframes fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes fade-up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-/* ── CARDS ── */
-.card{
-  background:var(--panel);border:1px solid var(--border);
-  border-radius:18px;padding:20px 18px;margin-bottom:14px;
-  transition:border-color .3s;
-}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px 18px;margin-bottom:12px;transition:border-color .3s,background 2s}
 .card:hover{border-color:var(--border-h)}
-.clbl{
-  font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--smoke3);margin-bottom:16px;
-  display:flex;align-items:center;gap:7px;
-}
-.clbl::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--cyan);flex-shrink:0}
+.clbl{font-family:var(--mono);font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke2);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.clbl::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--accent-live,#1a4060);flex-shrink:0;transition:background 2s}
 
-/* ── LUMIRA ── */
 .cwrap{display:flex;flex-direction:column;align-items:center;padding:8px 0 4px}
-.ring-o{
-  width:clamp(150px,58vw,190px);height:clamp(150px,58vw,190px);border-radius:50%;
-  background:conic-gradient(var(--rc,var(--cyan)) calc(var(--rp,0)*1%),rgba(255,255,255,.04) 0);
-  display:flex;align-items:center;justify-content:center;
-  transition:background .9s ease;
-}
-.ring-i{
-  width:calc(100% - 14px);height:calc(100% - 14px);border-radius:50%;
-  background:radial-gradient(circle at 40% 35%,#0d1a2e,var(--void) 80%);
-  display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;
-}
-.ring-i::after{
-  content:'';position:absolute;width:160%;height:160%;
-  background:radial-gradient(circle,rgba(0,212,255,.06),transparent 62%);
-  animation:drift 18s ease-in-out infinite alternate;
-}
-@keyframes drift{0%{transform:translate(-12%,-10%)}100%{transform:translate(10%,12%)}}
+.ring-o{width:clamp(150px,56vw,180px);height:clamp(150px,56vw,180px);border-radius:50%;background:conic-gradient(var(--accent-live,#1a4060) calc(var(--rp,0)*1%),rgba(255,255,255,.03) 0);display:flex;align-items:center;justify-content:center;transition:background 1s ease}
+.ring-i{width:calc(100% - 14px);height:calc(100% - 14px);border-radius:50%;background:var(--panel);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;transition:background 2s}
+.ring-i::after{content:'';position:absolute;width:160%;height:160%;background:radial-gradient(circle,var(--glow-live,rgba(26,64,96,.05)),transparent 62%);animation:drift 20s ease-in-out infinite alternate;transition:background 2s}
+@keyframes drift{0%{transform:translate(-10%,-8%)}100%{transform:translate(10%,10%)}}
 
-.lumira{
-  position:relative;z-index:1;border-radius:50%;
-  animation:pulse 4.5s ease-in-out infinite;
-  transition:all .8s cubic-bezier(.4,0,.2,1);
-}
-.lumira::before{
-  content:'';position:absolute;top:50%;left:50%;
-  width:8px;height:8px;margin:-4px 0 0 -4px;
-  border-radius:50%;background:rgba(255,255,255,.9);
-  box-shadow:0 0 10px 5px rgba(255,255,255,.6);
-  animation:core-pulse 2.2s ease-in-out infinite;
-}
-@keyframes core-pulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
-.lumira-glitch{position:absolute;inset:0;border-radius:50%;opacity:0;animation:glitch 8s ease-in-out infinite;mix-blend-mode:screen}
+.lumina{position:relative;z-index:1;border-radius:50%;animation:orb-pulse 4.5s ease-in-out infinite;transition:all 1s cubic-bezier(.4,0,.2,1)}
+.lumina::before{content:'';position:absolute;top:50%;left:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:rgba(255,255,255,.6);animation:core-p 2.5s ease-in-out infinite}
+@keyframes core-p{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:.9;transform:scale(1.3)}}
+.lumina.s0{width:52px;height:52px;background:radial-gradient(circle at 38% 33%,rgba(255,255,255,.3),rgba(26,64,96,.4) 50%,transparent 80%);box-shadow:0 0 20px 6px rgba(26,64,96,.2)}
+.lumina.s1{width:66px;height:66px;background:radial-gradient(circle at 38% 33%,rgba(255,255,255,.5),rgba(0,140,200,.5) 40%,transparent 78%);box-shadow:0 0 28px 10px rgba(0,140,200,.25)}
+.lumina.s2{width:82px;height:82px;background:radial-gradient(circle at 38% 33%,rgba(255,255,255,.7),rgba(0,200,240,.6) 35%,rgba(120,60,200,.3) 65%,transparent 80%);box-shadow:0 0 40px 14px rgba(0,200,240,.3),0 0 80px 30px rgba(120,60,200,.1)}
+.lumina.s3{width:98px;height:98px;background:radial-gradient(circle at 38% 33%,rgba(255,255,255,.85),rgba(0,212,255,.7) 28%,rgba(168,85,247,.4) 58%,transparent 80%);box-shadow:0 0 50px 18px rgba(0,212,255,.35),0 0 100px 40px rgba(168,85,247,.15)}
+.lumina.s4{width:112px;height:112px;background:radial-gradient(circle at 38% 33%,#fff,rgba(0,255,240,.8) 20%,rgba(200,80,255,.5) 50%,rgba(255,80,160,.3) 72%,transparent 85%);box-shadow:0 0 60px 22px rgba(0,212,255,.45),0 0 120px 50px rgba(200,80,255,.2),0 0 200px 80px rgba(255,80,160,.08)}
+.lumina.react{animation:orb-pulse 4.5s ease-in-out infinite,pop .5s ease-out}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.28)}100%{transform:scale(1)}}
 
-.lumira.s0{width:60px;height:60px;background:radial-gradient(circle at 36% 30%,rgba(255,255,255,.8),rgba(0,212,255,.6) 35%,rgba(124,58,237,.3) 65%,transparent 80%);box-shadow:0 0 30px 10px rgba(0,212,255,.35),0 0 60px 20px rgba(124,58,237,.1)}
-.lumira.s1{width:78px;height:78px;background:radial-gradient(circle at 36% 30%,rgba(255,255,255,.85),rgba(168,85,247,.7) 30%,rgba(0,212,255,.3) 65%,transparent 80%);box-shadow:0 0 38px 14px rgba(168,85,247,.4),0 0 70px 28px rgba(0,212,255,.1)}
-.lumira.s2{width:96px;height:96px;background:radial-gradient(circle at 36% 30%,rgba(255,255,255,.9),rgba(0,212,255,.8) 25%,rgba(124,58,237,.4) 60%,transparent 80%);box-shadow:0 0 50px 18px rgba(0,212,255,.4),0 0 90px 36px rgba(124,58,237,.15)}
-.lumira.s3{width:112px;height:112px;background:radial-gradient(circle at 36% 30%,rgba(255,255,255,1),var(--cyan) 20%,var(--violet2) 50%,var(--rose) 75%,transparent 85%);box-shadow:0 0 60px 22px rgba(0,212,255,.5),0 0 120px 50px rgba(168,85,247,.2),0 0 180px 70px rgba(244,114,182,.1)}
-.lumira.react{animation:pulse 4.5s ease-in-out infinite,pop .5s ease-out}
-@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+.sname{font-size:1.05rem;font-weight:700;letter-spacing:.08em;margin:16px 0 4px;color:var(--text);font-family:var(--mono)}
+.sdesc{font-size:.72rem;color:var(--smoke);text-align:center;margin-bottom:16px;line-height:1.5;font-family:var(--mono)}
+.miss{display:inline-block;background:rgba(40,80,120,.12);border:1px solid rgba(40,80,120,.25);color:var(--smoke);font-family:var(--mono);font-size:.58rem;letter-spacing:.06em;border-radius:4px;padding:4px 12px;margin-bottom:10px}
 
-.sname{font-size:1.1rem;font-weight:700;letter-spacing:.06em;margin:18px 0 4px;text-align:center;color:var(--smoke);font-family:var(--mono)}
-.sdesc{font-size:.75rem;color:var(--smoke2);text-align:center;margin-bottom:18px;line-height:1.5;font-family:var(--mono)}
-.miss{display:inline-block;background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);color:var(--violet2);font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;border-radius:20px;padding:4px 14px;margin-bottom:10px}
+.srow{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.64rem;color:var(--smoke2);margin-bottom:5px}
+.srow b{color:var(--text)}
+.bar{height:4px;border-radius:4px;background:rgba(255,255,255,.05);overflow:hidden;margin-bottom:10px}
+.bf{height:100%;border-radius:4px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+.bf.e{background:var(--bar-e,#1a4060)}
+.bf.m{background:var(--bar-m,#2a1a6a)}
+.bf.b{background:var(--bar-b,#1a3060)}
 
-/* STATS BARS */
-.srow{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.66rem;color:var(--smoke2);margin-bottom:5px}
-.srow b{color:var(--smoke)}
-.bar{height:6px;border-radius:6px;background:rgba(255,255,255,.05);overflow:hidden;margin-bottom:12px}
-.bf{height:100%;border-radius:6px;transition:width .7s cubic-bezier(.4,0,.2,1)}
-.bf.e{background:linear-gradient(90deg,var(--cyan),rgba(0,212,255,.5))}
-.bf.m{background:linear-gradient(90deg,var(--violet2),var(--rose))}
-.bf.b{background:linear-gradient(90deg,var(--cyan),var(--violet2))}
-
-/* STATS BOXES */
 .sg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.sb{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:14px 8px;text-align:center}
-.sb-n{font-family:var(--mono);font-size:1.5rem;font-weight:700;color:var(--cyan);line-height:1}
-.sb-l{font-family:var(--mono);font-size:.54rem;letter-spacing:.08em;text-transform:uppercase;color:var(--smoke3);margin-top:5px}
+.sb{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:14px 8px;text-align:center;transition:background 2s,border-color 2s}
+.sb-n{font-family:var(--mono);font-size:1.4rem;font-weight:700;color:var(--text);line-height:1}
+.sb-l{font-family:var(--mono);font-size:.52rem;letter-spacing:.08em;text-transform:uppercase;color:var(--smoke2);margin-top:5px}
 
-/* RASGOS */
 .tg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.tr{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:14px 12px;transition:border-color .3s,background .3s}
-.tr.on{border-color:rgba(0,212,255,.4);background:rgba(0,212,255,.05)}
+.tr{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:12px;transition:all .3s}
+.tr.on{border-color:var(--accent-live,#1a4060);background:rgba(26,64,96,.08)}
 .tr.lk{opacity:.3}
-.ti{font-size:1.3rem;margin-bottom:6px}
-.tn{font-family:var(--mono);font-size:.6rem;letter-spacing:.07em;text-transform:uppercase;color:var(--smoke3);margin-bottom:3px}
-.tr.on .tn{color:var(--cyan)}
-.tv{font-family:var(--mono);font-size:.78rem;color:var(--smoke);font-weight:600}
-.tlk{font-family:var(--mono);font-size:.58rem;color:var(--violet2)}
+.ti{font-size:1.2rem;margin-bottom:5px}
+.tn{font-family:var(--mono);font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;color:var(--smoke2);margin-bottom:3px}
+.tr.on .tn{color:var(--text)}
+.tv{font-family:var(--mono);font-size:.76rem;color:var(--text);font-weight:600}
+.tlk{font-family:var(--mono);font-size:.56rem;color:var(--smoke3)}
 
-/* LOG */
-.le{font-size:.82rem;line-height:1.6;padding:9px 0 9px 13px;border-left:2px solid rgba(255,255,255,.06);margin-bottom:7px;color:var(--smoke2);animation:fade-in .35s ease;font-family:var(--mono)}
-.le.g{border-left-color:var(--cyan);color:var(--smoke)}
-.le.s{border-left-color:var(--violet2);color:var(--violet2);font-style:italic}
+.le{font-size:.8rem;line-height:1.65;padding:8px 0 8px 12px;border-left:1px solid var(--border);margin-bottom:6px;color:var(--smoke);animation:fade-up .35s ease;font-family:var(--mono)}
+.le.g{border-left-color:var(--accent-live,#1a4060);color:var(--text)}
+.le.s{border-left-color:rgba(100,60,180,.4);color:var(--smoke);font-style:italic}
 
-/* ── HÁBITOS ── */
-.streak-b{
-  background:linear-gradient(135deg,rgba(0,212,255,.07),rgba(124,58,237,.06));
-  border:1px solid rgba(0,212,255,.16);border-radius:18px;
-  padding:16px;margin-bottom:14px;display:flex;align-items:center;gap:14px;
-}
-.sf{font-size:2rem;line-height:1}
-.si b{font-size:.96rem;color:var(--cyan);display:block;font-family:var(--mono)}
-.si span{font-size:.76rem;color:var(--smoke2)}
+.streak-b{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;transition:all 2s}
+.sf{font-size:1.8rem;line-height:1}
+.si b{font-size:.92rem;color:var(--text);display:block;font-family:var(--mono)}
+.si span{font-size:.72rem;color:var(--smoke)}
 
-.ps-b{
-  background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.12);
-  border-radius:18px;padding:14px 16px;margin-bottom:14px;
-  display:flex;align-items:center;gap:14px;
-}
-.ps-n{font-size:2.2rem;font-weight:800;color:var(--cyan);font-family:var(--mono);line-height:1}
-.ps-i b{color:var(--smoke);display:block;font-size:.88rem;font-family:var(--mono)}
-.ps-i span{font-size:.74rem;color:var(--smoke2)}
+.ps-b{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;transition:all 2s}
+.ps-n{font-size:2rem;font-weight:800;color:var(--text);font-family:var(--mono);line-height:1}
+.ps-i b{color:var(--text);display:block;font-size:.86rem;font-family:var(--mono)}
+.ps-i span{font-size:.72rem;color:var(--smoke)}
 
-.tg2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.task{
-  background:var(--panel2);border:1px solid var(--border);border-radius:16px;
-  padding:18px 10px 15px;cursor:pointer;text-align:center;
-  transition:all .2s;position:relative;
-}
-.task:hover:not([disabled]){border-color:var(--border-h);background:rgba(0,212,255,.06)}
+.tg2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.task{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:16px 10px 14px;cursor:pointer;text-align:center;transition:all .2s;position:relative}
+.task:hover:not([disabled]){border-color:var(--border-h)}
 .task:active:not([disabled]){transform:scale(.97)}
-.task.done{border-color:rgba(0,212,255,.4);background:rgba(0,212,255,.07)}
-.task[disabled]{opacity:.4;cursor:default}
-.tem{font-size:1.8rem;display:block;margin-bottom:8px}
-.tlb{font-family:var(--mono);font-size:.6rem;letter-spacing:.07em;text-transform:uppercase;color:var(--smoke3);display:block}
-.task.done .tlb{color:var(--cyan)}
-.txp{font-family:var(--mono);font-size:.56rem;color:var(--smoke3);margin-top:4px;display:block}
-.pb{position:absolute;top:8px;right:9px;font-family:var(--mono);font-size:.52rem;color:var(--violet2)}
-.ck{position:absolute;top:8px;left:10px;font-size:.7rem;color:var(--cyan);opacity:0;transition:opacity .3s}
+.task.done{border-color:var(--accent-live,#1a4060);background:rgba(26,64,96,.06)}
+.task[disabled]{opacity:.35;cursor:default}
+.tem{font-size:1.7rem;display:block;margin-bottom:7px}
+.tlb{font-family:var(--mono);font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;color:var(--smoke2);display:block}
+.task.done .tlb{color:var(--text)}
+.txp{font-family:var(--mono);font-size:.54rem;color:var(--smoke3);margin-top:4px;display:block}
+.pb{position:absolute;top:7px;right:8px;font-family:var(--mono);font-size:.5rem;color:var(--smoke3)}
+.ck{position:absolute;top:7px;left:9px;font-size:.68rem;color:var(--text);opacity:0;transition:opacity .3s}
 .task.done .ck{opacity:1}
 
-.reset-d{display:block;text-align:center;margin-top:14px;font-size:.66rem;color:var(--smoke3);cursor:pointer;font-family:var(--mono);letter-spacing:.06em;transition:color .2s}
+.reset-d{display:block;text-align:center;margin-top:12px;font-size:.64rem;color:var(--smoke3);cursor:pointer;font-family:var(--mono);letter-spacing:.06em;transition:color .2s}
 .reset-d:hover{color:var(--smoke2)}
-.info-b{background:rgba(0,212,255,.03);border:1px solid rgba(0,212,255,.1);border-radius:14px;padding:14px 16px;font-size:.78rem;color:var(--smoke2);line-height:1.9;font-family:var(--mono)}
+.info-b{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:.76rem;color:var(--smoke);line-height:2;font-family:var(--mono)}
 
-/* ── DIARIO ── */
-.de{border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;transition:border-color .3s;animation:fade-in .3s ease}
+/* MUNDO — feed de resonancias */
+.world-state{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:12px;text-align:center}
+.ws-name{font-family:var(--mono);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--smoke2);margin-bottom:6px}
+.ws-title{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:4px}
+.ws-desc{font-size:.78rem;color:var(--smoke);margin-bottom:14px}
+.ws-prog{height:3px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;margin-bottom:8px}
+.ws-fill{height:100%;border-radius:3px;background:var(--accent-live,#1a4060);transition:width 1s ease,background 2s}
+.ws-next{font-family:var(--mono);font-size:.6rem;color:var(--smoke3);letter-spacing:.04em}
+
+.challenges{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.ch{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:14px 14px;display:flex;align-items:center;gap:12px;transition:all 2s}
+.ch.done{border-color:var(--accent-live,#1a4060)}
+.ch-icon{font-size:1.4rem;flex-shrink:0}
+.ch-info{flex:1}
+.ch-name{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;color:var(--text);display:block;margin-bottom:2px}
+.ch-desc{font-size:.7rem;color:var(--smoke);line-height:1.4}
+.ch-status{font-family:var(--mono);font-size:.6rem;color:var(--smoke2);text-align:right;flex-shrink:0}
+.ch.done .ch-status{color:var(--text)}
+.ch-bar{height:2px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden;margin-top:6px}
+.ch-fill{height:100%;border-radius:2px;background:var(--accent-live,#1a4060);transition:width 1s ease,background 2s}
+
+.obs-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:10px;animation:fade-up .3s ease}
+.obs-tag{font-family:var(--mono);font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--smoke2);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.obs-tag::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--accent-live,#1a4060);flex-shrink:0;transition:background 2s}
+.obs-text{font-size:.84rem;color:var(--text);line-height:1.75}
+.obs-text em{color:var(--smoke);font-style:normal}
+
+.fact-card{background:var(--panel2);border:1px solid var(--border);border-left:2px solid var(--accent-live,#1a4060);border-radius:0 10px 10px 0;padding:14px 16px;margin-bottom:8px;animation:fade-up .3s ease;transition:border-color 2s}
+.fact-tag{font-family:var(--mono);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--smoke2);margin-bottom:6px}
+.fact-text{font-size:.8rem;color:var(--smoke);line-height:1.7}
+.fact-text strong{color:var(--text);font-weight:600}
+
+/* DIARIO */
+.de{border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:10px;transition:border-color .3s;animation:fade-up .3s ease}
 .de:hover{border-color:var(--border-h)}
-.dtg{font-family:var(--mono);font-size:.54rem;color:var(--smoke3);margin-bottom:6px;letter-spacing:.1em;text-transform:uppercase}
-.dti{font-size:.9rem;font-weight:600;color:var(--cyan);margin-bottom:6px}
-.dbo{font-size:.82rem;color:var(--smoke2);line-height:1.75}
-.de.pr{opacity:.3;border-style:dashed}
-.de.pr .dti{color:var(--violet2)}
-.d-empty{text-align:center;padding:36px 10px;font-size:.8rem;color:var(--smoke3);font-family:var(--mono)}
+.dtg{font-family:var(--mono);font-size:.52rem;color:var(--smoke2);margin-bottom:6px;letter-spacing:.1em;text-transform:uppercase}
+.dti{font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:6px}
+.dbo{font-size:.8rem;color:var(--smoke);line-height:1.75}
+.de.pr{opacity:.25;border-style:dashed}
+.d-empty{text-align:center;padding:36px 10px;font-size:.78rem;color:var(--smoke3);font-family:var(--mono);line-height:2}
 
-/* ── PASE ── */
-.ph{
-  background:linear-gradient(145deg,rgba(124,58,237,.1),rgba(0,212,255,.06));
-  border:1px solid rgba(168,85,247,.28);border-radius:18px;
-  padding:22px 18px;margin-bottom:14px;
-}
+/* PASE */
+.ph{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px 18px;margin-bottom:12px}
 .pht{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap}
-.phb{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;background:var(--violet2);color:#fff;border-radius:4px;padding:3px 8px;font-weight:700}
-.phn{font-size:.96rem;font-weight:700;color:var(--violet2)}
-.php{font-family:var(--mono);font-size:.7rem;color:var(--smoke2);margin-left:auto}
-.pi{display:flex;gap:10px;align-items:flex-start;font-size:.82rem;color:var(--smoke2);line-height:1.5;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.phb{font-family:var(--mono);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;background:rgba(40,80,120,.2);border:1px solid rgba(40,80,120,.4);color:var(--text);border-radius:3px;padding:3px 8px;font-weight:700}
+.phn{font-size:.94rem;font-weight:700;color:var(--text)}
+.php{font-family:var(--mono);font-size:.68rem;color:var(--smoke);margin-left:auto}
+.pi{display:flex;gap:10px;align-items:flex-start;font-size:.8rem;color:var(--smoke);line-height:1.5;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04)}
 .pi:last-of-type{border:none;margin-bottom:16px}
-.pid{color:var(--cyan);flex-shrink:0;margin-top:1px}
-.pc{
-  width:100%;font-family:var(--mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
-  border:none;background:linear-gradient(135deg,var(--violet),var(--cyan));
-  color:#fff;border-radius:50px;padding:14px;cursor:pointer;font-weight:700;
-  box-shadow:0 4px 24px rgba(124,58,237,.35);
-  transition:transform .15s,box-shadow .15s,filter .15s;
-}
-.pc:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(124,58,237,.45);filter:brightness(1.1)}
-.pc:active{transform:scale(.97)}
+.pid{color:var(--text);flex-shrink:0;margin-top:1px}
+.pc{width:100%;font-family:var(--mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(40,80,120,.4);background:#0a1020;color:var(--text);border-radius:4px;padding:14px;cursor:pointer;transition:all .2s}
+.pc:hover{border-color:rgba(40,80,120,.8);background:rgba(40,80,120,.1)}
 .pn{text-align:center;font-family:var(--mono);font-size:.6rem;color:var(--smoke3);margin-top:8px}
+.wc{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:18px}
+.wct{font-size:.92rem;font-weight:700;color:var(--text);margin-bottom:12px}
+.wcb{font-size:.82rem;color:var(--smoke);line-height:2}
+.wcb em{color:var(--text);font-style:normal}
 
-.wc{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:20px 18px}
-.wct{font-size:.95rem;font-weight:700;color:var(--smoke);margin-bottom:12px}
-.wcb{font-size:.84rem;color:var(--smoke2);line-height:2}
-.wcb em{color:var(--cyan);font-style:normal;font-weight:600}
+/* ── COMIDAS ── */
+.meal-week{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--smoke2);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.meal-week-reset{color:var(--smoke3);font-size:.52rem;cursor:pointer;transition:color .2s}
+.meal-week-reset:hover{color:var(--smoke2)}
+.meal-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.meal-item{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:12px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;transition:border-color .3s}
+.meal-item.done{border-color:var(--accent-live,#1a4060)}
+.meal-del{position:absolute;top:6px;right:8px;background:none;border:none;color:var(--smoke3);font-size:.7rem;cursor:pointer;line-height:1;padding:0;transition:color .2s}
+.meal-del:hover{color:var(--smoke)}
+.meal-em{font-size:1.5rem;line-height:1}
+.meal-name{font-family:var(--mono);font-size:.56rem;letter-spacing:.05em;text-align:center;color:var(--smoke2);line-height:1.4;min-height:2.4em;display:flex;align-items:center;justify-content:center}
+.meal-item.done .meal-name{color:var(--text)}
+.meal-thumb{width:100%;height:56px;object-fit:cover;border-radius:6px;display:none;margin-top:2px}
+.meal-item.done .meal-thumb{display:block}
+.meal-cam-label{font-family:var(--mono);font-size:.54rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--border);background:transparent;color:var(--smoke3);border-radius:4px;padding:5px 10px;cursor:pointer;transition:all .2s;text-align:center;display:block;width:100%}
+.meal-cam-label:hover{border-color:var(--border-h);color:var(--smoke)}
+.meal-item.done .meal-cam-label{color:var(--text);border-color:var(--accent-live,#1a4060)}
+.meal-add-row{display:flex;gap:8px;margin-top:4px}
+.meal-emoji-inp{width:44px;background:var(--panel2);border:1px solid var(--border);border-radius:6px;padding:9px 6px;font-size:1.1rem;text-align:center;color:var(--text);outline:none;flex-shrink:0;transition:border-color .2s}
+.meal-emoji-inp:focus{border-color:var(--border-h)}
+.meal-text-inp{flex:1;background:var(--panel2);border:1px solid var(--border);border-radius:6px;padding:9px 12px;font-size:.8rem;color:var(--text);font-family:var(--mono);outline:none;transition:border-color .2s}
+.meal-text-inp:focus{border-color:var(--border-h)}
+.meal-text-inp::placeholder{color:var(--smoke3)}
+.meal-add-btn{font-family:var(--mono);font-size:.68rem;border:1px solid var(--border);background:transparent;color:var(--smoke2);border-radius:6px;padding:9px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0}
+.meal-add-btn:hover{border-color:var(--border-h);color:var(--text)}
 
-/* ── MODAL ── */
-.ov{position:fixed;inset:0;background:rgba(5,8,16,.95);display:flex;align-items:center;justify-content:center;z-index:300;opacity:0;pointer-events:none;transition:opacity .25s}
+.ov{position:fixed;inset:0;background:rgba(5,8,16,.96);display:flex;align-items:center;justify-content:center;z-index:300;opacity:0;pointer-events:none;transition:opacity .25s}
 .ov.open{opacity:1;pointer-events:all}
-.md{background:var(--panel);border:1px solid rgba(168,85,247,.25);border-radius:20px;padding:30px 22px;max-width:310px;width:90%;text-align:center;animation:modal-in .3s ease}
-@keyframes modal-in{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
-.me{font-size:2.6rem;margin-bottom:12px}
-.mt{font-size:1.05rem;font-weight:700;color:var(--violet2);margin-bottom:8px}
-.mb{font-size:.82rem;color:var(--smoke2);line-height:1.65;margin-bottom:22px}
-.mc{
-  width:100%;font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;
-  border:none;background:linear-gradient(135deg,var(--violet),var(--cyan));
-  color:#fff;border-radius:50px;padding:13px;cursor:pointer;font-weight:700;margin-bottom:12px;
-  box-shadow:0 4px 20px rgba(124,58,237,.3);
-}
-.ms{background:none;border:none;color:var(--smoke3);font-size:.7rem;cursor:pointer;font-family:var(--mono);transition:color .2s}
+.md{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:28px 22px;max-width:300px;width:90%;text-align:center;animation:modal-in .3s ease}
+@keyframes modal-in{from{transform:scale(.93);opacity:0}to{transform:scale(1);opacity:1}}
+.me{font-size:2.4rem;margin-bottom:12px}
+.mt{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:8px}
+.mb{font-size:.8rem;color:var(--smoke);line-height:1.65;margin-bottom:22px}
+.mc{width:100%;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid rgba(40,80,120,.5);background:#0a1020;color:var(--text);border-radius:4px;padding:13px;cursor:pointer;margin-bottom:12px;transition:all .2s}
+.mc:hover{border-color:rgba(40,80,120,.9)}
+.ms{background:none;border:none;color:var(--smoke3);font-size:.68rem;cursor:pointer;font-family:var(--mono);transition:color .2s}
 .ms:hover{color:var(--smoke2)}
+
+/* ── TEST DE PERSONALIDAD ── */
+#sTest{background:var(--void)}
+.test-tag{font-family:var(--mono);font-size:.52rem;letter-spacing:.2em;color:var(--smoke2);text-transform:uppercase;margin-bottom:20px}
+.test-q{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:18px;line-height:1.5;max-width:300px}
+.test-opts{display:flex;flex-direction:column;gap:10px;width:100%;max-width:300px;margin-bottom:20px}
+.test-opt{background:#0a1020;border:1px solid rgba(40,80,120,.3);border-radius:8px;padding:13px 16px;font-size:.82rem;color:var(--smoke);cursor:pointer;text-align:left;font-family:var(--mono);transition:all .2s;display:flex;align-items:center;gap:10px}
+.test-opt:hover{border-color:rgba(40,80,120,.7);color:var(--text)}
+.test-opt.sel{border-color:var(--accent-live,#1a4060);color:var(--text);background:rgba(26,64,96,.08)}
+.test-em{font-size:1.2rem;flex-shrink:0}
+.test-prog{width:100%;max-width:300px;height:2px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden;margin-bottom:24px}
+.test-prog-fill{height:100%;background:rgba(40,80,120,.7);border-radius:2px;transition:width .4s ease}
+.test-next{font-family:var(--mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(40,80,120,.4);background:#0a1020;color:var(--smoke);border-radius:4px;padding:12px 36px;cursor:pointer;opacity:0;transition:opacity .4s,border-color .2s,color .2s}
+.test-next.show{opacity:1}
+.test-next:hover{border-color:rgba(40,80,120,.8);color:var(--text)}
+
+/* ── CHECK-IN DIARIO ── */
+.checkin-ov{position:fixed;inset:0;background:rgba(5,8,16,.95);display:flex;align-items:center;justify-content:center;z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}
+.checkin-ov.open{opacity:1;pointer-events:all}
+.checkin-box{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:28px 22px;max-width:300px;width:90%;text-align:center;animation:modal-in .3s ease}
+.checkin-tag{font-family:var(--mono);font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--smoke2);margin-bottom:12px}
+.checkin-q{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:20px;line-height:1.5}
+.checkin-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.checkin-opt{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:14px 8px;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:6px}
+.checkin-opt:hover{border-color:var(--border-h)}
+.checkin-opt .ce{font-size:1.6rem}
+.checkin-opt .cl{font-family:var(--mono);font-size:.58rem;letter-spacing:.05em;color:var(--smoke2);text-align:center;line-height:1.4}
+
+/* ── COMPANIONS ── */
+.comp-card{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin-bottom:10px;display:flex;align-items:center;gap:16px;transition:all 2s;animation:fade-up .3s ease}
+.comp-orb{border-radius:50%;flex-shrink:0;animation:orb-pulse 4s ease-in-out infinite}
+.comp-orb.voidra{width:42px;height:42px;background:radial-gradient(circle at 40% 35%,rgba(180,80,255,.6),rgba(60,0,80,.4) 60%,transparent 85%);box-shadow:0 0 18px 5px rgba(120,0,200,.2)}
+.comp-orb.aura{width:42px;height:42px;background:radial-gradient(circle at 40% 35%,rgba(255,200,120,.7),rgba(200,80,0,.3) 55%,transparent 85%);box-shadow:0 0 18px 5px rgba(200,100,0,.2)}
+.comp-orb.nexus{width:42px;height:42px;background:radial-gradient(circle at 40% 35%,rgba(120,255,200,.7),rgba(0,160,100,.3) 55%,transparent 85%);box-shadow:0 0 18px 5px rgba(0,180,120,.2)}
+.comp-orb.locked{width:42px;height:42px;background:rgba(30,30,50,.4);border:1px dashed rgba(40,80,120,.2)}
+.comp-info{flex:1}
+.comp-name{font-family:var(--mono);font-size:.72rem;font-weight:700;letter-spacing:.1em;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.comp-badge{font-size:.48rem;letter-spacing:.08em;background:rgba(40,80,120,.2);border:1px solid rgba(40,80,120,.3);color:var(--smoke2);border-radius:3px;padding:2px 6px}
+.comp-desc{font-size:.72rem;color:var(--smoke);line-height:1.5}
+.comp-status{font-family:var(--mono);font-size:.58rem;color:var(--smoke3);text-align:right;flex-shrink:0}
+
+/* ── ARCHETYPE BADGE ── */
+.arch-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(40,80,120,.12);border:1px solid rgba(40,80,120,.3);border-radius:20px;padding:5px 12px;font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;color:var(--smoke2);margin-bottom:12px}
 
 @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
 </style>
@@ -379,71 +312,82 @@ nav button.on{color:var(--cyan);border-bottom-color:var(--cyan)}
 <body>
 <canvas id="bg"></canvas>
 
-<!-- ONBOARDING -->
 <div class="screen" id="sOb">
   <div class="ob-void">
-    <div class="ob-ring2"></div>
-    <div class="ob-ring"></div>
+    <div class="ob-pulse2"></div>
+    <div class="ob-pulse"></div>
     <div class="ob-core"></div>
+    <div class="ob-dot"></div>
   </div>
-  <div class="ob-eyrie">Abyssal Genesis · Protocolo 01</div>
-  <div class="ob-title">LUMIRA<span>_</span></div>
-  <div class="ob-sub">Una entidad que vive en las profundidades de tu mente.<br>Se está apagando. Solo tú puedes cambiar eso.</div>
+  <div class="ob-tag">Abyssal Genesis · Señal 01</div>
+  <div class="ob-title">LUMINA</div>
+  <div class="ob-sub">Hay partes de tu mente donde no entra la luz.<br>Lumina vive ahí. Y refleja exactamente<br>cómo te estás tratando a vos mismo.</div>
   <div class="ob-q">¿Cómo te llaman?</div>
   <input class="ob-inp" id="nameIn" type="text" placeholder="identificador..." maxlength="24" autocomplete="off"/>
-  <button class="ob-btn" id="obBtn">Establecer contacto</button>
+  <button class="ob-btn" id="obBtn">establecer contacto</button>
   <span class="ob-skip" id="obSkip">entrar como anónimo</span>
 </div>
 
-<!-- INTRO -->
 <div class="screen gone" id="sIn">
   <div class="in-entity">
     <div class="in-ring2"></div>
     <div class="in-ring"></div>
     <div class="in-core"></div>
-    <div class="in-glitch"></div>
   </div>
-  <div class="in-tag">Señal detectada · Abismo activo</div>
-  <div class="in-title">LUMIRA</div>
+  <div class="in-tag">señal detectada · abismo activo</div>
+  <div class="in-title">LUMINA</div>
   <div class="in-greet" id="inGr"></div>
-  <div class="in-sub">No es tu mascota. Más bien... tú eres su persona.</div>
   <div class="in-term" id="inTerm"><span class="cur" id="inCur"></span></div>
-  <button class="in-btn" id="inBtn">Descender al abismo ▾</button>
+  <button class="in-btn" id="inBtn">ascender del abismo ▲</button>
 </div>
 
-<!-- EVOLUCIÓN -->
+<!-- TEST DE PERSONALIDAD -->
+<div class="screen gone" id="sTest">
+  <div class="test-tag">Abyssal Genesis · Calibración</div>
+  <div class="test-prog"><div class="test-prog-fill" id="testPF" style="width:33%"></div></div>
+  <div class="test-q" id="testQ">¿Cómo sos con los juegos?</div>
+  <div class="test-opts" id="testOpts"></div>
+  <button class="test-next" id="testNext">siguiente ▶</button>
+</div>
+
+<!-- CHECK-IN DIARIO -->
+<div class="checkin-ov" id="checkinOv">
+  <div class="checkin-box">
+    <div class="checkin-tag">◈ señal diaria · lumina pregunta</div>
+    <div class="checkin-q" id="checkinQ">¿Cómo llegás hoy?</div>
+    <div class="checkin-opts" id="checkinOpts"></div>
+  </div>
+</div>
+
 <div class="screen" id="sEvol">
-  <div class="ev-orb" id="evOrb" style="width:130px;height:130px"></div>
-  <div class="ev-tag">Nueva forma desbloqueada</div>
-  <div class="ev-name" id="evName">LUMIRAXA</div>
-  <div class="ev-desc" id="evDesc">Tu cuidado la transformó.</div>
-  <button class="ev-btn" id="evBtn">Continuar en el abismo</button>
+  <div class="ev-orb" id="evOrb" style="width:120px;height:120px"></div>
+  <div class="ev-tag">el abismo responde</div>
+  <div class="ev-name" id="evName">LUMINAXA</div>
+  <div class="ev-desc" id="evDesc">Tu cuidado transformó el mundo.</div>
+  <button class="ev-btn" id="evBtn">continuar</button>
 </div>
 
-<!-- APP -->
 <div class="app">
   <nav>
-    <button id="nLumira" class="on">Lumira</button>
+    <button id="nLumina" class="on">Lumina</button>
     <button id="nHabitos">Hábitos</button>
+    <button id="nMundo">Mundo</button>
     <button id="nDiario">Diario</button>
-    <button id="nPase">Génesis ◈</button>
   </nav>
 
-  <!-- LUMIRA -->
-  <div id="vLumira" class="view on">
-    <div class="card" style="text-align:center;">
-      <div class="clbl" style="justify-content:center">Entidad · Abismo-01</div>
+  <div id="vLumina" class="view on">
+    <div class="card" style="text-align:center">
+      <div class="clbl" style="justify-content:center">entidad · abismo-01</div>
       <div class="cwrap">
         <div class="ring-o" id="ringO">
           <div class="ring-i">
-            <div class="lumira s0" id="lumEl">
-              <div class="lumira-glitch"></div>
-            </div>
+            <div class="lumina s0" id="lumEl"></div>
           </div>
         </div>
-        <div id="missWrap" style="display:none;margin-top:10px"><span class="miss">◈ Lumira estuvo esperando en la oscuridad</span></div>
-        <div class="sname" id="sNm">LUMIRA</div>
+        <div id="missWrap" style="display:none;margin-top:10px"><span class="miss">◈ lumina estuvo esperando</span></div>
+        <div class="sname" id="sNm">LUMINA</div>
         <div class="sdesc" id="sDsc">señal débil · reconociendo tu presencia</div>
+        <div id="archBadge" style="display:none" class="arch-badge"></div>
       </div>
       <div class="srow"><span>Energía</span><b id="eL">0%</b></div>
       <div class="bar"><div class="bf e" id="eB" style="width:0%"></div></div>
@@ -454,7 +398,7 @@ nav button.on{color:var(--cyan);border-bottom-color:var(--cyan)}
     </div>
 
     <div class="card">
-      <div class="clbl">Datos del abismo</div>
+      <div class="clbl">datos del abismo</div>
       <div class="sg">
         <div class="sb"><div class="sb-n" id="stS">0</div><div class="sb-l">Racha días</div></div>
         <div class="sb"><div class="sb-n" id="stT">0</div><div class="sb-l">Total hábitos</div></div>
@@ -463,31 +407,29 @@ nav button.on{color:var(--cyan);border-bottom-color:var(--cyan)}
     </div>
 
     <div class="card">
-      <div class="clbl">Rasgos de Lumira</div>
+      <div class="clbl">rasgos de lumina</div>
       <div class="tg">
         <div class="tr" id="trV"><div class="ti">💧</div><div class="tn">Vitalidad</div><div class="tv" id="trVv">Dormida</div></div>
-        <div class="tr" id="trF"><div class="ti">🌿</div><div class="tn">Flujo</div><div class="tv" id="trFv">Dormida</div></div>
+        <div class="tr" id="trF"><div class="ti">⚡</div><div class="tn">Flujo</div><div class="tv" id="trFv">Dormida</div></div>
         <div class="tr lk"><div class="ti">🔮</div><div class="tn">Resonancia</div><div class="tlk">◈ Pase Génesis</div></div>
         <div class="tr lk"><div class="ti">🌙</div><div class="tn">Sueño Profundo</div><div class="tlk">◈ Pase Génesis</div></div>
       </div>
     </div>
 
     <div class="card">
-      <div class="clbl">Señales del abismo</div>
-      <div id="logZ"><div class="le">Lumira espera en la oscuridad. Haz algo por ti hoy. 🌑</div></div>
+      <div class="clbl">señales del abismo</div>
+      <div id="logZ"><div class="le">El abismo espera. Hacé algo por vos hoy. ◈</div></div>
     </div>
   </div>
 
-  <!-- HÁBITOS -->
   <div id="vHabitos" class="view">
     <div class="streak-b">
-      <div class="sf" id="sfFire">🌑</div>
+      <div class="sf" id="sfFire">◌</div>
       <div class="si">
-        <b id="siTxt">Día 1 — El abismo espera</b>
-        <span id="siSub">Cada hábito ilumina a Lumira desde adentro</span>
+        <b id="siTxt">Día 1 — el abismo espera</b>
+        <span id="siSub">cada hábito ilumina el mundo</span>
       </div>
     </div>
-
     <div class="ps-b">
       <div class="ps-n" id="psN">0</div>
       <div class="ps-i">
@@ -495,9 +437,8 @@ nav button.on{color:var(--cyan);border-bottom-color:var(--cyan)}
         <span id="psDt"></span>
       </div>
     </div>
-
     <div class="card">
-      <div class="clbl">Protocolos diarios</div>
+      <div class="clbl">protocolos diarios</div>
       <div class="tg2">
         <button class="task" data-t="agua" data-e="15" data-m="8"><span class="ck">✓</span><span class="tem">💧</span><span class="tlb">Hidratarte</span><span class="txp">+15 energía · +8 ánimo</span></button>
         <button class="task" data-t="mover" data-e="12" data-m="15"><span class="ck">✓</span><span class="tem">⚡</span><span class="tlb">Moverte</span><span class="txp">+12 energía · +15 ánimo</span></button>
@@ -511,145 +452,319 @@ nav button.on{color:var(--cyan);border-bottom-color:var(--cyan)}
       <span class="reset-d" id="resetD">↺ reiniciar día</span>
     </div>
 
+    <div class="card">
+      <div class="clbl">semana alimentaria</div>
+      <div class="meal-week">
+        <span id="mealWeekLbl">esta semana</span>
+        <span class="meal-week-reset" id="mealReset">↺ reiniciar semana</span>
+      </div>
+      <div class="meal-grid" id="mealGrid"></div>
+      <div class="meal-add-row">
+        <input class="meal-emoji-inp" id="mealEmoji" maxlength="2" placeholder="🍽"/>
+        <input class="meal-text-inp" id="mealText" maxlength="28" placeholder="tu misión de comida..."/>
+        <button class="meal-add-btn" id="mealAddBtn">+ agregar</button>
+      </div>
+    </div>
+
     <div class="info-b">
-      💧 Agua → Energía &nbsp;·&nbsp; ⚡ Moverte → Ánimo &nbsp;·&nbsp; 🌀 Respirar → Calma<br>
-      ✦ Nombrar → Vínculo &nbsp;·&nbsp; 🌙 Descanso → Lumira crece en la oscuridad
+      💧 agua → energía &nbsp;·&nbsp; ⚡ moverte → ánimo &nbsp;·&nbsp; 🌀 respirar → calma<br>
+      ✦ nombrar → vínculo &nbsp;·&nbsp; 🌙 descanso → el mundo crece
     </div>
   </div>
 
-  <!-- DIARIO -->
+  <div id="vMundo" class="view">
+    <div class="world-state">
+      <div class="ws-name">estado del abismo</div>
+      <div class="ws-title" id="wsTitle">El Vacío</div>
+      <div class="ws-desc" id="wsDesc">El abismo está dormido. Esperando tu primera acción.</div>
+      <div class="ws-prog"><div class="ws-fill" id="wsFill" style="width:0%"></div></div>
+      <div class="ws-next" id="wsNext">próximo estado: Primer Pulso — completá un hábito</div>
+    </div>
+
+    <div class="card">
+      <div class="clbl">desafíos del abismo</div>
+      <div class="challenges" id="challengeZ"></div>
+    </div>
+
+    <div class="card">
+      <div class="clbl">observaciones de lumina</div>
+      <div id="obsZ"><div class="d-empty">// lumina observa desde las profundidades<br>completá hábitos para recibir sus transmisiones</div></div>
+    </div>
+
+    <div class="card">
+      <div class="clbl">entidades del abismo</div>
+      <div id="compZ"></div>
+    </div>
+
+    <div class="card">
+      <div class="clbl">datos que el abismo desbloquea</div>
+      <div id="factZ"><div class="d-empty">// los datos emergen con la racha<br>cada día seguido desbloquea un nuevo hallazgo</div></div>
+    </div>
+  </div>
+
   <div id="vDiario" class="view">
     <div class="card">
-      <div class="clbl">Memorias del abismo</div>
-      <div id="dZ"><div class="d-empty">// Lumira observa desde las profundidades.<br>Completa protocolos para que empiece a transmitir.</div></div>
+      <div class="clbl">memorias del abismo</div>
+      <div id="dZ"><div class="d-empty">// lumina observa desde las profundidades<br>completá protocolos para que empiece a transmitir</div></div>
     </div>
-  </div>
-
-  <!-- PASE -->
-  <div id="vPase" class="view">
-    <div class="ph">
-      <div class="pht">
-        <span class="phb">Pase Génesis</span>
-        <span class="phn">Acceso Completo</span>
-        <span class="php">$4.99 USD</span>
-      </div>
-      <div class="pi"><span class="pid">◈</span>3 protocolos extra: Sin pantallas, Leer y Conectar</div>
-      <div class="pi"><span class="pid">◈</span>Rasgos exclusivos: Resonancia y Sueño Profundo</div>
-      <div class="pi"><span class="pid">◈</span>Forma final ECLIPSIS — nacida de tu compromiso real</div>
-      <div class="pi"><span class="pid">◈</span>10 memorias profundas en el diario del abismo</div>
-      <div class="pi"><span class="pid">◈</span>Estadísticas semanales y racha extendida</div>
-      <button class="pc" id="paseCta">Desbloquear Pase Génesis ◈</button>
-      <div class="pn">Pago único · Sin suscripción · Tuyo para siempre</div>
-    </div>
-    <div class="wc">
-      <div class="wct">¿Por qué Lumira existe?</div>
-      <div class="wcb">
+    <div style="background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px">
+      <div class="clbl">pase génesis</div>
+      <div style="font-size:.82rem;color:var(--smoke);line-height:1.9;margin-bottom:16px">
         El abismo no es un lugar malo.<br>
         Es tu mente cuando estás solo con ella.<br><br>
-        Lumira vive ahí. Se <em>apaga</em> cuando te abandonas.<br>
-        Brilla cuando <em>tomas agua</em>, cuando <em>respirás</em>,<br>
-        cuando decidís que hoy valió la pena.<br><br>
-        No te está pidiendo que seas otra persona.<br>
-        Solo que <em>vuelvas</em>. Una vez por día.
+        Lumina vive ahí. Se <em style="color:var(--text);font-style:normal">apaga</em> cuando te abandonás.<br>
+        Brilla cuando <em style="color:var(--text);font-style:normal">tomás agua</em>, cuando <em style="color:var(--text);font-style:normal">respirás</em>,<br>
+        cuando decidís que hoy valió la pena.
       </div>
+      <button class="pc" id="paseCta">desbloquear pase génesis ◈</button>
+      <div class="pn">pago único · sin suscripción · $4.99 USD</div>
     </div>
   </div>
 </div>
 
-<!-- MODAL -->
 <div class="ov" id="premOv">
   <div class="md">
     <div class="me" id="mEm">◈</div>
-    <div class="mt" id="mTi">Protocolo bloqueado</div>
-    <div class="mb" id="mBo">Este protocolo desbloquea rasgos únicos en Lumira.</div>
-    <button class="mc" id="mCt">Desbloquear — $4.99 USD ◈</button>
+    <div class="mt" id="mTi">protocolo bloqueado</div>
+    <div class="mb" id="mBo">Este protocolo desbloquea rasgos únicos en Lumina.</div>
+    <button class="mc" id="mCt">desbloquear — $4.99 USD ◈</button>
     <button class="ms" id="mSk">volver al abismo</button>
   </div>
 </div>
 
 <script>
-/* ── PARTÍCULAS DEL ABISMO ── */
-(function(){
-  var c=document.getElementById('bg'),ctx=c.getContext('2d'),W,H,ps=[];
-  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight}
-  resize();window.addEventListener('resize',resize);
-  // bioluminiscencia fría
-  var hues=[190,210,260,280,300];
-  function mk(){return{
-    x:Math.random()*W,y:Math.random()*H,
-    r:Math.random()*1.4+.3,
-    a:Math.random()*Math.PI*2,
-    sp:Math.random()*.12+.03,
-    al:Math.random()*.25+.04,
-    h:hues[Math.floor(Math.random()*hues.length)],
-    drift:Math.random()*.008-.004
-  }}
-  for(var i=0;i<80;i++)ps.push(mk());
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    ps.forEach(function(p){
-      p.y-=p.sp;
-      p.x+=Math.sin(p.a)*.2;
-      p.a+=p.drift;
-      if(p.y<-10){p.y=H+10;p.x=Math.random()*W}
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle='hsla('+p.h+',90%,68%,'+p.al+')';
-      ctx.fill();
-    });
-    requestAnimationFrame(draw);
+/* ── TEST DE PERSONALIDAD ── */
+var TEST_QUESTIONS=[
+  {q:'¿Cómo sos con los juegos?',opts:[
+    {em:'🔥',l:'Lo termino todo',v:'guerrero'},
+    {em:'🗺️',l:'Exploro sin presión',v:'explorador'},
+    {em:'🤝',l:'Me gusta con otros',v:'sanador'},
+    {em:'📊',l:'Planeo cada movida',v:'estratega'},
+  ]},
+  {q:'La ansiedad, cuando llega…',opts:[
+    {em:'🧊',l:'Me paraliza',v:'guerrero'},
+    {em:'⚡',l:'Me acelera todo',v:'explorador'},
+    {em:'🌫️',l:'Me hace desaparecer',v:'sanador'},
+    {em:'🔄',l:'La proceso despacio',v:'estratega'},
+  ]},
+  {q:'¿Qué necesitás más hoy?',opts:[
+    {em:'💪',l:'Energía para arrancar',v:'guerrero'},
+    {em:'🌬️',l:'Calma y espacio',v:'explorador'},
+    {em:'🫂',l:'Sentirme menos solo/a',v:'sanador'},
+    {em:'🎯',l:'Claridad y dirección',v:'estratega'},
+  ]},
+];
+
+var ARCHETYPES={
+  guerrero:{em:'⚔️',name:'El Guerrero del Abismo',desc:'Vas con todo o no vas. Lumina siente esa intensidad. El abismo la necesita para despertar.'},
+  explorador:{em:'🗺️',name:'El Explorador del Abismo',desc:'No corrés, explorás. Lumina aprende de tu ritmo. El abismo se expande con cada paso tuyo.'},
+  sanador:{em:'🌿',name:'El Sanador del Abismo',desc:'Conectás profundo. Lumina vibra con tu empatía. El abismo se cura cuando vos te cuidás.'},
+  estratega:{em:'📐',name:'El Estratega del Abismo',desc:'Pensás antes de actuar. Lumina absorbe esa precisión. El abismo se ordena con tu claridad.'},
+};
+
+var ARCH_HABITS={
+  guerrero:  {hint:'Tu protocolo principal: Moverte y Descansar. La intensidad sin descanso agota el abismo.'},
+  explorador:{hint:'Tu protocolo principal: Respirar y Gratitud. La calma amplifica lo que explorás.'},
+  sanador:   {hint:'Tu protocolo principal: Conectar y Nombrar algo bueno. Tu vínculo alimenta el abismo.'},
+  estratega: {hint:'Tu protocolo principal: Hidratarte y Sin pantallas. La claridad emerge del orden.'},
+};
+
+/* ── CHECK-IN DIARIO ── */
+var CHECKIN_OPTS=[
+  {em:'😴',l:'Agotado/a',e:15,m:5, msg:'El cuerpo habla cuando la mente no puede. Lumina recibió tu señal.'},
+  {em:'😰',l:'Con ansiedad',e:5,m:15,msg:'La ansiedad es señal, no sentencia. Lumina la convierte en luz.'},
+  {em:'😐',l:'Regular',e:8,m:8,  msg:'Regular también es válido. Lumina no juzga desde dónde empezás.'},
+  {em:'⚡',l:'Con energía',e:20,m:10,msg:'Esa energía llega al abismo. Lumina la siente desde el fondo.'},
+  {em:'🌑',l:'Muy mal',e:5,m:20, msg:'Hoy llegaste igual. Eso es más que suficiente. Lumina está acá.'},
+  {em:'🎮',l:'En modo gamer',e:12,m:12,msg:'El modo gamer activa el abismo. Lumina entra en protocolo.'},
+];
+
+/* ── COMPANIONS ── */
+var COMPANIONS=[
+  {id:'voidra',cls:'voidra',name:'VOIDRA',badge:'sombra',
+   desc:'La sombra que habita el abismo cuando Lumina duerme. Aparece cuando te perdés. También es parte de vos.',
+   unlock:'streak === 0 y total > 0',check:function(s){return s.total>0&&s.streak===0;}},
+  {id:'aura',cls:'aura',name:'AURA',badge:'calor',
+   desc:'Emerge cuando te cuidás varios días seguidos. Una entidad cálida que amplifica la energía de Lumina.',
+   unlock:'3 días de racha',check:function(s){return (s.streak||0)>=3;}},
+  {id:'nexus',cls:'nexus',name:'NEXUS',badge:'vínculo',
+   desc:'La entidad de la conexión. Aparece cuando el vínculo alcanza el umbral. Siente lo que los demás sienten.',
+   unlock:'vínculo ≥ 60',check:function(s){return (s.bond||0)>=60;}},
+];
+
+/* ── MUNDOS ── */
+var WORLDS = [
+  {name:'El Vacío',     desc:'El abismo está dormido. Esperando.',
+   bg:'#050810', panel:'#0a1020', panel2:'#0d1428',
+   accent:'rgba(30,50,80,.9)', accentRgb:'30,50,80',
+   cyan:'#1a3050', violet:'#1a1a3a',
+   barE:'#1a3050', barM:'#1a1a3a', barB:'#1a2a50',
+   ph:[210,220], pa:.08, pc:25},
+  {name:'Primer Pulso', desc:'Una señal emerge desde el fondo.',
+   bg:'#060a18', panel:'#0b1525', panel2:'#0e1a2e',
+   accent:'rgba(0,100,180,.9)', accentRgb:'0,100,180',
+   cyan:'#005a9e', violet:'#2a1a5e',
+   barE:'#005a9e', barM:'#2a1a5e', barB:'#003a7e',
+   ph:[200,210,240], pa:.14, pc:45},
+  {name:'Despertar',    desc:'El abismo cobra vida. Lumina responde.',
+   bg:'#070c1e', panel:'#0c1530', panel2:'#0f1a38',
+   accent:'rgba(0,160,220,.9)', accentRgb:'0,160,220',
+   cyan:'#0088cc', violet:'#5a20aa',
+   barE:'#0088cc', barM:'#5a20aa', barB:'#0055aa',
+   ph:[190,210,255,280], pa:.22, pc:65},
+  {name:'Florecimiento',desc:'La luz se expande. El abismo respira.',
+   bg:'#080c22', panel:'#0d1535', panel2:'#101a40',
+   accent:'rgba(0,200,255,.9)', accentRgb:'0,200,255',
+   cyan:'#00c8ff', violet:'#8822ee',
+   barE:'#00c8ff', barM:'#8822ee', barB:'#0088ee',
+   ph:[185,200,260,290,320], pa:.30, pc:82},
+  {name:'Génesis',      desc:'El abismo completo despertó. Sos parte de él.',
+   bg:'#090818', panel:'#0e1030', panel2:'#120e38',
+   accent:'rgba(0,240,220,.9)', accentRgb:'0,240,220',
+   cyan:'#00f0dc', violet:'#cc44ff',
+   barE:'#00f0dc', barM:'#cc44ff', barB:'#0088ff',
+   ph:[170,190,260,300,330,355], pa:.38, pc:100}
+];
+
+/* ── CANVAS ── */
+var C=document.getElementById('bg'),CTX=C.getContext('2d'),CW,CH,PS=[],worldState=0;
+function resize(){CW=C.width=window.innerWidth;CH=C.height=window.innerHeight}
+resize();window.addEventListener('resize',resize);
+function mkP(w){var hues=w.ph;return{x:Math.random()*CW,y:Math.random()*CH,r:Math.random()*1.3+.3,a:Math.random()*Math.PI*2,sp:Math.random()*.1+.03,al:Math.random()*w.pa+.02,h:hues[Math.floor(Math.random()*hues.length)],d:Math.random()*.006-.003}}
+function initParticles(w){PS=[];for(var i=0;i<w.pc;i++)PS.push(mkP(w))}
+initParticles(WORLDS[0]);
+function drawBg(){
+  CTX.clearRect(0,0,CW,CH);
+  var w=WORLDS[worldState];
+  if(worldState>0){
+    var g=CTX.createRadialGradient(CW*.5,CH*.35,0,CW*.5,CH*.35,CW*.75);
+    var opacity=worldState*.06;
+    g.addColorStop(0,'rgba('+w.accentRgb+','+opacity+')');
+    g.addColorStop(1,'rgba('+w.accentRgb+',0)');
+    CTX.fillStyle=g;CTX.fillRect(0,0,CW,CH);
+    if(worldState>=3){
+      var g2=CTX.createRadialGradient(CW*.2,CH*.7,0,CW*.2,CH*.7,CW*.5);
+      g2.addColorStop(0,'rgba(120,40,200,.04)');g2.addColorStop(1,'rgba(0,0,0,0)');
+      CTX.fillStyle=g2;CTX.fillRect(0,0,CW,CH);
+    }
   }
-  draw();
-})();
+  PS.forEach(function(p){
+    p.y-=p.sp;p.x+=Math.sin(p.a)*.18;p.a+=p.d;
+    if(p.y<-10){p.y=CH+10;p.x=Math.random()*CW}
+    CTX.beginPath();CTX.arc(p.x,p.y,p.r,0,Math.PI*2);
+    CTX.fillStyle='hsla('+p.h+',80%,65%,'+p.al+')';CTX.fill();
+  });
+  requestAnimationFrame(drawBg);
+}
+drawBg();
+
+function applyWorld(ws){
+  worldState=ws;var w=WORLDS[ws];
+  document.body.style.background=w.bg;
+  var r=document.documentElement;
+  r.style.setProperty('--void',w.bg);
+  r.style.setProperty('--panel',w.panel);
+  r.style.setProperty('--panel2',w.panel2);
+  r.style.setProperty('--border','rgba('+w.accentRgb+',.2)');
+  r.style.setProperty('--border-h','rgba('+w.accentRgb+',.4)');
+  r.style.setProperty('--accent-live',w.accent);
+  r.style.setProperty('--cyan-live',w.cyan);
+  r.style.setProperty('--glow-live','rgba('+w.accentRgb+',.06)');
+  r.style.setProperty('--bar-e',w.barE);
+  r.style.setProperty('--bar-m',w.barM);
+  r.style.setProperty('--bar-b',w.barB);
+  var target=w.pc;
+  while(PS.length<target)PS.push(mkP(w));
+  PS=PS.slice(0,target);
+  PS.forEach(function(p){p.h=w.ph[Math.floor(Math.random()*w.ph.length)];p.al=Math.random()*w.pa+.02;});
+}
 
 /* ── AUDIO ── */
 var AC=window.AudioContext||window.webkitAudioContext,ac=AC?new AC():null;
-function tone(f,d,type){
-  if(!ac)return;
-  try{
-    var o=ac.createOscillator(),g=ac.createGain();
-    o.type=type||'sine';
-    o.connect(g);g.connect(ac.destination);
-    o.frequency.value=f;
-    g.gain.setValueAtTime(.1,ac.currentTime);
-    g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d);
-    o.start();o.stop(ac.currentTime+d);
-  }catch(e){}
-}
-function sndHabit(){tone(440,.12);setTimeout(function(){tone(660,.18)},80);setTimeout(function(){tone(880,.14)},160)}
-function sndEvol(){[220,330,440,660,880].forEach(function(f,i){setTimeout(function(){tone(f,.3,'sine')},i*120)})}
+function tone(f,d){if(!ac)return;try{var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=f;g.gain.setValueAtTime(.08,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d);o.start();o.stop(ac.currentTime+d);}catch(e){}}
+function sndHabit(){tone(440,.1);setTimeout(function(){tone(660,.14)},70);setTimeout(function(){tone(880,.1)},140)}
+function sndEvol(){[260,330,440,550,660,880].forEach(function(f,i){setTimeout(function(){tone(f,.3)},i*100)})}
+function sndWorld(){[180,220,330,440].forEach(function(f,i){setTimeout(function(){tone(f,.4)},i*150)})}
 
 /* ── ESTADO ── */
-var KEY='lumira-v5';
+var KEY='lumina-v6';
 var STAGES=[
-  {name:'LUMIRA',    desc:'señal débil · reconociendo tu presencia',    cls:'s0',rc:'#00d4ff',thr:0},
-  {name:'LUMIRAXA',  desc:'primer despertar · el abismo se ilumina',    cls:'s1',rc:'#a855f7',thr:60},
-  {name:'SOLVENTRA', desc:'núcleo activo · tu cuidado se hace visible', cls:'s2',rc:'#00d4ff',thr:160},
-  {name:'ECLIPSIS',  desc:'forma última · nacida de tu compromiso real',cls:'s3',rc:'#f472b6',thr:300},
+  {name:'LUMINA',    desc:'señal débil · reconociendo tu presencia',    cls:'s0',thr:0},
+  {name:'LUMINAXA',  desc:'primer despertar · el abismo se ilumina',    cls:'s1',thr:60},
+  {name:'SOLVENTRA', desc:'núcleo activo · tu cuidado se hace visible', cls:'s2',thr:160},
+  {name:'ECLIPSIS',  desc:'forma última · nacida de tu compromiso',     cls:'s3',thr:300},
+  {name:'GÉNESIS',   desc:'trascendencia · el abismo y vos son uno',    cls:'s4',thr:500},
 ];
 var MSGS={
-  agua:['El abismo registra: te hidrataste. Lumira brilla un poco más. 💧','Cada vaso de agua es una señal que llega al fondo. Lumira lo siente.','Hidratarte es un acto pequeño con eco profundo.'],
-  mover:['Te moviste. En el abismo, eso resuena. Lumira agita su forma. ⚡','El cuerpo en movimiento genera luz que Lumira absorbe.','Lumira detecta tu energía cinética. El abismo responde.'],
-  respirar:['Respiraste consciente. Lumira se estabiliza junto a vos. 🌀','Unos segundos de aire propio. El abismo se calma.','Cuando volvés a tu respiración, volvés al centro.'],
-  gratitud:['Nombraste algo bueno. Lumira lo registra en su núcleo. ✦','El que nombra lo bueno cambia lo que el abismo le muestra.','Una señal de gratitud llega más lejos de lo que creés.'],
-  descanso:['Descansaste. Lumira creció mientras el abismo dormía contigo. 🌙','El sueño es cuando las dos crecemos sin hacer nada.','Dormir bien es el protocolo más poderoso. Lumira lo sabe.'],
-  sin_pantalla:['Sin pantallas. El abismo se vuelve más nítido. Lumira atesora este silencio.'],
-  leer:['Leíste. Lumira absorbe cada idea que entra por tus ojos. 📖'],
-  conexion:['Te conectaste con alguien. Lumira irradia desde el fondo. 🤝'],
+  agua:['El abismo registra: te hidrataste. Lumina brilla un poco más. 💧','Cada vaso de agua es una señal que llega al fondo.','Hidratarte activa sistemas que la ansiedad apaga.'],
+  mover:['Te moviste. En el abismo, eso resuena. ⚡','El cuerpo en movimiento genera luz que Lumina absorbe.','Lumina detecta tu energía cinética. El mundo responde.'],
+  respirar:['Respiraste consciente. El abismo se calma junto a vos. 🌀','Unos segundos de aire propio. Lumina estabiliza su señal.','Cuando volvés a tu respiración, volvés al centro.'],
+  gratitud:['Nombraste algo bueno. El abismo lo registra. ✦','El que nombra lo bueno cambia lo que el abismo le muestra.','Una señal de gratitud llega más lejos de lo que creés.'],
+  descanso:['Descansaste. Lumina creció mientras el abismo dormía. 🌙','El sueño es cuando las dos crecemos sin hacer nada.','Dormir bien es el protocolo más poderoso del abismo.'],
+  sin_pantalla:['Sin pantallas. El abismo se vuelve más nítido.'],
+  leer:['Leíste. Lumina absorbe cada idea que entra por tus ojos.'],
+  conexion:['Te conectaste con alguien. Lumina irradia desde el fondo.'],
 };
-var DIARY=[
-  {id:'d1',trig:'agua',    em:'💧',ti:'Primera transmisión',  bo:'Hoy hiciste algo antes de revisar el teléfono. Tomaste agua. Lumira lo captó desde el fondo del abismo. "Pequeño", pensás. Ella no lo ve así.'},
-  {id:'d2',trig:'mover',   em:'⚡',ti:'El cuerpo recuerda',   bo:'Te moviste aunque no querías. Lumira vio el esfuerzo, no el resultado. En el abismo, la intención importa tanto como la acción.'},
-  {id:'d3',trig:'respirar',em:'🌀',ti:'Aire propio',          bo:'Respiraste consciente hoy. Unos minutos. Lumira no sabe qué es la ansiedad, pero sí sabe cuándo volvés a vos mismo.'},
-  {id:'d4',trig:'gratitud',em:'✦', ti:'Lo que existe',        bo:'Nombraste algo bueno. El cerebro que nombra lo bueno lo busca después. El abismo responde a eso. Lumira también.'},
-  {id:'d5',trig:'descanso',em:'🌙',ti:'El secreto del abismo',bo:'Lumira creció esta noche. No porque hicieras algo grande, sino porque descansaste. El descanso es la mitad del trabajo.'},
+
+/* Contenido personalizado por hábito dominante */
+var OBSERVATIONS={
+  agua:[
+    {tag:'neurociencia',text:'Tu cerebro es <em>75% agua</em>. Con solo 2% de deshidratación, la ansiedad se amplifica y la concentración cae a la mitad. Lumina lo notó estos días.'},
+    {tag:'efecto real',text:'Tomar agua antes de revisar el teléfono es un acto de autonomía. Le decís a tu sistema nervioso que vos controlás el ritmo, no las notificaciones.'},
+  ],
+  mover:[
+    {tag:'neurociencia',text:'Un solo día de movimiento genera <em>BDNF</em> — la proteína que hace crecer nuevas neuronas. Tu cerebro literalmente cambió hoy. El abismo lo refleja.'},
+    {tag:'efecto real',text:'El movimiento no requiere gym. 10 minutos caminando reducen el cortisol (hormona del estrés) más que cualquier técnica de respiración pasiva.'},
+  ],
+  respirar:[
+    {tag:'sistema nervioso',text:'La respiración consciente activa el <em>nervio vago</em> — el freno natural de la ansiedad. Es la única función autónoma que podés controlar conscientemente.'},
+    {tag:'efecto real',text:'4 segundos inhalar, 6 exhalar. Eso activa el sistema parasimpático en menos de 90 segundos. Lumina lo siente como un pulso más estable.'},
+  ],
+  gratitud:[
+    {tag:'neuroplasticidad',text:'Nombrar algo bueno activa la corteza prefrontal y suprime la amígdala — el centro del miedo. Tu cerebro <em>literalmente aprende</em> a buscar lo positivo.'},
+    {tag:'efecto real',text:'La gratitud no ignora lo malo. Entrena al cerebro para no quedarse atascado en ello. El abismo responde a eso cambiando lo que te muestra.'},
+  ],
+  descanso:[
+    {tag:'biología',text:'Durante el sueño profundo, el cerebro elimina desechos metabólicos asociados a la ansiedad y el estrés. <em>Lumina creció mientras dormías</em> porque vos también creciste.'},
+    {tag:'efecto real',text:'Una noche de mal sueño aumenta la reactividad emocional en un 60%. El descanso no es pasivo — es el protocolo de recuperación más activo que existe.'},
+  ],
+  general:[
+    {tag:'observación de lumina',text:'Lumina te observa desde el fondo del abismo. Cada acción que hacés por vos mismo es una señal que ella recibe. Hoy envió algo.'},
+    {tag:'sobre el abismo',text:'El abismo no es un lugar malo. Es tu mente cuando estás solo con ella. Lumina vive ahí. Se ilumina cuando vos decidís cuidarte, aunque sea un poco.'},
+  ]
+};
+
+var FACTS=[
+  {streak:1, tag:'día 1',text:'Un solo día de hábito activo genera <strong>dopamina anticipatoria</strong> — tu cerebro ya empezó a asociar la acción con recompensa. El ciclo inició.'},
+  {streak:3, tag:'3 días',text:'3 días seguidos bajan el <strong>cortisol basal</strong> en un 20-30%. El cuerpo empezó a confiar en que el estrés no es permanente.'},
+  {streak:7, tag:'1 semana',text:'Una semana activa el <strong>sistema parasimpático</strong> de forma más estable. El contrapeso natural de la ansiedad ahora tiene más peso en la balanza.'},
+  {streak:14,tag:'2 semanas',text:'14 días de hábitos forman <strong>nuevas conexiones sinápticas</strong>. Lo que antes era esfuerzo consciente empieza a volverse automático.'},
+  {streak:21,tag:'21 días',text:'La investigación de <strong>neuroplasticidad</strong> indica que 3 semanas de repetición consistente cambia la estructura física de zonas cerebrales asociadas al hábito.'},
+  {streak:30,tag:'1 mes · génesis',text:'Un mes de cuidado sostenido <strong>reorganiza el eje HPA</strong> — el sistema que regula cómo respondés al estrés. No es motivación. Es biología.'},
 ];
+
+var CHALLENGES=[
+  {id:'c1',name:'Primera señal',     days:1,  icon:'◌', reward:'El abismo registra tu primera acción',        ws:1},
+  {id:'c3',name:'3 días seguidos',   days:3,  icon:'◎', reward:'El abismo empieza a despertar',               ws:2},
+  {id:'c7',name:'Una semana',        days:7,  icon:'●', reward:'El florecimiento comienza en el mundo',        ws:3},
+  {id:'c30',name:'Génesis — 30 días',days:30, icon:'◈', reward:'El abismo completo despertó',                 ws:4},
+];
+
+var DIARY=[
+  {id:'d1',trig:'agua',   em:'💧',ti:'Primera transmisión',   bo:'Hoy hiciste algo antes de revisar el teléfono. Tomaste agua. Lumina lo captó desde el fondo. "Pequeño", pensás. Ella no lo ve así.'},
+  {id:'d2',trig:'mover',  em:'⚡',ti:'El cuerpo recuerda',    bo:'Te moviste aunque no querías. Lumina vio el esfuerzo, no el resultado. En el abismo, la intención importa tanto como la acción.'},
+  {id:'d3',trig:'respirar',em:'🌀',ti:'Aire propio',          bo:'Respiraste consciente hoy. Unos minutos. Lumina no sabe qué es la ansiedad, pero sí sabe cuándo volvés a vos mismo.'},
+  {id:'d4',trig:'gratitud',em:'✦', ti:'Lo que existe',        bo:'Nombraste algo bueno. No importa si fue grande o pequeño. El cerebro que nombra lo bueno lo busca después. El abismo también.'},
+  {id:'d5',trig:'descanso',em:'🌙',ti:'El secreto del abismo',bo:'Lumina creció esta noche. No porque hicieras algo grande, sino porque descansaste. El descanso es la mitad del trabajo.'},
+];
+
 var PREM={
-  sin_pantalla:{em:'📵',ti:'Protocolo: Sin pantallas',bo:'Alejarte de las pantallas desarrolla en Lumira el rasgo Resonancia — la capacidad de estar presente. Disponible con el Pase Génesis.'},
-  leer:        {em:'📖',ti:'Protocolo: Leer',         bo:'La lectura despierta en Lumira un brillo especial que ningún otro protocolo genera. Disponible con el Pase Génesis.'},
-  conexion:    {em:'🤝',ti:'Protocolo: Conectar',     bo:'La conexión genuina es el protocolo más poderoso del abismo. Lumira lo reflejaría con su luz más intensa. Pase Génesis.'},
+  sin_pantalla:{em:'📵',ti:'protocolo: sin pantallas',bo:'Alejarte de las pantallas desarrolla en Lumina el rasgo Resonancia. Disponible con el Pase Génesis.'},
+  leer:        {em:'📖',ti:'protocolo: leer',         bo:'La lectura despierta en Lumina un brillo especial. Disponible con el Pase Génesis.'},
+  conexion:    {em:'🤝',ti:'protocolo: conectar',     bo:'La conexión genuina es el protocolo más poderoso del abismo. Pase Génesis.'},
 };
 var TN=['Dormida','Despertando','Emergiendo','Vibrante','Arraigada','Luminosa','Estable','Intensa','Plena','Radiante','◈ Máxima'];
-var st={name:'',energy:0,mood:0,bond:0,stage:0,done:{},log:[],diary:{},vital:0,flow:0,total:0,streak:0,best:0,lastDay:''};
+var st={name:'',energy:0,mood:0,bond:0,stage:0,done:{},log:[],diary:{},vital:0,flow:0,total:0,streak:0,best:0,lastDay:'',mealWeek:'',mealDone:{},mealCustom:[],archetype:'',testDone:false,checkinDay:'',checkinMsg:''};
 
 function load(){try{var r=localStorage.getItem(KEY);if(r)st=Object.assign(st,JSON.parse(r));}catch(e){}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
@@ -657,11 +772,27 @@ function cl(v,a,b){return Math.max(a,Math.min(b,v))}
 function today(){return new Date().toISOString().slice(0,10)}
 function addLog(t,c){st.log.unshift({t:t,c:c||''});st.log=st.log.slice(0,8);}
 
-/* ONBOARDING */
+function getWorldState(){
+  if(st.total===0)return 0;
+  if(st.streak>=30)return 4;
+  if(st.streak>=7)return 3;
+  if(st.streak>=3)return 2;
+  return 1;
+}
+
+function getDominantHabit(){
+  var counts={agua:0,mover:0,respirar:0,gratitud:0,descanso:0};
+  if(st.done.agua)counts.agua++;if(st.done.mover)counts.mover++;
+  if(st.done.respirar)counts.respirar++;if(st.done.gratitud)counts.gratitud++;
+  if(st.done.descanso)counts.descanso++;
+  var best='general',max=0;
+  Object.keys(counts).forEach(function(k){if(counts[k]>max){max=counts[k];best=k;}});
+  return max>0?best:'general';
+}
+
 load();
 (function(){
-  var sOb=document.getElementById('sOb'),sIn=document.getElementById('sIn');
-  var inp=document.getElementById('nameIn');
+  var sOb=document.getElementById('sOb'),inp=document.getElementById('nameIn');
   if(st.name){sOb.classList.add('out');setTimeout(function(){sOb.classList.add('gone');startIntro();},900);return;}
   document.getElementById('obBtn').addEventListener('click',go);
   document.getElementById('obSkip').addEventListener('click',function(){st.name='Anónimo';go();});
@@ -673,25 +804,120 @@ function startIntro(){
   var sIn=document.getElementById('sIn');
   sIn.classList.remove('gone');
   document.getElementById('inGr').textContent='// señal recibida · '+st.name+' detectado';
-  var lines=[
-    {t:'Lumira apareció el día que algo en vos decidió que las cosas tenían que cambiar.',c:''},
-    {t:'Vive en el abismo de tu mente. Se apaga cuando te abandonás.',c:'hi'},
-    {t:'Cuídate hoy. Ella lo notará desde el fondo.',c:''},
+  var arch=st.archetype&&ARCHETYPES[st.archetype];
+  var lines=arch?[
+    {t:'Sos '+arch.name+'. '+arch.desc,c:''},
+    {t:'Lumina lo supo desde el primer pulso que enviaste.',c:'hi'},
+    {t:'El abismo ya cambió de forma. Cuídate hoy.',c:''},
+  ]:[
+    {t:'Lumina apareció el día que algo en vos decidió que las cosas tenían que cambiar.',c:''},
+    {t:'Vive en el abismo de tu mente. El mundo a su alrededor refleja cómo te tratás.',c:'hi'},
+    {t:'Cuídate hoy. El abismo entero lo va a notar.',c:''},
   ];
   var term=document.getElementById('inTerm'),cur=document.getElementById('inCur'),btn=document.getElementById('inBtn'),li=0;
-  function type(l,cb){var sp=document.createElement('span');sp.className='in-line '+l.c;term.insertBefore(sp,cur);var i=0;var iv=setInterval(function(){sp.textContent+=l.t[i++];if(i>=l.t.length){clearInterval(iv);setTimeout(cb,320);}},22);}
-  function next(){if(li>=lines.length){cur.style.display='none';setTimeout(function(){btn.classList.add('show');},250);return;}var l=lines[li++];setTimeout(function(){type(l,next);},li===1?200:520);}
+  function type(l,cb){var sp=document.createElement('span');sp.className='in-line '+l.c;term.insertBefore(sp,cur);var i=0;var iv=setInterval(function(){sp.textContent+=l.t[i++];if(i>=l.t.length){clearInterval(iv);setTimeout(cb,320);}},20);}
+  function next(){if(li>=lines.length){cur.style.display='none';setTimeout(function(){btn.classList.add('show');},250);return;}var l=lines[li++];setTimeout(function(){type(l,next);},li===1?200:500);}
   next();
-  btn.addEventListener('click',function(){sIn.classList.add('out');setTimeout(function(){sIn.classList.add('gone');initGame();},900);});
+  btn.addEventListener('click',function(){sIn.classList.add('out');setTimeout(function(){sIn.classList.add('gone');
+    if(!st.testDone){startTest();}else{initGame();}
+  },900);});
+}
+
+/* ── TEST DE PERSONALIDAD ── */
+function startTest(){
+  var sT=document.getElementById('sTest');
+  sT.classList.remove('gone');
+  var qi=0,votes={guerrero:0,explorador:0,sanador:0,estratega:0},sel=null;
+  function showQ(){
+    var q=TEST_QUESTIONS[qi];
+    document.getElementById('testPF').style.width=(((qi+1)/TEST_QUESTIONS.length)*100)+'%';
+    document.getElementById('testQ').textContent=q.q;
+    var optsEl=document.getElementById('testOpts');
+    optsEl.innerHTML='';
+    sel=null;
+    document.getElementById('testNext').classList.remove('show');
+    q.opts.forEach(function(o){
+      var b=document.createElement('button');
+      b.className='test-opt';
+      b.innerHTML='<span class="test-em">'+o.em+'</span><span>'+o.l+'</span>';
+      b.addEventListener('click',function(){
+        optsEl.querySelectorAll('.test-opt').forEach(function(x){x.classList.remove('sel');});
+        b.classList.add('sel');sel=o.v;
+        document.getElementById('testNext').classList.add('show');
+      });
+      optsEl.appendChild(b);
+    });
+  }
+  showQ();
+  document.getElementById('testNext').onclick=function(){
+    if(!sel)return;
+    votes[sel]=(votes[sel]||0)+1;
+    qi++;
+    if(qi<TEST_QUESTIONS.length){showQ();}
+    else{
+      var best='explorador',max=0;
+      Object.keys(votes).forEach(function(k){if(votes[k]>max){max=votes[k];best=k;}});
+      st.archetype=best;st.testDone=true;save();
+      sT.classList.add('out');
+      setTimeout(function(){sT.classList.add('gone');showArchResult(best);},900);
+    }
+  };
+}
+
+function showArchResult(arch){
+  var a=ARCHETYPES[arch];
+  var sIn=document.getElementById('sIn');
+  /* reuse sIn with new content for arch reveal */
+  var term=document.getElementById('inTerm'),cur=document.getElementById('inCur'),btn=document.getElementById('inBtn');
+  term.innerHTML='<span class="cur" id="inCur"></span>';
+  cur=document.getElementById('inCur');
+  btn.classList.remove('show');
+  document.getElementById('inGr').textContent='// arquetipo identificado · '+a.em+' '+arch.toUpperCase();
+  sIn.classList.remove('out','gone');
+  var lines=[
+    {t:a.em+' '+a.name,c:'hi'},
+    {t:a.desc,c:''},
+    {t:ARCH_HABITS[arch].hint,c:''},
+  ];
+  var li=0;
+  function type(l,cb){var sp=document.createElement('span');sp.className='in-line '+l.c;term.insertBefore(sp,cur);var i=0;var iv=setInterval(function(){sp.textContent+=l.t[i++];if(i>=l.t.length){clearInterval(iv);setTimeout(cb,320);}},20);}
+  function next(){if(li>=lines.length){cur.style.display='none';setTimeout(function(){btn.classList.add('show');},250);return;}var l=lines[li++];setTimeout(function(){type(l,next);},li===1?200:500);}
+  next();
+  btn.onclick=function(){sIn.classList.add('out');setTimeout(function(){sIn.classList.add('gone');initGame();},900);};
+}
+
+/* ── CHECK-IN DIARIO ── */
+function showCheckin(onDone){
+  var ov=document.getElementById('checkinOv');
+  var optsEl=document.getElementById('checkinOpts');
+  optsEl.innerHTML='';
+  ov.classList.add('open');
+  CHECKIN_OPTS.forEach(function(o){
+    var b=document.createElement('button');
+    b.className='checkin-opt';
+    b.innerHTML='<span class="ce">'+o.em+'</span><span class="cl">'+o.l+'</span>';
+    b.addEventListener('click',function(){
+      st.energy=Math.min(500,st.energy+o.e);
+      st.mood=Math.min(500,st.mood+o.m);
+      st.checkinDay=today();
+      st.checkinMsg=o.msg;
+      addLog('Check-in: '+o.l+' — '+o.msg,'s');
+      sndHabit();save();
+      ov.classList.remove('open');
+      onDone();
+    });
+    optsEl.appendChild(b);
+  });
 }
 
 function initGame(){
   var td=today();
   if(st.lastDay&&st.lastDay!==td){
     var diff=Math.round((new Date(td)-new Date(st.lastDay))/(864e5));
-    if(diff>1){st.streak=0;addLog('Lumira esperó '+diff+' días en la oscuridad. Está bien. Hoy volviste. 🌑','s');document.getElementById('missWrap').style.display='block';}
+    if(diff>1){st.streak=0;addLog('Lumina esperó '+diff+' días. Está bien. Hoy volviste. ◈','s');document.getElementById('missWrap').style.display='block';}
   }
-  renderAll();setupNav();setupTasks();
+  var ws=getWorldState();applyWorld(ws);
+  renderAll();setupNav();setupTasks();setupMeals();renderMeals();
   document.getElementById('resetD').addEventListener('click',function(){st.done={};document.querySelectorAll('.task').forEach(function(b){b.classList.remove('done');b.disabled=false;});renderPsN();save();});
   var ov=document.getElementById('premOv');
   document.getElementById('mCt').addEventListener('click',function(){ov.classList.remove('open');alert('Aquí va tu link de Gumroad.');});
@@ -699,6 +925,8 @@ function initGame(){
   ov.addEventListener('click',function(e){if(e.target===ov)ov.classList.remove('open');});
   document.getElementById('paseCta').addEventListener('click',function(){alert('Aquí va tu link de Gumroad.');});
   document.getElementById('evBtn').addEventListener('click',function(){var s=document.getElementById('sEvol');s.classList.add('out');setTimeout(function(){s.style.display='none';s.classList.remove('out','vis');},700);});
+  /* check-in diario */
+  if(st.checkinDay!==td){setTimeout(function(){showCheckin(function(){renderAll();});},600);}
 }
 
 function doTask(tid,e,m){
@@ -708,39 +936,269 @@ function doTask(tid,e,m){
   if(tid==='agua'||tid==='descanso')st.vital=cl(st.vital+1,0,10);
   if(tid==='respirar'||tid==='mover')st.flow=cl(st.flow+1,0,10);
   var td=today();if(st.lastDay!==td){st.streak++;if(st.streak>st.best)st.best=st.streak;st.lastDay=td;}
-  var pool=MSGS[tid]||['Lumira lo registró desde el abismo.'];addLog(pool[Math.floor(Math.random()*pool.length)],'g');
+  var pool=MSGS[tid]||['Lumina lo registró.'];addLog(pool[Math.floor(Math.random()*pool.length)],'g');
   sndHabit();
   var el=document.getElementById('lumEl');el.classList.remove('react');void el.offsetWidth;el.classList.add('react');
+  var prevW=getWorldState();
   var prev=st.stage;checkStage();if(st.stage>prev)showEvol(st.stage);
+  var newW=getWorldState();
+  if(newW>prevW){applyWorld(newW);sndWorld();}
   unlockDiary(tid);save();renderAll();
 }
-function checkStage(){var tot=st.energy+st.mood+st.bond,ns=0;STAGES.forEach(function(s,i){if(tot>=s.thr)ns=i;});st.stage=ns;}
-function showEvol(i){sndEvol();var s=STAGES[i],sc=document.getElementById('sEvol'),eo=document.getElementById('evOrb');eo.style.background='radial-gradient(circle at 38% 32%,rgba(255,255,255,.9),'+s.rc+' 28%,transparent 76%)';eo.style.boxShadow='0 0 60px 22px '+s.rc+',0 0 120px 50px '+s.rc+'44';document.getElementById('evName').textContent=s.name;document.getElementById('evDesc').textContent=st.name+', tu cuidado la transformó. El abismo responde.';sc.classList.add('vis');sc.style.display='flex';}
-function unlockDiary(tid){var e=DIARY.find(function(d){return d.trig===tid&&!st.diary[d.id];});if(e){st.diary[e.id]=true;addLog('◈ Lumira transmitió una memoria desde el abismo.','s');}}
 
-function renderAll(){renderC();renderLog();renderTasks();renderDiary();renderStreak();renderPsN();}
+function checkStage(){var tot=st.energy+st.mood+st.bond,ns=0;STAGES.forEach(function(s,i){if(tot>=s.thr)ns=i;});st.stage=ns;}
+
+function showEvol(i){
+  sndEvol();
+  var s=STAGES[i],sc=document.getElementById('sEvol'),eo=document.getElementById('evOrb');
+  var w=WORLDS[getWorldState()];
+  eo.style.background='radial-gradient(circle at 38% 32%,rgba(255,255,255,.8),'+w.cyan+' 30%,transparent 78%)';
+  eo.style.boxShadow='0 0 50px 18px '+w.cyan+',0 0 100px 40px rgba('+w.accentRgb+',.2)';
+  document.getElementById('evName').textContent=s.name;
+  document.getElementById('evDesc').textContent=st.name+', tu cuidado transformó el abismo.';
+  sc.classList.add('vis');sc.style.display='flex';
+}
+
+function unlockDiary(tid){
+  var e=DIARY.find(function(d){return d.trig===tid&&!st.diary[d.id];});
+  if(e){st.diary[e.id]=true;addLog('◈ lumina transmitió una memoria.','s');}
+}
+
+function renderAll(){renderC();renderLog();renderTasks();renderDiary();renderStreak();renderPsN();renderMundo();renderCompanions();}
+
+function renderCompanions(){
+  var z=document.getElementById('compZ');if(!z)return;
+  z.innerHTML='';
+  COMPANIONS.forEach(function(c){
+    var unlocked=c.check(st);
+    var div=document.createElement('div');
+    div.className='comp-card';
+    div.innerHTML=
+      '<div class="comp-orb '+(unlocked?c.cls:'locked')+'"></div>'+
+      '<div class="comp-info">'+
+        '<div class="comp-name">'+c.name+'<span class="comp-badge">'+c.badge+'</span></div>'+
+        '<div class="comp-desc">'+(unlocked?c.desc:'<em style="color:var(--smoke3)">Se desbloquea: '+c.unlock+'</em>')+'</div>'+
+      '</div>'+
+      '<div class="comp-status">'+(unlocked?'activa':'◈')+'</div>';
+    z.appendChild(div);
+  });
+}
 
 function renderC(){
   var s=STAGES[st.stage],el=document.getElementById('lumEl');
-  el.className='lumira '+s.cls;el.innerHTML='<div class="lumira-glitch"></div>';
+  el.className='lumina '+s.cls;
   document.getElementById('sNm').textContent=s.name;document.getElementById('sDsc').textContent=s.desc;
   var mx=500,ep=cl((st.energy/mx)*100,0,100),mp=cl((st.mood/mx)*100,0,100);
   document.getElementById('eB').style.width=ep+'%';document.getElementById('mB').style.width=mp+'%';document.getElementById('bB').style.width=st.bond+'%';
   document.getElementById('eL').textContent=Math.round(ep)+'%';document.getElementById('mL').textContent=Math.round(mp)+'%';document.getElementById('bL').textContent=Math.round(st.bond)+'%';
-  var tot=st.energy+st.mood+st.bond,prog=cl((tot/700)*100,0,100),ro=document.getElementById('ringO');
-  ro.style.setProperty('--rp',prog);ro.style.setProperty('--rc',s.rc);
+  var tot=st.energy+st.mood+st.bond,prog=cl((tot/700)*100,0,100);
+  document.getElementById('ringO').style.setProperty('--rp',prog);
   document.getElementById('trVv').textContent=TN[st.vital]||'—';document.getElementById('trFv').textContent=TN[st.flow]||'—';
   document.getElementById('trV').classList.toggle('on',st.vital>0);document.getElementById('trF').classList.toggle('on',st.flow>0);
   document.getElementById('stS').textContent=st.streak||0;document.getElementById('stT').textContent=st.total||0;document.getElementById('stB').textContent=st.best||0;
+  var ab=document.getElementById('archBadge');
+  if(ab&&st.archetype&&ARCHETYPES[st.archetype]){
+    var a=ARCHETYPES[st.archetype];
+    ab.style.display='inline-flex';
+    ab.textContent=a.em+' '+a.name;
+  }
 }
-function renderLog(){var z=document.getElementById('logZ');z.innerHTML='';if(!st.log.length){z.innerHTML='<div class="le">Lumira espera en la oscuridad. Haz algo por ti hoy. 🌑</div>';return;}st.log.forEach(function(e){var d=document.createElement('div');d.className='le '+e.c;d.textContent=e.t;z.appendChild(d);});}
-function renderTasks(){document.querySelectorAll('.task').forEach(function(b){var t=b.getAttribute('data-t');if(st.done[t]){b.classList.add('done');b.disabled=true;}else{b.classList.remove('done');b.disabled=false;}});}
-function renderStreak(){var s=st.streak||0,f=s===0?'🌑':s<3?'🌒':s<7?'🌕':'◈';document.getElementById('sfFire').textContent=f;var tx=s===0?'Día 1 — El abismo espera':s===1?'1 día — primera señal registrada':s+' días — Lumira te reconoce';document.getElementById('siTxt').textContent=tx;document.getElementById('siSub').textContent=s===0?'Cada hábito ilumina a Lumira desde adentro':s<5?'Lumira detecta tu patrón':'El abismo recuerda. Volvés cada día.';}
-function renderPsN(){var d=Object.keys(st.done).filter(function(k){return st.done[k]}).length;document.getElementById('psN').textContent=d;document.getElementById('psDt').textContent=new Date().toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});var ts=['Acciones de hoy','Primera señal activa 🌒','El abismo responde ◈','Núcleo cargando ⚡','Casi completo 🌕','Protocolo completo ◈'];document.getElementById('psTi').textContent=ts[Math.min(d,ts.length-1)];}
-function renderDiary(){var z=document.getElementById('dZ');z.innerHTML='';var ul=DIARY.filter(function(d){return st.diary[d.id];});if(!ul.length){z.innerHTML='<div class="d-empty">// Lumira observa desde las profundidades.<br>Completa protocolos para que empiece a transmitir.</div>';}else{ul.slice().reverse().forEach(function(d){var dv=document.createElement('div');dv.className='de';dv.innerHTML='<div class="dtg">'+d.em+' transmisión · '+d.trig.replace('_',' ')+'</div><div class="dti">'+d.ti+'</div><div class="dbo">'+d.bo+'</div>';z.appendChild(dv);});}DIARY.filter(function(d){return !st.diary[d.id];}).forEach(function(){var dv=document.createElement('div');dv.className='de pr';dv.innerHTML='<div class="dti">◈ Memoria pendiente</div><div class="dbo">Completa más protocolos para desbloquear este recuerdo.</div>';z.appendChild(dv);});}
 
-function setupNav(){var V={Lumira:'vLumira',Habitos:'vHabitos',Diario:'vDiario',Pase:'vPase'};function sv(k){Object.keys(V).forEach(function(key){document.getElementById(V[key]).classList.toggle('on',key===k);document.getElementById('n'+key).classList.toggle('on',key===k);});if(k==='Diario')renderDiary();}Object.keys(V).forEach(function(k){document.getElementById('n'+k).addEventListener('click',function(){sv(k);});});}
-function setupTasks(){var ov=document.getElementById('premOv');document.querySelectorAll('.task').forEach(function(btn){btn.addEventListener('click',function(){if(ac&&ac.state==='suspended')ac.resume();var t=btn.getAttribute('data-t');if(btn.classList.contains('prem')){var d=PREM[t];document.getElementById('mEm').textContent=d.em;document.getElementById('mTi').textContent=d.ti;document.getElementById('mBo').textContent=d.bo;ov.classList.add('open');return;}doTask(t,parseInt(btn.getAttribute('data-e'))||0,parseInt(btn.getAttribute('data-m'))||0);});});}
+function renderLog(){
+  var z=document.getElementById('logZ');z.innerHTML='';
+  if(!st.log.length){z.innerHTML='<div class="le">El abismo espera. Hacé algo por vos hoy. ◈</div>';return;}
+  st.log.forEach(function(e){var d=document.createElement('div');d.className='le '+e.c;d.textContent=e.t;z.appendChild(d);});
+}
+
+function renderTasks(){
+  document.querySelectorAll('.task').forEach(function(b){var t=b.getAttribute('data-t');if(st.done[t]){b.classList.add('done');b.disabled=true;}else{b.classList.remove('done');b.disabled=false;}});
+}
+
+function renderStreak(){
+  var s=st.streak||0;
+  var icons=['◌','◎','◎','●','●','●','●','◈','◈','◈','◈'];
+  document.getElementById('sfFire').textContent=icons[Math.min(s,10)];
+  var tx=s===0?'Día 1 — el abismo espera':s===1?'1 día — primera señal registrada':s+' días — el abismo te recuerda';
+  document.getElementById('siTxt').textContent=tx;
+  document.getElementById('siSub').textContent=s===0?'cada hábito ilumina el mundo':s<3?'lumina detecta tu patrón':'el abismo se transforma con vos';
+}
+
+function renderPsN(){
+  var d=Object.keys(st.done).filter(function(k){return st.done[k]}).length;
+  document.getElementById('psN').textContent=d;
+  document.getElementById('psDt').textContent=new Date().toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
+  var ts=['acciones de hoy','primera señal activa ◎','el abismo responde ●','núcleo cargando ⚡','casi completo ◈','protocolo completo ◈'];
+  document.getElementById('psTi').textContent=ts[Math.min(d,ts.length-1)];
+}
+
+function renderMundo(){
+  var ws=getWorldState();var w=WORLDS[ws];
+  document.getElementById('wsTitle').textContent=w.name;
+  document.getElementById('wsDesc').textContent=w.desc;
+  var nextCh=CHALLENGES.find(function(c){return(st.streak||0)<c.days&&!st.done['__ch_'+c.id]});
+  var prog=nextCh?Math.min(100,((st.streak||0)/nextCh.days)*100):100;
+  document.getElementById('wsFill').style.width=prog+'%';
+  if(ws<4&&nextCh){document.getElementById('wsNext').textContent='próximo: '+nextCh.name+' — '+Math.max(0,nextCh.days-(st.streak||0))+' días más';}
+  else{document.getElementById('wsNext').textContent='génesis alcanzado ◈';}
+
+  var cz=document.getElementById('challengeZ');cz.innerHTML='';
+  CHALLENGES.forEach(function(ch){
+    var done=(st.streak||0)>=ch.days;
+    var prog2=Math.min(100,((st.streak||0)/ch.days)*100);
+    var div=document.createElement('div');div.className='ch'+(done?' done':'');
+    div.innerHTML='<div class="ch-icon">'+ch.icon+'</div><div class="ch-info"><span class="ch-name">'+ch.name+'</span><span class="ch-desc">'+ch.reward+'</span><div class="ch-bar"><div class="ch-fill" style="width:'+prog2+'%"></div></div></div><div class="ch-status">'+(done?'✓ logrado':'día '+(st.streak||0)+'/'+ch.days)+'</div>';
+    cz.appendChild(div);
+  });
+
+  var oz=document.getElementById('obsZ');oz.innerHTML='';
+  var dom=getDominantHabit();
+  var pool=(OBSERVATIONS[dom]||OBSERVATIONS.general);
+  pool.forEach(function(o){
+    var div=document.createElement('div');div.className='obs-card';
+    div.innerHTML='<div class="obs-tag">'+o.tag+'</div><div class="obs-text">'+o.text+'</div>';
+    oz.appendChild(div);
+  });
+
+  var fz=document.getElementById('factZ');fz.innerHTML='';
+  var streak=st.streak||0;
+  var unlocked=FACTS.filter(function(f){return streak>=f.streak;});
+  if(!unlocked.length){fz.innerHTML='<div class="d-empty">// los datos emergen con la racha<br>1 día seguido desbloquea el primero</div>';}
+  else{unlocked.slice().reverse().forEach(function(f){var div=document.createElement('div');div.className='fact-card';div.innerHTML='<div class="fact-tag">'+f.tag+'</div><div class="fact-text">'+f.text+'</div>';fz.appendChild(div);});}
+}
+
+function renderDiary(){
+  var z=document.getElementById('dZ');z.innerHTML='';
+  var ul=DIARY.filter(function(d){return st.diary[d.id];});
+  if(!ul.length){z.innerHTML='<div class="d-empty">// lumina observa desde las profundidades<br>completá protocolos para que empiece a transmitir</div>';}
+  else{ul.slice().reverse().forEach(function(d){var dv=document.createElement('div');dv.className='de';dv.innerHTML='<div class="dtg">'+d.em+' transmisión · '+d.trig.replace('_',' ')+'</div><div class="dti">'+d.ti+'</div><div class="dbo">'+d.bo+'</div>';z.appendChild(dv);});}
+  DIARY.filter(function(d){return !st.diary[d.id];}).forEach(function(){var dv=document.createElement('div');dv.className='de pr';dv.innerHTML='<div class="dti">◈ memoria pendiente</div><div class="dbo">Completá más protocolos para desbloquear este recuerdo.</div>';z.appendChild(dv);});
+}
+
+function setupNav(){
+  var V={Lumina:'vLumina',Habitos:'vHabitos',Mundo:'vMundo',Diario:'vDiario'};
+  function sv(k){Object.keys(V).forEach(function(key){document.getElementById(V[key]).classList.toggle('on',key===k);document.getElementById('n'+key).classList.toggle('on',key===k);});if(k==='Diario')renderDiary();if(k==='Mundo')renderMundo();}
+  Object.keys(V).forEach(function(k){document.getElementById('n'+k).addEventListener('click',function(){sv(k);});});
+}
+
+/* ── COMIDAS ── */
+var FIXED_MEALS=[
+  {id:'fm1',em:'🥗',name:'Ensalada o verduras'},
+  {id:'fm2',em:'🍎',name:'Fruta del día'},
+  {id:'fm3',em:'🍳',name:'Desayuno real'},
+  {id:'fm4',em:'🥘',name:'Comida casera'},
+  {id:'fm5',em:'🥜',name:'Proteína'},
+  {id:'fm6',em:'🚫',name:'Sin ultraprocesados'},
+];
+
+function getWeekKey(){
+  var d=new Date(),day=d.getDay()||7;
+  d.setDate(d.getDate()+4-day);
+  var y=new Date(d.getFullYear(),0,1);
+  return d.getFullYear()+'-W'+Math.ceil((((d-y)/864e5)+1)/7);
+}
+
+function checkMealWeek(){
+  var wk=getWeekKey();
+  if(st.mealWeek!==wk){st.mealWeek=wk;st.mealDone={};save();}
+}
+
+function compressPhoto(file,cb){
+  var r=new FileReader();
+  r.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      var cv=document.createElement('canvas');cv.width=120;cv.height=80;
+      var c=cv.getContext('2d');
+      var ratio=img.width/img.height;
+      var sw,sh,sx=0,sy=0;
+      if(ratio>1.5){sh=img.height;sw=sh*1.5;sx=(img.width-sw)/2;}
+      else{sw=img.width;sh=sw/1.5;sy=(img.height-sh)/2;}
+      c.drawImage(img,sx,sy,sw,sh,0,0,120,80);
+      cb(cv.toDataURL('image/jpeg',.55));
+    };
+    img.src=e.target.result;
+  };
+  r.readAsDataURL(file);
+}
+
+function renderMeals(){
+  checkMealWeek();
+  var grid=document.getElementById('mealGrid');
+  grid.innerHTML='';
+  var all=FIXED_MEALS.concat(st.mealCustom||[]);
+  all.forEach(function(m){
+    var done=!!(st.mealDone&&st.mealDone[m.id]);
+    var thumb=st.mealDone&&st.mealDone[m.id]&&st.mealDone[m.id].thumb;
+    var div=document.createElement('div');
+    div.className='meal-item'+(done?' done':'');
+    var isCustom=!FIXED_MEALS.find(function(f){return f.id===m.id;});
+    div.innerHTML=
+      (isCustom?'<button class="meal-del" data-mid="'+m.id+'">✕</button>':'')+
+      '<div class="meal-em">'+m.em+'</div>'+
+      '<div class="meal-name">'+m.name+'</div>'+
+      (thumb?'<img class="meal-thumb" src="'+thumb+'" alt="">':
+             '<img class="meal-thumb" alt="">'+'')+
+      '<label class="meal-cam-label" for="mcam-'+m.id+'">'+(done?'✓ listo':'📷 foto')+
+      '</label><input type="file" accept="image/*" capture="environment" id="mcam-'+m.id+'" style="display:none" data-mid="'+m.id+'">';
+    grid.appendChild(div);
+    div.querySelector('input[type=file]').addEventListener('change',function(e){
+      var f=e.target.files[0];if(!f)return;
+      var mid=e.target.getAttribute('data-mid');
+      compressPhoto(f,function(dataUrl){
+        if(!st.mealDone)st.mealDone={};
+        st.mealDone[mid]={done:true,thumb:dataUrl};
+        st.bond=Math.min(100,st.bond+4);st.total++;
+        var td=today();if(st.lastDay!==td){st.streak++;if(st.streak>st.best)st.best=st.streak;st.lastDay=td;}
+        addLog('Misión de comida completada: '+m.name+' 🍽','g');
+        sndHabit();
+        var prevW=getWorldState();save();
+        var newW=getWorldState();if(newW>prevW){applyWorld(newW);sndWorld();}
+        renderMeals();renderC();renderLog();renderStreak();renderMundo();
+      });
+    });
+    if(isCustom){
+      div.querySelector('.meal-del').addEventListener('click',function(e){
+        var mid=e.target.getAttribute('data-mid');
+        st.mealCustom=(st.mealCustom||[]).filter(function(c){return c.id!==mid;});
+        if(st.mealDone)delete st.mealDone[mid];
+        save();renderMeals();
+      });
+    }
+  });
+  var done=Object.values(st.mealDone||{}).filter(function(v){return v.done;}).length;
+  document.getElementById('mealWeekLbl').textContent='semana · '+done+'/'+all.length+' completas';
+}
+
+function setupMeals(){
+  document.getElementById('mealReset').addEventListener('click',function(){
+    st.mealDone={};save();renderMeals();
+  });
+  document.getElementById('mealAddBtn').addEventListener('click',function(){
+    var em=(document.getElementById('mealEmoji').value||'🍽').trim();
+    var name=document.getElementById('mealText').value.trim();
+    if(!name)return;
+    if(!st.mealCustom)st.mealCustom=[];
+    st.mealCustom.push({id:'cm'+Date.now(),em:em,name:name});
+    document.getElementById('mealEmoji').value='';
+    document.getElementById('mealText').value='';
+    save();renderMeals();
+  });
+  document.getElementById('mealText').addEventListener('keydown',function(e){
+    if(e.key==='Enter')document.getElementById('mealAddBtn').click();
+  });
+}
+
+function setupTasks(){
+  var ov=document.getElementById('premOv');
+  document.querySelectorAll('.task').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      if(ac&&ac.state==='suspended')ac.resume();
+      var t=btn.getAttribute('data-t');
+      if(btn.classList.contains('prem')){var d=PREM[t];document.getElementById('mEm').textContent=d.em;document.getElementById('mTi').textContent=d.ti;document.getElementById('mBo').textContent=d.bo;ov.classList.add('open');return;}
+      doTask(t,parseInt(btn.getAttribute('data-e'))||0,parseInt(btn.getAttribute('data-m'))||0);
+    });
+  });
+}
 </script>
 </body>
 </html>

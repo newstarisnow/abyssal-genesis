@@ -1,0 +1,22 @@
+{
+  "name": "Abyssal Genesis",
+  "short_name": "Abyssal",
+  "description": "Una criatura vive en tu mente. Crece cuando te cuidás.",
+  "start_url": "/abyssal-genesis/",
+  "display": "standalone",
+  "background_color": "#050810",
+  "theme_color": "#050810",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

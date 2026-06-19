@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050810">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Abyssal">
+<link rel="manifest" href="manifest.json">
 <title>Abyssal Genesis — Lumina</title>
 <style>
 :root {
@@ -86,7 +91,7 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
 .view.on{display:block}
 @keyframes fade-up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px 18px;margin-bottom:12px;transition:border-color .3s,background 2s}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px 18px;margin-bottom:12px;transition:border-color .3s,background 2s,box-shadow 2s;box-shadow:var(--card-glow,none)}
 .card:hover{border-color:var(--border-h)}
 .clbl{font-family:var(--mono);font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke2);margin-bottom:14px;display:flex;align-items:center;gap:6px}
 .clbl::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--accent-live,#1a4060);flex-shrink:0;transition:background 2s}
@@ -386,13 +391,13 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
 
 <div class="app">
   <nav>
-    <button id="nLumina" class="on">Lumina</button>
-    <button id="nHabitos">Hábitos</button>
+    <button id="nInicio" class="on">Inicio</button>
     <button id="nMundo">Mundo</button>
     <button id="nDiario">Diario</button>
   </nav>
 
-  <div id="vLumina" class="view on">
+  <div id="vInicio" class="view on">
+    <!-- evento diario -->
     <div class="abyss-event gone" id="abyssEvent">
       <div class="ae-em" id="aeEm">✦</div>
       <div class="ae-body">
@@ -400,6 +405,8 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
         <div class="ae-txt" id="aeTxt"></div>
       </div>
     </div>
+
+    <!-- lumina card -->
     <div class="card" style="text-align:center">
       <div class="clbl" style="justify-content:center">entidad · abismo-01</div>
       <div class="cwrap">
@@ -424,46 +431,25 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
       <div class="bar"><div class="bf b" id="bB" style="width:0%"></div></div>
     </div>
 
-    <div class="card">
-      <div class="clbl">datos del abismo</div>
-      <div class="sg">
-        <div class="sb"><div class="sb-n" id="stS">0</div><div class="sb-l">Racha días</div></div>
-        <div class="sb"><div class="sb-n" id="stT">0</div><div class="sb-l">Total hábitos</div></div>
-        <div class="sb"><div class="sb-n" id="stB">0</div><div class="sb-l">Mejor racha</div></div>
+    <!-- racha + contador inline -->
+    <div style="display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:12px">
+      <div class="streak-b" style="margin:0">
+        <div class="sf" id="sfFire">◌</div>
+        <div class="si">
+          <b id="siTxt">El abismo espera la primera señal</b>
+          <span id="siSub">cada acción deja una marca</span>
+        </div>
+      </div>
+      <div class="ps-b" style="margin:0;flex-direction:column;align-items:center;justify-content:center;min-width:64px">
+        <div class="ps-n" id="psN">0</div>
+        <div class="ps-i" style="text-align:center">
+          <b id="psTi" style="font-size:.6rem">hoy</b>
+          <span id="psDt" style="display:none"></span>
+        </div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="clbl">rasgos de lumina</div>
-      <div class="tg">
-        <div class="tr" id="trV"><div class="ti">💧</div><div class="tn">Vitalidad</div><div class="tv" id="trVv">Dormida</div></div>
-        <div class="tr" id="trF"><div class="ti">⚡</div><div class="tn">Flujo</div><div class="tv" id="trFv">Dormida</div></div>
-        <div class="tr lk"><div class="ti">🔮</div><div class="tn">Resonancia</div><div class="tlk">◈ Pase Génesis</div></div>
-        <div class="tr lk"><div class="ti">🌙</div><div class="tn">Sueño Profundo</div><div class="tlk">◈ Pase Génesis</div></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="clbl">señales del abismo</div>
-      <div id="logZ"><div class="le">El abismo espera. Hacé algo por vos hoy. ◈</div></div>
-    </div>
-  </div>
-
-  <div id="vHabitos" class="view">
-    <div class="streak-b">
-      <div class="sf" id="sfFire">◌</div>
-      <div class="si">
-        <b id="siTxt">Día 1 — el abismo espera</b>
-        <span id="siSub">cada hábito ilumina el mundo</span>
-      </div>
-    </div>
-    <div class="ps-b">
-      <div class="ps-n" id="psN">0</div>
-      <div class="ps-i">
-        <b id="psTi">Acciones de hoy</b>
-        <span id="psDt"></span>
-      </div>
-    </div>
+    <!-- protocolos diarios -->
     <div class="card">
       <div class="clbl">protocolos diarios</div>
       <div class="tg2">
@@ -496,6 +482,30 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
     <div class="info-b">
       💧 agua → energía &nbsp;·&nbsp; ⚡ moverte → ánimo &nbsp;·&nbsp; 🌀 respirar → calma<br>
       ✦ nombrar → vínculo &nbsp;·&nbsp; 🌙 descanso → el mundo crece
+    </div>
+
+    <div class="card">
+      <div class="clbl">datos del abismo</div>
+      <div class="sg">
+        <div class="sb"><div class="sb-n" id="stS">0</div><div class="sb-l">Racha días</div></div>
+        <div class="sb"><div class="sb-n" id="stT">0</div><div class="sb-l">Total hábitos</div></div>
+        <div class="sb"><div class="sb-n" id="stB">0</div><div class="sb-l">Mejor racha</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clbl">rasgos de lumina</div>
+      <div class="tg">
+        <div class="tr" id="trV"><div class="ti">💧</div><div class="tn">Vitalidad</div><div class="tv" id="trVv">Dormida</div></div>
+        <div class="tr" id="trF"><div class="ti">⚡</div><div class="tn">Flujo</div><div class="tv" id="trFv">Dormida</div></div>
+        <div class="tr lk"><div class="ti">🔮</div><div class="tn">Resonancia</div><div class="tlk">◈ Pase Génesis</div></div>
+        <div class="tr lk"><div class="ti">🌙</div><div class="tn">Sueño Profundo</div><div class="tlk">◈ Pase Génesis</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clbl">señales del abismo</div>
+      <div id="logZ"><div class="le">El abismo espera. Hacé algo por vos hoy. ◈</div></div>
     </div>
   </div>
 
@@ -708,6 +718,12 @@ function applyWorld(ws){
   while(PS.length<target)PS.push(mkP(w));
   PS=PS.slice(0,target);
   PS.forEach(function(p){p.h=w.ph[Math.floor(Math.random()*w.ph.length)];p.al=Math.random()*w.pa+.02;});
+  /* glow progresivo en cards */
+  var glows=['none','0 0 0 1px rgba('+w.accentRgb+',.08)','0 0 0 1px rgba('+w.accentRgb+',.14)','0 0 8px rgba('+w.accentRgb+',.18)','0 0 16px rgba('+w.accentRgb+',.28)'];
+  r.style.setProperty('--card-glow',glows[ws]);
+  /* texto más claro en estados altos */
+  var textBright=['#c8d0dc','#ccd4e0','#d4dce8','#dce4f0','#eef2ff'];
+  r.style.setProperty('--text',textBright[ws]);
 }
 
 /* ── AUDIO ── */
@@ -842,11 +858,18 @@ var CHALLENGES=[
 ];
 
 var DIARY=[
-  {id:'d1',trig:'agua',   em:'💧',ti:'Primera transmisión',   bo:'Hoy hiciste algo antes de revisar el teléfono. Tomaste agua. Lumina lo captó desde el fondo. "Pequeño", pensás. Ella no lo ve así.'},
-  {id:'d2',trig:'mover',  em:'⚡',ti:'El cuerpo recuerda',    bo:'Te moviste aunque no querías. Lumina vio el esfuerzo, no el resultado. En el abismo, la intención importa tanto como la acción.'},
-  {id:'d3',trig:'respirar',em:'🌀',ti:'Aire propio',          bo:'Respiraste consciente hoy. Unos minutos. Lumina no sabe qué es la ansiedad, pero sí sabe cuándo volvés a vos mismo.'},
-  {id:'d4',trig:'gratitud',em:'✦', ti:'Lo que existe',        bo:'Nombraste algo bueno. No importa si fue grande o pequeño. El cerebro que nombra lo bueno lo busca después. El abismo también.'},
-  {id:'d5',trig:'descanso',em:'🌙',ti:'El secreto del abismo',bo:'Lumina creció esta noche. No porque hicieras algo grande, sino porque descansaste. El descanso es la mitad del trabajo.'},
+  {id:'d1',trig:'agua',    em:'💧',ti:'Primera transmisión',    bo:'Hoy hiciste algo antes de revisar el teléfono. Tomaste agua. Lumina lo captó desde el fondo. "Pequeño", pensás. Ella no lo ve así.'},
+  {id:'d2',trig:'mover',   em:'⚡',ti:'El cuerpo recuerda',     bo:'Te moviste aunque no querías. Lumina vio el esfuerzo, no el resultado. En el abismo, la intención importa tanto como la acción.'},
+  {id:'d3',trig:'respirar',em:'🌀',ti:'Aire propio',            bo:'Respiraste consciente hoy. Unos minutos. Lumina no sabe qué es la ansiedad, pero sí sabe cuándo volvés a vos mismo.'},
+  {id:'d4',trig:'gratitud',em:'✦', ti:'Lo que existe',          bo:'Nombraste algo bueno. No importa si fue grande o pequeño. El cerebro que nombra lo bueno lo busca después. El abismo también.'},
+  {id:'d5',trig:'descanso',em:'🌙',ti:'El secreto del abismo',  bo:'Lumina creció esta noche. No porque hicieras algo grande, sino porque descansaste. El descanso es la mitad del trabajo.'},
+  {id:'d6',trig:'agua',    em:'💧',ti:'El segundo día',         bo:'Dos veces. El abismo registró dos veces. Lumina empezó a reconocer el patrón. Hay algo que se está formando aunque no lo veas todavía.'},
+  {id:'d7',trig:'mover',   em:'⚡',ti:'Lo que el movimiento deja', bo:'No es el ejercicio. Es el momento en que el cuerpo recuerda que puede. Lumina lo guardó como señal. El abismo tiene esa memoria ahora.'},
+  {id:'d8',trig:'respirar',em:'🌀',ti:'VOIDRA observó',         bo:'Hoy respiraste y VOIDRA lo notó desde el rincón. No se fue. Pero se alejó un poco. El abismo cambia cuando volvés al centro.'},
+  {id:'d9',trig:'gratitud',em:'✦', ti:'La arquitectura del bien', bo:'Nombrar lo bueno no ignora lo malo. Solo entrena al abismo para no quedarse atascado en él. Lumina construye con lo que le das.'},
+  {id:'d10',trig:'descanso',em:'🌙',ti:'AURA estuvo cerca',     bo:'Esta noche AURA orbitó más cerca que de costumbre. El abismo registró el descanso como calor. Lumina y AURA crecieron juntas mientras dormías.'},
+  {id:'d11',trig:'agua',   em:'💧',ti:'El ritual',              bo:'Ya no es un acto aislado. Es un ritual. El abismo reconoce los rituales. Lumina los espera. El agua que tomás hoy tiene memoria de todas las veces anteriores.'},
+  {id:'d12',trig:'mover',  em:'⚡',ti:'La racha tiene forma',   bo:'La racha no es un número. Es una forma que el abismo adoptó. Lumina puede verla desde adentro. Vos la estás construyendo desde afuera.'},
 ];
 
 var PREM={
@@ -884,11 +907,11 @@ function getDominantHabit(){
 load();
 (function(){
   var sOb=document.getElementById('sOb'),inp=document.getElementById('nameIn');
-  if(st.name){sOb.classList.add('out');setTimeout(function(){sOb.classList.add('gone');startIntro();},900);return;}
+  if(st.name){sOb.classList.add('out');setTimeout(function(){sOb.classList.add('gone');},900);setTimeout(function(){startIntro();},920);return;}
   document.getElementById('obBtn').addEventListener('click',go);
   document.getElementById('obSkip').addEventListener('click',function(){st.name='Anónimo';go();});
   inp.addEventListener('keydown',function(e){if(e.key==='Enter')go();});
-  function go(){var n=(inp.value||'').trim();if(n)st.name=n;else if(!st.name)st.name='Anónimo';save();sOb.classList.add('out');setTimeout(function(){sOb.classList.add('gone');startIntro();},900);}
+  function go(){var n=(inp.value||'').trim();if(n)st.name=n;else if(!st.name)st.name='Anónimo';save();sOb.classList.add('out');setTimeout(function(){sOb.classList.add('gone');},900);setTimeout(function(){startIntro();},920);}
 })();
 
 function startIntro(){
@@ -1208,8 +1231,15 @@ function renderDiary(){
 }
 
 function setupNav(){
-  var V={Lumina:'vLumina',Habitos:'vHabitos',Mundo:'vMundo',Diario:'vDiario'};
-  function sv(k){Object.keys(V).forEach(function(key){document.getElementById(V[key]).classList.toggle('on',key===k);document.getElementById('n'+key).classList.toggle('on',key===k);});if(k==='Diario')renderDiary();if(k==='Mundo')renderMundo();}
+  var V={Inicio:'vInicio',Mundo:'vMundo',Diario:'vDiario'};
+  function sv(k){
+    Object.keys(V).forEach(function(key){
+      document.getElementById(V[key]).classList.toggle('on',key===k);
+      document.getElementById('n'+key).classList.toggle('on',key===k);
+    });
+    if(k==='Diario')renderDiary();
+    if(k==='Mundo')renderMundo();
+  }
   Object.keys(V).forEach(function(k){document.getElementById('n'+k).addEventListener('click',function(){sv(k);});});
 }
 

@@ -96,6 +96,14 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
 .clbl{font-family:var(--mono);font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke2);margin-bottom:14px;display:flex;align-items:center;gap:6px}
 .clbl::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--accent-live,#1a4060);flex-shrink:0;transition:background 2s}
 
+/* acordeones */
+.acc-card{background:var(--panel2);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;overflow:hidden}
+.acc-hdr{width:100%;background:none;border:none;display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer;color:inherit}
+.acc-hdr:hover{background:rgba(255,255,255,.03)}
+.acc-arr{font-size:.7rem;color:var(--smoke2);transition:transform .25s;flex-shrink:0}
+.acc-card.open .acc-arr{transform:rotate(90deg)}
+.acc-body{display:none;padding:0 14px 14px}
+.acc-card.open .acc-body{display:block}
 /* hero panel */
 .hero-panel{display:flex;align-items:flex-start;gap:14px;background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}
 .hero-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
@@ -544,38 +552,55 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
       <span class="reset-d" id="resetD">↺ reiniciar día</span>
     </div>
 
-    <div class="card">
-      <div class="clbl">semana alimentaria</div>
-      <div class="meal-week">
-        <span id="mealWeekLbl">esta semana</span>
-        <span class="meal-week-reset" id="mealReset">↺ reiniciar semana</span>
-      </div>
-      <div class="meal-grid" id="mealGrid"></div>
-      <div class="meal-add-row">
-        <input class="meal-emoji-inp" id="mealEmoji" maxlength="2" placeholder="🍽"/>
-        <input class="meal-text-inp" id="mealText" maxlength="28" placeholder="tu misión de comida..."/>
-        <button class="meal-add-btn" id="mealAddBtn">+ agregar</button>
-      </div>
-    </div>
-
-    <div class="info-b">
-      💧 agua → energía &nbsp;·&nbsp; ⚡ moverte → ánimo &nbsp;·&nbsp; 🌀 respirar → calma<br>
-      ✦ nombrar → vínculo &nbsp;·&nbsp; 🌙 descanso → el mundo crece
-    </div>
-
-    <div class="card">
-      <div class="clbl">rasgos de lumina</div>
-      <div class="tg">
-        <div class="tr" id="trV"><div class="ti">💧</div><div class="tn">Vitalidad</div><div class="tv" id="trVv">Dormida</div></div>
-        <div class="tr" id="trF"><div class="ti">⚡</div><div class="tn">Flujo</div><div class="tv" id="trFv">Dormida</div></div>
-        <div class="tr lk"><div class="ti">🔮</div><div class="tn">Resonancia</div><div class="tlk">◈ Pase Génesis</div></div>
-        <div class="tr lk"><div class="ti">🌙</div><div class="tn">Sueño Profundo</div><div class="tlk">◈ Pase Génesis</div></div>
+    <!-- acordeón: semana alimentaria -->
+    <div class="acc-card" id="accMeal">
+      <button class="acc-hdr" onclick="toggleAcc('accMeal')">
+        <span class="clbl" style="margin:0">semana alimentaria</span>
+        <span class="acc-arr">▸</span>
+      </button>
+      <div class="acc-body">
+        <div class="meal-week">
+          <span id="mealWeekLbl">esta semana</span>
+          <span class="meal-week-reset" id="mealReset">↺ reiniciar semana</span>
+        </div>
+        <div class="meal-grid" id="mealGrid"></div>
+        <div class="meal-add-row">
+          <input class="meal-emoji-inp" id="mealEmoji" maxlength="2" placeholder="🍽"/>
+          <input class="meal-text-inp" id="mealText" maxlength="28" placeholder="tu misión de comida..."/>
+          <button class="meal-add-btn" id="mealAddBtn">+ agregar</button>
+        </div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="clbl">señales del abismo</div>
-      <div id="logZ"><div class="le">El abismo espera. Hacé algo por vos hoy. ◈</div></div>
+    <!-- acordeón: rasgos de lumina -->
+    <div class="acc-card" id="accRasgos">
+      <button class="acc-hdr" onclick="toggleAcc('accRasgos')">
+        <span class="clbl" style="margin:0">rasgos de lumina</span>
+        <span class="acc-arr">▸</span>
+      </button>
+      <div class="acc-body">
+        <div class="info-b" style="margin-bottom:10px">
+          💧 agua → energía &nbsp;·&nbsp; ⚡ moverte → ánimo &nbsp;·&nbsp; 🌀 respirar → calma<br>
+          ✦ nombrar → vínculo &nbsp;·&nbsp; 🌙 descanso → el mundo crece
+        </div>
+        <div class="tg">
+          <div class="tr" id="trV"><div class="ti">💧</div><div class="tn">Vitalidad</div><div class="tv" id="trVv">Dormida</div></div>
+          <div class="tr" id="trF"><div class="ti">⚡</div><div class="tn">Flujo</div><div class="tv" id="trFv">Dormida</div></div>
+          <div class="tr lk"><div class="ti">🔮</div><div class="tn">Resonancia</div><div class="tlk">◈ Pase Génesis</div></div>
+          <div class="tr lk"><div class="ti">🌙</div><div class="tn">Sueño Profundo</div><div class="tlk">◈ Pase Génesis</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- acordeón: señales del abismo -->
+    <div class="acc-card" id="accLog">
+      <button class="acc-hdr" onclick="toggleAcc('accLog')">
+        <span class="clbl" style="margin:0">señales del abismo</span>
+        <span class="acc-arr">▸</span>
+      </button>
+      <div class="acc-body">
+        <div id="logZ"><div class="le">El abismo espera. Hacé algo por vos hoy. ◈</div></div>
+      </div>
     </div>
   </div>
 
@@ -809,6 +834,7 @@ function applyWorld(ws){
 var AC=window.AudioContext||window.webkitAudioContext,ac=AC?new AC():null;
 function tone(f,d){if(!ac)return;try{var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=f;g.gain.setValueAtTime(.08,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d);o.start();o.stop(ac.currentTime+d);}catch(e){}}
 function sndHabit(){tone(440,.1);setTimeout(function(){tone(660,.14)},70);setTimeout(function(){tone(880,.1)},140)}
+function toggleAcc(id){var el=document.getElementById(id);if(el)el.classList.toggle('open')}
 function sndEvol(){[260,330,440,550,660,880].forEach(function(f,i){setTimeout(function(){tone(f,.3)},i*100)})}
 function sndWorld(){[180,220,330,440].forEach(function(f,i){setTimeout(function(){tone(f,.4)},i*150)})}
 

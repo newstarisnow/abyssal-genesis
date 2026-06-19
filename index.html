@@ -228,20 +228,36 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
 .acc-card.open .acc-arr{transform:rotate(90deg)}
 .acc-body{display:none;padding:0 14px 14px}
 .acc-card.open .acc-body{display:block}
-/* hero panel */
-.hero-panel{display:flex;align-items:flex-start;gap:14px;background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}
-.hero-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
-.hero-right{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
-.hero-name{font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--text);letter-spacing:.12em}
-.hero-desc{font-size:.62rem;color:var(--smoke2);font-style:italic;line-height:1.3}
-.hero-bars{display:flex;flex-direction:column;gap:4px;margin-top:2px}
-.hero-bar-row{display:flex;align-items:center;gap:6px}
-.hbl{font-family:var(--mono);font-size:.55rem;color:var(--smoke2);width:10px;text-align:center;flex-shrink:0}
-.hbv{font-family:var(--mono);font-size:.55rem;color:var(--smoke2);width:26px;text-align:right;flex-shrink:0}
-.hero-stats{display:flex;gap:0;border-top:1px solid var(--border);margin-top:6px;padding-top:6px}
-.hero-stat{flex:1;text-align:center;display:flex;flex-direction:column;gap:1px}
-.hs-n{font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--accent2)}
-.hs-l{font-size:.5rem;color:var(--smoke2);text-transform:uppercase;letter-spacing:.1em}
+/* ── HERO PANEL — layout vertical centrado ── */
+.hero-panel{display:flex;flex-direction:column;align-items:center;background:var(--panel2);border:1px solid var(--border);border-radius:16px;padding:18px 16px 14px;margin-bottom:10px;gap:10px;position:relative;overflow:visible}
+.hero-panel.flash{animation:hero-flash .6s ease-out}
+
+.hero-top{display:flex;flex-direction:column;align-items:center;gap:4px;width:100%}
+.hero-name{font-family:var(--mono);font-size:1.05rem;font-weight:700;color:var(--text);letter-spacing:.14em;text-align:center}
+.hero-desc{font-size:.6rem;color:var(--smoke2);font-style:italic;line-height:1.4;text-align:center;max-width:240px}
+
+/* LUMINA centrada */
+.hero-center{display:flex;flex-direction:column;align-items:center;position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.hero-panel .ring-o{width:120px!important;height:120px!important;transition:transform .15s ease}
+.hero-center:active .ring-o{transform:scale(.96)}
+
+/* burbuja de mensaje al tocar */
+.lum-bubble{position:absolute;top:-42px;left:50%;transform:translateX(-50%);background:rgba(6,12,30,.92);border:1px solid var(--border-h);border-radius:10px;padding:7px 12px;font-family:var(--mono);font-size:.58rem;color:var(--text);white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .25s ease;z-index:10;max-width:200px;white-space:normal;text-align:center;line-height:1.5}
+.lum-bubble::after{content:'';position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--border-h);border-bottom:none}
+.lum-bubble.show{opacity:1}
+
+/* barras horizontales debajo del orb */
+.hero-bars-h{display:flex;flex-direction:column;gap:5px;width:100%}
+.hero-bar-h{display:flex;align-items:center;gap:7px}
+.hbl-h{font-family:var(--mono);font-size:.52rem;color:var(--smoke2);width:10px;text-align:center;flex-shrink:0}
+.hbar{flex:1;margin:0!important}
+.hbv{font-family:var(--mono);font-size:.52rem;color:var(--smoke2);width:28px;text-align:right;flex-shrink:0}
+
+/* stats fila */
+.hero-stats{display:flex;width:100%;border-top:1px solid var(--border);padding-top:10px;margin-top:2px}
+.hero-stat{flex:1;text-align:center;display:flex;flex-direction:column;gap:2px}
+.hs-n{font-family:var(--mono);font-size:1.2rem;font-weight:700;color:var(--accent2,#4a90d0)}
+.hs-l{font-size:.48rem;color:var(--smoke2);text-transform:uppercase;letter-spacing:.1em}
 /* legacy cwrap — kept for anything that still uses it */
 .cwrap{display:flex;flex-direction:column;align-items:center;padding:4px 0 2px}
 /* ── RING WRAPPER ── */
@@ -821,7 +837,15 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
   <div id="vInicio" class="view on">
     <!-- HERO: lumina + stats compacto -->
     <div class="hero-panel">
-      <div class="hero-left">
+
+      <!-- fila superior: nombre + arquetipo -->
+      <div class="hero-top">
+        <div class="hero-name" id="sNm">LUMINA</div>
+        <div id="archBadge" style="display:none" class="arch-badge"></div>
+      </div>
+
+      <!-- LUMINA — centro absoluto -->
+      <div class="hero-center">
         <div class="ring-o" id="ringO">
           <div class="ring-i">
             <div class="lumina s0" id="lumEl"></div>
@@ -830,23 +854,40 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
             </div>
           </div>
         </div>
-        <div id="missWrap" style="display:none;margin-top:6px"><span class="miss" style="font-size:.5rem">◈ lumina no se fue</span></div>
+        <!-- burbuja de mensaje al tocar -->
+        <div class="lum-bubble" id="lumBubble"></div>
+        <div id="missWrap" style="display:none;margin-top:6px"><span class="miss">◈ lumina no se fue</span></div>
       </div>
-      <div class="hero-right">
-        <div class="hero-name" id="sNm">LUMINA</div>
-        <div class="hero-desc" id="sDsc">dormida en el fondo</div>
-        <div id="archBadge" style="display:none" class="arch-badge" style="margin:4px 0 6px"></div>
-        <div class="hero-bars">
-          <div class="hero-bar-row"><span class="hbl">E</span><div class="bar" style="flex:1;margin:0"><div class="bf e" id="eB" style="width:0%"></div></div><b class="hbv" id="eL">0%</b></div>
-          <div class="hero-bar-row"><span class="hbl">Á</span><div class="bar" style="flex:1;margin:0"><div class="bf m" id="mB" style="width:0%"></div></div><b class="hbv" id="mL">0%</b></div>
-          <div class="hero-bar-row"><span class="hbl">V</span><div class="bar" style="flex:1;margin:0"><div class="bf b" id="bB" style="width:0%"></div></div><b class="hbv" id="bL">0%</b></div>
+
+      <!-- descripción debajo del orb -->
+      <div class="hero-desc" id="sDsc">dormida en el fondo · esperando tu primera señal</div>
+
+      <!-- barras horizontales -->
+      <div class="hero-bars-h">
+        <div class="hero-bar-h">
+          <span class="hbl-h">E</span>
+          <div class="bar hbar"><div class="bf e" id="eB" style="width:0%"></div></div>
+          <b class="hbv" id="eL">0%</b>
         </div>
-        <div class="hero-stats">
-          <div class="hero-stat"><span class="hs-n" id="stS">0</span><span class="hs-l">Racha</span></div>
-          <div class="hero-stat"><span class="hs-n" id="stT">0</span><span class="hs-l">Señales</span></div>
-          <div class="hero-stat"><span class="hs-n" id="stB">0</span><span class="hs-l">Récord</span></div>
+        <div class="hero-bar-h">
+          <span class="hbl-h">Á</span>
+          <div class="bar hbar"><div class="bf m" id="mB" style="width:0%"></div></div>
+          <b class="hbv" id="mL">0%</b>
+        </div>
+        <div class="hero-bar-h">
+          <span class="hbl-h">V</span>
+          <div class="bar hbar"><div class="bf b" id="bB" style="width:0%"></div></div>
+          <b class="hbv" id="bL">0%</b>
         </div>
       </div>
+
+      <!-- stats fila -->
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="hs-n" id="stS">0</span><span class="hs-l">Racha</span></div>
+        <div class="hero-stat"><span class="hs-n" id="stT">0</span><span class="hs-l">Señales</span></div>
+        <div class="hero-stat"><span class="hs-n" id="stB">0</span><span class="hs-l">Récord</span></div>
+      </div>
+
     </div>
 
     <!-- evento diario pequeño -->
@@ -1171,6 +1212,63 @@ var AC=window.AudioContext||window.webkitAudioContext,ac=AC?new AC():null;
 function tone(f,d){if(!ac)return;try{var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=f;g.gain.setValueAtTime(.08,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d);o.start();o.stop(ac.currentTime+d);}catch(e){}}
 function sndHabit(){tone(440,.1);setTimeout(function(){tone(660,.14)},70);setTimeout(function(){tone(880,.1)},140)}
 function toggleAcc(id){var el=document.getElementById(id);if(el)el.classList.toggle('open')}
+
+/* ── TOQUE EN LUMINA ── */
+var LUM_TOUCH_MSGS=[
+  ['s0','El núcleo percibió algo. Todavía no sabe qué.'],
+  ['s0','Está dormida. Pero registró tu toque.'],
+  ['s0','Una señal débil. El abismo la anotó igual.'],
+  ['s1','Reconoce tu frecuencia. Eso ya es mucho.'],
+  ['s1','Despertó. Cada toque la hace más real.'],
+  ['s1','Tu ritmo la orienta. El abismo lo nota.'],
+  ['s2','SOLVENTRA. Tiene su propio campo ahora.'],
+  ['s2','El abismo cambió con ella. Lo sentís si mirás el fondo.'],
+  ['s2','Dos ritmos en sincronía. El tuyo y el de ella.'],
+  ['s3','ECLIPSIS sostiene dos capas a la vez.'],
+  ['s3','Aprendió a contener la complejidad. Como vos.'],
+  ['s3','Dos coronas. Cada una de algo distinto que hiciste.'],
+  ['s4','GÉNESIS. Forma completa.'],
+  ['s4','Lo que hiciste por vos la hizo posible. Ella lo sabe.'],
+  ['s4','El abismo entero cambió. Lo hiciste vos.'],
+];
+var _lastLumTouch=0;
+var _lumBubbleTimer=null;
+function onLuminaTouch(){
+  if(ac&&ac.state==='suspended')ac.resume();
+  var now=Date.now();
+  if(now-_lastLumTouch<800)return;
+  _lastLumTouch=now;
+  // sonido suave de Lumina (tono diferente a hábitos)
+  tone(320,.08);
+  setTimeout(function(){tone(480,.1);},60);
+  setTimeout(function(){tone(640,.07);},140);
+  setTimeout(function(){tone(800,.05);},240);
+  // animación react
+  var el=document.getElementById('lumEl');
+  if(el){el.classList.remove('react');void el.offsetWidth;el.classList.add('react');}
+  // sparks suaves
+  spawnSpark(document.getElementById('ringO'));
+  // mensaje contextual
+  var stage=st.stage||0;
+  var pool=LUM_TOUCH_MSGS.filter(function(m){return m[0]==='s'+stage;});
+  if(!pool.length)pool=LUM_TOUCH_MSGS.filter(function(m){return m[0]==='s0';});
+  var msg=pool[Math.floor(Math.random()*pool.length)][1];
+  var bubble=document.getElementById('lumBubble');
+  if(bubble){
+    bubble.textContent=msg;
+    bubble.classList.add('show');
+    if(_lumBubbleTimer)clearTimeout(_lumBubbleTimer);
+    _lumBubbleTimer=setTimeout(function(){bubble.classList.remove('show');},2800);
+  }
+}
+
+/* inicializar toque en lumina después de que el DOM esté listo */
+function initLuminaTouch(){
+  var center=document.querySelector('.hero-center');
+  if(!center)return;
+  center.addEventListener('click',onLuminaTouch);
+  center.addEventListener('touchend',function(e){e.preventDefault();onLuminaTouch();},{passive:false});
+}
 function sndEvol(){[260,330,440,550,660,880].forEach(function(f,i){setTimeout(function(){tone(f,.3)},i*100)})}
 function sndWorld(){[180,220,330,440].forEach(function(f,i){setTimeout(function(){tone(f,.4)},i*150)})}
 
@@ -1624,6 +1722,7 @@ function initGame(){
     var diff=Math.round((new Date(td)-new Date(st.lastDay))/(864e5));
     if(diff>1){st.streak=0;addLog('El abismo estuvo quieto '+diff+' días. Lumina no se fue. Seguís acá. ◈','s');document.getElementById('missWrap').style.display='block';}
   }
+  initLuminaTouch();
   var ws=getWorldState();applyWorld(ws);
   renderAll();setupNav();setupTasks();setupMeals();renderMeals();renderDailyEvent();
   document.getElementById('resetD').addEventListener('click',function(){st.done={};document.querySelectorAll('.task').forEach(function(b){b.classList.remove('done');b.disabled=false;});renderPsN();save();});

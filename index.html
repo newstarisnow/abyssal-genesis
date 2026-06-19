@@ -87,6 +87,85 @@ html,body{min-height:100vh;background:var(--void);color:var(--text);font-family:
 
 #sEvol{background:rgba(5,8,16,.97);z-index:250;display:none;flex-direction:column;align-items:center;justify-content:center}
 #sEvol.vis{display:flex}
+/* ══════════════════════════════════════════
+   TUTORIAL
+══════════════════════════════════════════ */
+#sTut{background:var(--void);padding:0;justify-content:flex-start;overflow:hidden}
+.tut-bar{position:absolute;top:0;left:0;right:0;height:2px;background:rgba(255,255,255,.06)}
+.tut-fill{height:100%;background:var(--accent-live,#0088cc);transition:width .4s ease}
+.tut-step{position:absolute;top:14px;right:18px;font-family:var(--mono);font-size:.48rem;color:var(--smoke3);letter-spacing:.1em}
+
+.tut-slides{width:100%;flex:1;position:relative;display:flex;flex-direction:column;padding:48px 24px 0}
+.tut-slide{display:none;flex-direction:column;gap:0;height:100%;animation:fade-up .35s ease}
+.tut-slide.active{display:flex}
+
+/* visual area */
+.tut-visual{flex:0 0 auto;display:flex;align-items:center;justify-content:center;min-height:220px;position:relative;margin-bottom:24px}
+
+/* lumina preview */
+.tv-ring-outer{width:100px;height:100px;border-radius:50%;background:conic-gradient(rgba(0,140,220,.7) 65%,rgba(255,255,255,.04) 0);display:flex;align-items:center;justify-content:center}
+.tv-ring-inner{width:86px;height:86px;border-radius:50%;background:#06091a;display:flex;align-items:center;justify-content:center;overflow:visible}
+.tv-orb{border-radius:50%;position:relative}
+.tv-orb.s2{width:56px;height:56px;background:radial-gradient(circle at 36% 32%,rgba(255,255,255,.88),rgba(0,220,255,.7) 28%,rgba(80,40,220,.38) 60%,transparent 82%);box-shadow:0 0 28px 10px rgba(0,200,240,.35),0 0 60px 22px rgba(80,40,220,.14);animation:s2-pulse 2.8s ease-in-out infinite}
+
+.tv-arrows{position:absolute;inset:0;pointer-events:none}
+.tv-arrow{position:absolute;display:flex;align-items:center;gap:6px}
+.tv-arrow span{font-family:var(--mono);font-size:.5rem;color:var(--smoke2);white-space:nowrap}
+.tv-arr-line{width:24px;height:1px;background:rgba(0,140,220,.3);flex-shrink:0}
+
+/* hábitos preview */
+.tv-habits{display:flex;flex-direction:column;gap:6px;width:100%}
+.tv-habit{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.2);border:1px solid rgba(40,80,120,.18);border-radius:8px;padding:7px 10px;transition:all .3s}
+.tv-habit.done{border-color:rgba(0,140,220,.25);background:rgba(0,100,180,.08)}
+.tv-h-ck{font-size:.6rem;color:rgba(0,180,220,.7);width:12px;flex-shrink:0}
+.tv-h-em{font-size:1rem;flex-shrink:0}
+.tv-h-info{flex:1;display:flex;flex-direction:column}
+.tv-h-info b{font-size:.62rem;color:var(--text);font-family:var(--mono);letter-spacing:.06em}
+.tv-h-info span{font-size:.5rem;color:var(--smoke2);font-style:italic}
+.tv-h-plus{font-family:var(--mono);font-size:.58rem;color:rgba(0,180,220,.6);flex-shrink:0}
+
+/* barras preview */
+.tv-bars{width:100%;display:flex;flex-direction:column;gap:14px}
+.tv-bar-row{display:flex;flex-direction:column;gap:4px}
+.tv-bar-label{display:flex;align-items:center;gap:6px;font-size:.58rem;color:var(--smoke)}
+.tv-bar-icon{font-size:.8rem}
+.tv-bar-track{height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+.tv-bar-fill{height:100%;border-radius:2px;transition:width 1s ease}
+.tv-bar-src{font-family:var(--mono);font-size:.46rem;color:var(--smoke3);letter-spacing:.06em}
+.tv-bar-note{margin-top:6px;font-size:.52rem;color:var(--smoke2);text-align:center;font-style:italic;line-height:1.5}
+
+/* check-in preview */
+.tv-checkins{display:grid;grid-template-columns:1fr 1fr;gap:5px;width:100%;margin-bottom:10px}
+.tv-ci{display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.2);border:1px solid rgba(40,80,120,.15);border-radius:8px;padding:7px 9px;transition:all .3s}
+.tv-ci.active{border-color:rgba(0,180,220,.35);background:rgba(0,120,200,.1)}
+.tv-ci-em{font-size:.9rem}
+.tv-ci-l{font-size:.52rem;color:var(--smoke);font-family:var(--mono)}
+.tv-ci-msg{font-size:.58rem;color:var(--smoke2);font-style:italic;text-align:center;line-height:1.6;border-left:2px solid rgba(0,140,220,.25);padding-left:10px}
+
+/* mundo preview */
+.tv-world{width:100%;display:flex;flex-direction:column;gap:12px}
+.tv-world-stages{display:flex;flex-direction:column;gap:8px}
+.tv-ws{display:flex;align-items:center;gap:10px;font-size:.58rem;color:var(--smoke2);font-family:var(--mono)}
+.tv-ws.active{color:var(--text)}
+.tv-ws-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;border:1px solid rgba(255,255,255,.08)}
+.tv-world-arrow{font-size:.52rem;color:var(--smoke3);text-align:center;font-style:italic;line-height:1.5;margin-top:4px}
+
+/* texto del slide */
+.tut-text{flex:1;display:flex;flex-direction:column;gap:8px;padding-bottom:16px}
+.tut-title{font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--text);letter-spacing:.08em}
+.tut-desc{font-size:.84rem;color:var(--smoke);line-height:1.75}
+.tut-sub{font-size:.72rem;color:var(--smoke2);font-style:italic;line-height:1.6}
+
+/* nav */
+.tut-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;flex-shrink:0}
+.tut-prev,.tut-next{background:none;border:1px solid rgba(40,80,120,.3);color:var(--smoke);font-size:.9rem;width:38px;height:38px;border-radius:50%;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.tut-prev:hover,.tut-next:hover{border-color:rgba(0,160,220,.5);color:var(--text)}
+.tut-dots{display:flex;gap:6px}
+.tut-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.12);transition:all .3s;cursor:pointer}
+.tut-dot.active{background:var(--accent-live,#0088cc);width:18px;border-radius:3px}
+.tut-skip{display:block;margin:0 auto 28px;background:none;border:none;font-family:var(--mono);font-size:.58rem;color:var(--smoke3);cursor:pointer;letter-spacing:.08em;transition:color .2s}
+.tut-skip:hover{color:var(--smoke2)}
+
 /* ── ESCENA EVOLUCIÓN ── */
 .ev-orb{width:110px;height:110px;border-radius:50%;animation:orb-pulse 2s ease-in-out infinite;margin:16px auto 20px;transition:all 1.5s ease;flex-shrink:0}
 @keyframes orb-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
@@ -545,6 +624,163 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
   <div class="in-greet" id="inGr"></div>
   <div class="in-term" id="inTerm"><span class="cur" id="inCur"></span></div>
   <button class="in-btn" id="inBtn">ascender del abismo ▲</button>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TUTORIAL — solo primera vez
+══════════════════════════════════════════ -->
+<div class="screen gone" id="sTut">
+  <!-- barra de progreso -->
+  <div class="tut-bar">
+    <div class="tut-fill" id="tutFill"></div>
+  </div>
+  <div class="tut-step" id="tutStep">1 / 5</div>
+
+  <!-- slides -->
+  <div class="tut-slides" id="tutSlides">
+
+    <!-- SLIDE 1: Lumina -->
+    <div class="tut-slide active" data-slide="0">
+      <div class="tut-visual">
+        <div class="tv-ring-outer">
+          <div class="tv-ring-inner">
+            <div class="tv-orb s2"></div>
+          </div>
+        </div>
+        <div class="tv-arrows">
+          <div class="tv-arrow" style="top:18%;left:62%">
+            <div class="tv-arr-line"></div>
+            <span>evoluciona con vos</span>
+          </div>
+          <div class="tv-arrow" style="top:52%;left:62%">
+            <div class="tv-arr-line"></div>
+            <span>refleja tu estado</span>
+          </div>
+          <div class="tv-arrow bottom" style="top:76%;left:62%">
+            <div class="tv-arr-line"></div>
+            <span>5 formas posibles</span>
+          </div>
+        </div>
+      </div>
+      <div class="tut-text">
+        <div class="tut-title">Lumina</div>
+        <div class="tut-desc">Una entidad que vive en tu dispositivo. No tiene objetivos propios — su forma depende de lo que hacés por vos.</div>
+        <div class="tut-sub">Cuanto más te cuidás, más completa se vuelve.</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: Hábitos -->
+    <div class="tut-slide" data-slide="1">
+      <div class="tut-visual">
+        <div class="tv-habits">
+          <div class="tv-habit done"><span class="tv-h-ck">✓</span><span class="tv-h-em">💧</span><div class="tv-h-info"><b>Agua</b><span>el cuerpo primero</span></div><span class="tv-h-plus">+E</span></div>
+          <div class="tv-habit done"><span class="tv-h-ck">✓</span><span class="tv-h-em">⚡</span><div class="tv-h-info"><b>Movimiento</b><span>señal cinética</span></div><span class="tv-h-plus">+Á</span></div>
+          <div class="tv-habit"><span class="tv-h-ck" style="opacity:0">✓</span><span class="tv-h-em">🌀</span><div class="tv-h-info"><b>Respiración</b><span>volver al centro</span></div><span class="tv-h-plus" style="opacity:.3">+Á</span></div>
+          <div class="tv-habit"><span class="tv-h-ck" style="opacity:0">✓</span><span class="tv-h-em">✦</span><div class="tv-h-info"><b>Gratitud</b><span>lo que existe</span></div><span class="tv-h-plus" style="opacity:.3">+V</span></div>
+          <div class="tv-habit"><span class="tv-h-ck" style="opacity:0">✓</span><span class="tv-h-em">🌙</span><div class="tv-h-info"><b>Descanso</b><span>el protocolo invisible</span></div><span class="tv-h-plus" style="opacity:.3">+E</span></div>
+        </div>
+      </div>
+      <div class="tut-text">
+        <div class="tut-title">Protocolos diarios</div>
+        <div class="tut-desc">5 acciones pequeñas. Cada una alimenta una parte diferente de Lumina — energía, ánimo o vínculo.</div>
+        <div class="tut-sub">Se reinician cada día. No hay penalización por no completarlos.</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Barras -->
+    <div class="tut-slide" data-slide="2">
+      <div class="tut-visual">
+        <div class="tv-bars">
+          <div class="tv-bar-row">
+            <div class="tv-bar-label">
+              <span class="tv-bar-icon">⚡</span>
+              <span>Energía</span>
+            </div>
+            <div class="tv-bar-track"><div class="tv-bar-fill" style="width:68%;background:#0088cc"></div></div>
+            <div class="tv-bar-src">agua · descanso</div>
+          </div>
+          <div class="tv-bar-row">
+            <div class="tv-bar-label">
+              <span class="tv-bar-icon">🌊</span>
+              <span>Ánimo</span>
+            </div>
+            <div class="tv-bar-track"><div class="tv-bar-fill" style="width:45%;background:#5a20aa"></div></div>
+            <div class="tv-bar-src">movimiento · respiración</div>
+          </div>
+          <div class="tv-bar-row">
+            <div class="tv-bar-label">
+              <span class="tv-bar-icon">◈</span>
+              <span>Vínculo</span>
+            </div>
+            <div class="tv-bar-track"><div class="tv-bar-fill" style="width:30%;background:#0055aa"></div></div>
+            <div class="tv-bar-src">gratitud · check-in</div>
+          </div>
+          <div class="tv-bar-note">la suma de las tres<br>determina la etapa de Lumina</div>
+        </div>
+      </div>
+      <div class="tut-text">
+        <div class="tut-title">Tres dimensiones</div>
+        <div class="tut-desc">Energía, Ánimo y Vínculo. No son métricas de rendimiento — son señales de cómo estás hoy.</div>
+        <div class="tut-sub">Lumina evoluciona cuando la suma de las tres supera ciertos umbrales.</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: Check-in -->
+    <div class="tut-slide" data-slide="3">
+      <div class="tut-visual">
+        <div class="tv-checkins">
+          <div class="tv-ci"><span class="tv-ci-em">😴</span><span class="tv-ci-l">Agotado/a</span></div>
+          <div class="tv-ci"><span class="tv-ci-em">😰</span><span class="tv-ci-l">Con ansiedad</span></div>
+          <div class="tv-ci active"><span class="tv-ci-em">⚡</span><span class="tv-ci-l">Con energía</span></div>
+          <div class="tv-ci"><span class="tv-ci-em">😐</span><span class="tv-ci-l">Regular</span></div>
+          <div class="tv-ci"><span class="tv-ci-em">🌑</span><span class="tv-ci-l">Muy mal</span></div>
+          <div class="tv-ci"><span class="tv-ci-em">🎮</span><span class="tv-ci-l">Modo activo</span></div>
+        </div>
+        <div class="tv-ci-msg">"El abismo se encendió antes de que abrieras esto. Eso ya es algo."</div>
+      </div>
+      <div class="tut-text">
+        <div class="tut-title">Check-in diario</div>
+        <div class="tut-desc">Una vez por día elegís cómo llegás. No hay respuesta incorrecta — cada estado suma diferente.</div>
+        <div class="tut-sub">Lumina responde con un mensaje específico para lo que elegiste.</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: El mundo -->
+    <div class="tut-slide" data-slide="4">
+      <div class="tut-visual">
+        <div class="tv-world">
+          <div class="tv-world-stages">
+            <div class="tv-ws"><div class="tv-ws-dot" style="background:#0a1428"></div><span>El Vacío</span></div>
+            <div class="tv-ws"><div class="tv-ws-dot" style="background:#0d2040"></div><span>Primer Pulso</span></div>
+            <div class="tv-ws active"><div class="tv-ws-dot" style="background:#0a2a4a;box-shadow:0 0 8px rgba(0,140,220,.5)"></div><span>El Despertar</span></div>
+            <div class="tv-ws"><div class="tv-ws-dot" style="background:#1a1060;opacity:.5"></div><span>La Tormenta</span></div>
+            <div class="tv-ws"><div class="tv-ws-dot" style="background:#200840;opacity:.4"></div><span>La Génesis</span></div>
+          </div>
+          <div class="tv-world-arrow">el fondo, los colores y las partículas cambian con cada estado</div>
+        </div>
+      </div>
+      <div class="tut-text">
+        <div class="tut-title">El mundo cambia</div>
+        <div class="tut-desc">El abismo tiene 5 estados. A medida que Lumina crece, el fondo, los colores y la atmósfera se transforman.</div>
+        <div class="tut-sub">No es decoración — es el abismo respondiendo a lo que hacés.</div>
+      </div>
+    </div>
+
+  </div><!-- /slides -->
+
+  <!-- controles -->
+  <div class="tut-nav">
+    <button class="tut-prev" id="tutPrev" style="visibility:hidden">←</button>
+    <div class="tut-dots" id="tutDots">
+      <span class="tut-dot active"></span>
+      <span class="tut-dot"></span>
+      <span class="tut-dot"></span>
+      <span class="tut-dot"></span>
+      <span class="tut-dot"></span>
+    </div>
+    <button class="tut-next" id="tutNext">→</button>
+  </div>
+  <button class="tut-skip" id="tutSkip">saltar tutorial</button>
 </div>
 
 <!-- TEST DE PERSONALIDAD -->
@@ -1119,7 +1355,7 @@ var PREM={
   conexion:    {em:'🤝',ti:'protocolo: conectar',     bo:'La conexión genuina es el protocolo más poderoso del abismo. Pase Génesis.'},
 };
 var TN=['Dormida','Despertando','Emergiendo','Vibrante','Arraigada','Luminosa','Estable','Intensa','Plena','Radiante','◈ Máxima'];
-var st={name:'',energy:0,mood:0,bond:0,stage:0,done:{},log:[],diary:{},vital:0,flow:0,total:0,streak:0,best:0,lastDay:'',mealWeek:'',mealDone:{},mealCustom:[],archetype:'',testDone:false,checkinDay:'',checkinMsg:'',lumixActive:false,lumixDaysInactive:0,eventDay:''};
+var st={name:'',energy:0,mood:0,bond:0,stage:0,done:{},log:[],diary:{},vital:0,flow:0,total:0,streak:0,best:0,lastDay:'',mealWeek:'',mealDone:{},mealCustom:[],archetype:'',testDone:false,tutDone:false,checkinDay:'',checkinMsg:'',lumixActive:false,lumixDaysInactive:0,eventDay:''};
 
 function load(){try{var r=localStorage.getItem(KEY);if(r)st=Object.assign(st,JSON.parse(r));}catch(e){}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
@@ -1230,9 +1466,68 @@ function startIntro(){
   function type(l,cb){var sp=document.createElement('span');sp.className='in-line '+l.c;term.insertBefore(sp,cur);var i=0;var iv=setInterval(function(){sp.textContent+=l.t[i++];if(i>=l.t.length){clearInterval(iv);setTimeout(cb,320);}},20);}
   function next(){if(li>=lines.length){cur.style.display='none';setTimeout(function(){btn.classList.add('show');},250);return;}var l=lines[li++];setTimeout(function(){type(l,next);},li===1?200:500);}
   next();
-  btn.addEventListener('click',function(){sIn.classList.add('out');setTimeout(function(){sIn.classList.add('gone');
+  btn.addEventListener('click',function(){
+    sIn.classList.add('out');
+    setTimeout(function(){
+      sIn.classList.add('gone');
+      if(!st.tutDone){startTutorial();}
+      else if(!st.testDone){startTest();}
+      else{initGame();}
+    },900);
+  });
+}
+
+/* ── TUTORIAL ── */
+function startTutorial(){
+  var sT=document.getElementById('sTut');
+  sT.classList.remove('gone');
+  var cur=0,total=5;
+  var slides=sT.querySelectorAll('.tut-slide');
+  var dots=sT.querySelectorAll('.tut-dot');
+  var fill=document.getElementById('tutFill');
+  var stepLbl=document.getElementById('tutStep');
+  var prev=document.getElementById('tutPrev');
+  var next=document.getElementById('tutNext');
+
+  function go(n){
+    slides[cur].classList.remove('active');
+    dots[cur].classList.remove('active');
+    cur=Math.max(0,Math.min(total-1,n));
+    slides[cur].classList.add('active');
+    dots[cur].classList.add('active');
+    fill.style.width=((cur+1)/total*100)+'%';
+    stepLbl.textContent=(cur+1)+' / '+total;
+    prev.style.visibility=cur===0?'hidden':'visible';
+    next.textContent=cur===total-1?'entrar ▲':'→';
+  }
+
+  prev.addEventListener('click',function(){go(cur-1);});
+  next.addEventListener('click',function(){
+    if(cur<total-1){go(cur+1);}
+    else{finishTutorial();}
+  });
+  dots.forEach(function(d,i){d.addEventListener('click',function(){go(i);});});
+  document.getElementById('tutSkip').addEventListener('click',finishTutorial);
+
+  // swipe táctil
+  var tx=0;
+  sT.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
+  sT.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-tx;
+    if(Math.abs(dx)>40){dx<0?go(cur+1):go(cur-1);}
+  },{passive:true});
+
+  go(0);
+}
+
+function finishTutorial(){
+  st.tutDone=true;save();
+  var sT=document.getElementById('sTut');
+  sT.classList.add('out');
+  setTimeout(function(){
+    sT.classList.add('gone');
     if(!st.testDone){startTest();}else{initGame();}
-  },900);});
+  },900);
 }
 
 /* ── TEST DE PERSONALIDAD ── */
@@ -1910,6 +2205,7 @@ function dbReset(){
   <button class="dev-act" onclick="dbCheckin()">🌑 simular check-in de hoy</button>
   <button class="dev-act" onclick="dbNewDay()">↺ nuevo día — liberar hábitos</button>
   <button class="dev-act" onclick="dbLumix()">◉ activar LUMIX ahora</button>
+  <button class="dev-act" onclick="st.tutDone=false;save();alert('Reiniciá la app para ver el tutorial')">📖 repetir tutorial (reiniciar)</button>
 
   <div class="dev-sec">sistemas implementados</div>
   <div class="dev-checklist">

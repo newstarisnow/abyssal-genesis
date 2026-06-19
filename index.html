@@ -96,9 +96,24 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
 .clbl{font-family:var(--mono);font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke2);margin-bottom:14px;display:flex;align-items:center;gap:6px}
 .clbl::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--accent-live,#1a4060);flex-shrink:0;transition:background 2s}
 
-.cwrap{display:flex;flex-direction:column;align-items:center;padding:8px 0 4px}
-.ring-o{width:clamp(150px,56vw,180px);height:clamp(150px,56vw,180px);border-radius:50%;background:conic-gradient(var(--accent-live,#1a4060) calc(var(--rp,0)*1%),rgba(255,255,255,.03) 0);display:flex;align-items:center;justify-content:center;transition:background 1s ease}
-.ring-i{width:calc(100% - 14px);height:calc(100% - 14px);border-radius:50%;background:var(--panel);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;transition:background 2s}
+/* hero panel */
+.hero-panel{display:flex;align-items:flex-start;gap:14px;background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}
+.hero-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.hero-right{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.hero-name{font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--text);letter-spacing:.12em}
+.hero-desc{font-size:.62rem;color:var(--smoke2);font-style:italic;line-height:1.3}
+.hero-bars{display:flex;flex-direction:column;gap:4px;margin-top:2px}
+.hero-bar-row{display:flex;align-items:center;gap:6px}
+.hbl{font-family:var(--mono);font-size:.55rem;color:var(--smoke2);width:10px;text-align:center;flex-shrink:0}
+.hbv{font-family:var(--mono);font-size:.55rem;color:var(--smoke2);width:26px;text-align:right;flex-shrink:0}
+.hero-stats{display:flex;gap:0;border-top:1px solid var(--border);margin-top:6px;padding-top:6px}
+.hero-stat{flex:1;text-align:center;display:flex;flex-direction:column;gap:1px}
+.hs-n{font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--accent2)}
+.hs-l{font-size:.5rem;color:var(--smoke2);text-transform:uppercase;letter-spacing:.1em}
+/* legacy cwrap — kept for anything that still uses it */
+.cwrap{display:flex;flex-direction:column;align-items:center;padding:4px 0 2px}
+.ring-o{width:clamp(86px,28vw,104px);height:clamp(86px,28vw,104px);border-radius:50%;background:conic-gradient(var(--accent-live,#1a4060) calc(var(--rp,0)*1%),rgba(255,255,255,.03) 0);display:flex;align-items:center;justify-content:center;transition:background 1s ease}
+.ring-i{width:calc(100% - 10px);height:calc(100% - 10px);border-radius:50%;background:var(--panel);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;transition:background 2s}
 .ring-i::after{content:'';position:absolute;width:160%;height:160%;background:radial-gradient(circle,var(--glow-live,rgba(26,64,96,.05)),transparent 62%);animation:drift 20s ease-in-out infinite alternate;transition:background 2s}
 @keyframes drift{0%{transform:translate(-10%,-8%)}100%{transform:translate(10%,10%)}}
 
@@ -459,19 +474,9 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
   </nav>
 
   <div id="vInicio" class="view on">
-    <!-- evento diario -->
-    <div class="abyss-event gone" id="abyssEvent">
-      <div class="ae-em" id="aeEm">✦</div>
-      <div class="ae-body">
-        <div class="ae-tag">señal del abismo · hoy</div>
-        <div class="ae-txt" id="aeTxt"></div>
-      </div>
-    </div>
-
-    <!-- lumina card -->
-    <div class="card" style="text-align:center">
-      <div class="clbl" style="justify-content:center">entidad · abismo-01</div>
-      <div class="cwrap">
+    <!-- HERO: lumina + stats compacto -->
+    <div class="hero-panel">
+      <div class="hero-left">
         <div class="ring-o" id="ringO">
           <div class="ring-i">
             <div class="lumina s0" id="lumEl"></div>
@@ -480,39 +485,50 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
             </div>
           </div>
         </div>
-        <div id="missWrap" style="display:none;margin-top:10px"><span class="miss">◈ el abismo estuvo quieto · lumina no se fue</span></div>
-        <div class="sname" id="sNm">LUMINA</div>
-        <div class="sdesc" id="sDsc">señal débil · reconociendo tu presencia</div>
-        <div id="archBadge" style="display:none" class="arch-badge"></div>
+        <div id="missWrap" style="display:none;margin-top:6px"><span class="miss" style="font-size:.5rem">◈ lumina no se fue</span></div>
       </div>
-      <div class="srow"><span>Energía</span><b id="eL">0%</b></div>
-      <div class="bar"><div class="bf e" id="eB" style="width:0%"></div></div>
-      <div class="srow"><span>Ánimo</span><b id="mL">0%</b></div>
-      <div class="bar"><div class="bf m" id="mB" style="width:0%"></div></div>
-      <div class="srow"><span>Vínculo</span><b id="bL">0%</b></div>
-      <div class="bar"><div class="bf b" id="bB" style="width:0%"></div></div>
+      <div class="hero-right">
+        <div class="hero-name" id="sNm">LUMINA</div>
+        <div class="hero-desc" id="sDsc">dormida en el fondo</div>
+        <div id="archBadge" style="display:none" class="arch-badge" style="margin:4px 0 6px"></div>
+        <div class="hero-bars">
+          <div class="hero-bar-row"><span class="hbl">E</span><div class="bar" style="flex:1;margin:0"><div class="bf e" id="eB" style="width:0%"></div></div><b class="hbv" id="eL">0%</b></div>
+          <div class="hero-bar-row"><span class="hbl">Á</span><div class="bar" style="flex:1;margin:0"><div class="bf m" id="mB" style="width:0%"></div></div><b class="hbv" id="mL">0%</b></div>
+          <div class="hero-bar-row"><span class="hbl">V</span><div class="bar" style="flex:1;margin:0"><div class="bf b" id="bB" style="width:0%"></div></div><b class="hbv" id="bL">0%</b></div>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><span class="hs-n" id="stS">0</span><span class="hs-l">Racha</span></div>
+          <div class="hero-stat"><span class="hs-n" id="stT">0</span><span class="hs-l">Señales</span></div>
+          <div class="hero-stat"><span class="hs-n" id="stB">0</span><span class="hs-l">Récord</span></div>
+        </div>
+      </div>
     </div>
 
-    <!-- racha + contador inline -->
-    <div style="display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:12px">
-      <div class="streak-b" style="margin:0">
-        <div class="sf" id="sfFire">◌</div>
-        <div class="si">
-          <b id="siTxt">El abismo espera la primera señal</b>
-          <span id="siSub">cada acción deja una marca</span>
-        </div>
+    <!-- evento diario pequeño -->
+    <div class="abyss-event gone" id="abyssEvent" style="margin-bottom:10px">
+      <div class="ae-em" id="aeEm">✦</div>
+      <div class="ae-body">
+        <div class="ae-tag">señal del abismo · hoy</div>
+        <div class="ae-txt" id="aeTxt"></div>
       </div>
-      <div class="ps-b" style="margin:0;flex-direction:column;align-items:center;justify-content:center;min-width:64px">
-        <div class="ps-n" id="psN">0</div>
-        <div class="ps-i" style="text-align:center">
-          <b id="psTi" style="font-size:.6rem">hoy</b>
-          <span id="psDt" style="display:none"></span>
-        </div>
+    </div>
+
+    <!-- racha inline compacta -->
+    <div class="streak-b" style="margin-bottom:10px;padding:10px 14px">
+      <div class="sf" id="sfFire">◌</div>
+      <div class="si" style="flex:1">
+        <b id="siTxt">El abismo espera la primera señal</b>
+        <span id="siSub">cada acción deja una marca</span>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div class="ps-n" id="psN" style="font-size:1.4rem">0</div>
+        <div style="font-family:var(--mono);font-size:.5rem;color:var(--smoke2)" id="psTi">hoy</div>
+        <span id="psDt" style="display:none"></span>
       </div>
     </div>
 
     <!-- protocolos diarios -->
-    <div class="card">
+    <div class="card" style="padding:14px 14px">
       <div class="clbl">protocolos diarios</div>
       <div class="tg2">
         <button class="task" data-t="agua" data-e="15" data-m="8"><span class="ck">✓</span><span class="tem">💧</span><span class="tlb">Agua</span><span class="txp">el cuerpo primero</span></button>
@@ -544,15 +560,6 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
     <div class="info-b">
       💧 agua → energía &nbsp;·&nbsp; ⚡ moverte → ánimo &nbsp;·&nbsp; 🌀 respirar → calma<br>
       ✦ nombrar → vínculo &nbsp;·&nbsp; 🌙 descanso → el mundo crece
-    </div>
-
-    <div class="card">
-      <div class="clbl">datos del abismo</div>
-      <div class="sg">
-        <div class="sb"><div class="sb-n" id="stS">0</div><div class="sb-l">Racha</div></div>
-        <div class="sb"><div class="sb-n" id="stT">0</div><div class="sb-l">Señales</div></div>
-        <div class="sb"><div class="sb-n" id="stB">0</div><div class="sb-l">Récord</div></div>
-      </div>
     </div>
 
     <div class="card">

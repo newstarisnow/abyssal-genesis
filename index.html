@@ -220,6 +220,23 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
 .clbl{font-family:var(--mono);font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke2);margin-bottom:14px;display:flex;align-items:center;gap:6px}
 .clbl::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--accent-live,#1a4060);flex-shrink:0;transition:background 2s}
 
+/* ── CHECK-IN HERO BUTTON ── */
+.checkin-hero-btn{width:100%;background:rgba(0,100,180,.06);border:1px solid rgba(0,140,220,.2);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .25s;color:var(--text);font-family:var(--sans)}
+.checkin-hero-btn:hover{background:rgba(0,120,200,.12);border-color:rgba(0,160,240,.35)}
+.checkin-hero-btn.done{background:rgba(0,60,20,.08);border-color:rgba(0,160,80,.2)}
+.chb-dot{width:8px;height:8px;border-radius:50%;background:var(--accent-live,#0088cc);flex-shrink:0;animation:dot-blink 2s ease-in-out infinite}
+.checkin-hero-btn.done .chb-dot{background:rgba(0,180,80,.7);animation:none}
+.chb-txt{flex:1;font-size:.68rem;color:var(--smoke);text-align:left;font-family:var(--mono);letter-spacing:.04em}
+.checkin-hero-btn.done .chb-txt{color:var(--smoke2)}
+.chb-em{font-size:.85rem;flex-shrink:0;color:var(--smoke2)}
+
+/* ── LUMIX SCENE ── */
+.lumix-scene-orb{width:80px;height:80px;border-radius:50%;margin:20px auto;
+  background:radial-gradient(circle at 42% 38%,rgba(255,255,255,.6),rgba(140,80,220,.7) 40%,rgba(60,20,120,.4) 70%,transparent 88%);
+  box-shadow:0 0 30px 10px rgba(140,80,220,.35),0 0 70px 28px rgba(80,20,180,.15);
+  animation:lumix-float 3s ease-in-out infinite}
+@keyframes lumix-float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.05)}}
+
 /* ── METAS PERSONALES ── */
 .goal-intro{font-size:.6rem;color:var(--smoke2);font-style:italic;margin-bottom:10px;line-height:1.5}
 .goal-add-row{display:flex;gap:8px;margin-bottom:12px}
@@ -843,6 +860,16 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
 </div>
 
 <!-- ESCENA NARRATIVA DE EVOLUCIÓN -->
+<!-- ESCENA NARRATIVA DE LUMIX -->
+<div class="screen gone" id="sLumix" style="background:var(--void);justify-content:center;padding:32px 28px;text-align:center">
+  <div class="ev-tag">algo emergió del abismo</div>
+  <div class="lumix-scene-orb" id="lumixSceneOrb"></div>
+  <div class="ev-name" style="font-size:1.6rem;margin-bottom:4px">LUMIX</div>
+  <div class="ev-stage-sub" style="font-size:.9rem;color:var(--smoke2);margin-bottom:20px">entidad secundaria · frecuencia propia</div>
+  <div class="ev-lines" id="lumixLines"></div>
+  <button class="ev-btn show" id="lumixBtn">entendido ▲</button>
+</div>
+
 <div class="screen" id="sEvol" style="background:var(--void);justify-content:center;padding:32px 28px">
   <div class="ev-tag" id="evTag">el abismo responde</div>
   <div class="ev-orb" id="evOrb"></div>
@@ -905,6 +932,13 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
           <b class="hbv" id="bL">0%</b>
         </div>
       </div>
+
+      <!-- CHECK-IN — siempre visible en el hero -->
+      <button class="checkin-hero-btn" id="checkinHeroBtn">
+        <span class="chb-dot" id="chbDot"></span>
+        <span class="chb-txt" id="chbTxt">¿Cómo llegás hoy? · check-in</span>
+        <span class="chb-em" id="chbEm">→</span>
+      </button>
 
       <!-- stats fila -->
       <div class="hero-stats">
@@ -1818,6 +1852,64 @@ function showArchResult(arch){
   btn.onclick=function(){sIn.classList.add('out');setTimeout(function(){sIn.classList.add('gone');initGame();},900);};
 }
 
+/* ── ACTUALIZAR BOTÓN CHECK-IN EN HERO ── */
+function renderCheckinBtn(){
+  var btn=document.getElementById('checkinHeroBtn');
+  var txt=document.getElementById('chbTxt');
+  var dot=document.getElementById('chbDot');
+  var em=document.getElementById('chbEm');
+  if(!btn)return;
+  var done=st.checkinDay===today();
+  btn.classList.toggle('done',done);
+  if(done){
+    // mostrar qué eligió
+    var mood=st.checkinMsg||'';
+    var em2='';
+    if(mood.indexOf('cuerpo llegó')>-1||mood.indexOf('Agotado')>-1)em2='😴';
+    else if(mood.indexOf('ansiedad')>-1)em2='😰';
+    else if(mood.indexOf('honesto')>-1||mood.indexOf('Regular')>-1)em2='😐';
+    else if(mood.indexOf('encendió')>-1||mood.indexOf('energía')>-1)em2='⚡';
+    else if(mood.indexOf('costó')>-1||mood.indexOf('Muy mal')>-1)em2='🌑';
+    else if(mood.indexOf('ctivo')>-1)em2='🎮';
+    txt.textContent='check-in registrado hoy '+(em2||'✓');
+    em.textContent='✓';
+    btn.style.cursor='default';
+  } else {
+    txt.textContent='¿cómo llegás hoy? · toca para registrar';
+    em.textContent='→';
+    btn.style.cursor='pointer';
+  }
+}
+
+/* ── ESCENA NARRATIVA DE LUMIX ── */
+function showLumixScene(){
+  var sc=document.getElementById('sLumix');
+  if(!sc)return;
+  var lz=document.getElementById('lumixLines');
+  lz.innerHTML='';
+  sc.classList.remove('gone');
+  sc.style.display='flex';
+  window.scrollTo(0,0);
+  var lines=[
+    {t:'Emergió del mismo abismo que Lumina.',hi:false},
+    {t:'Pero llegó antes. Y por razones distintas.',hi:false},
+    {t:'LUMIX orbita cuando el ritmo se sostiene.',hi:true},
+    {t:'Si el ritmo se corta, vuelve al fondo.',hi:false},
+    {t:'No desaparece. Espera.',hi:true},
+  ];
+  lines.forEach(function(l,i){
+    var span=document.createElement('span');
+    span.className='ev-line'+(l.hi?' hi':'');
+    span.textContent=l.t;
+    lz.appendChild(span);
+    setTimeout(function(){span.classList.add('show');},600+i*500);
+  });
+  document.getElementById('lumixBtn').addEventListener('click',function(){
+    sc.classList.add('out');
+    setTimeout(function(){sc.style.display='none';sc.classList.remove('out');},700);
+  },{once:true});
+}
+
 /* ── CHECK-IN DIARIO ── */
 function showCheckin(onDone){
   var ov=document.getElementById('checkinOv');
@@ -1851,6 +1943,12 @@ function initGame(){
   }
   initLuminaTouch();
   initGoals();
+  // botón check-in en hero
+  var chBtn=document.getElementById('checkinHeroBtn');
+  if(chBtn)chBtn.addEventListener('click',function(){
+    if(st.checkinDay===today())return;
+    showCheckin(function(){renderAll();});
+  });
   var ws=getWorldState();applyWorld(ws);
   renderAll();setupNav();setupTasks();setupMeals();renderMeals();renderDailyEvent();
   document.getElementById('resetD').addEventListener('click',function(){st.done={};document.querySelectorAll('.task').forEach(function(b){b.classList.remove('done');b.disabled=false;});renderPsN();save();});
@@ -1907,7 +2005,7 @@ function doTask(tid,e,m){
   var prevLumix=st.lumixActive;
   unlockDiary(tid);save();renderAll();
   if(!prevLumix&&st.lumixActive){
-    setTimeout(function(){showToast(TOASTS.lumix.icon,TOASTS.lumix.title,TOASTS.lumix.desc);},600);
+    setTimeout(function(){showLumixScene();},600);
   }
 }
 
@@ -1947,7 +2045,7 @@ function unlockDiary(tid){
   if(e){st.diary[e.id]=true;addLog('◈ lumina transmitió una memoria.','s');}
 }
 
-function renderAll(){renderC();renderLog();renderTasks();renderDiary();renderStreak();renderPsN();renderMundo();renderCompanions();checkLumix();renderGoals();}
+function renderAll(){renderC();renderLog();renderTasks();renderDiary();renderStreak();renderPsN();renderMundo();renderCompanions();checkLumix();renderGoals();renderCheckinBtn();}
 
 function renderCompanions(){
   var z=document.getElementById('compZ');if(!z)return;

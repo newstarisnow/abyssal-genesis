@@ -1,7 +1,7 @@
 {
-  "name": "Abyssal Genesis",
-  "short_name": "Abyssal",
-  "description": "Una criatura vive en tu mente. Crece cuando te cuidás.",
+  "name": "Abismo",
+  "short_name": "Abismo",
+  "description": "Tu estado mental tiene forma. Lumina vive en él.",
   "start_url": "/abyssal-genesis/",
   "display": "standalone",
   "background_color": "#050810",

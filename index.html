@@ -35,6 +35,21 @@ html,body{min-height:100vh;background:var(--void);color:var(--text);font-family:
 .screen.gone{display:none}
 
 #sOb{background:var(--void)}
+/* ── EMOCION ONBOARDING ── */
+#sEmotion{background:var(--void)}
+.em-tag{font-family:var(--mono);font-size:.5rem;letter-spacing:.22em;color:var(--smoke2);text-transform:uppercase;margin-bottom:28px}
+.em-q{font-size:1.05rem;color:var(--text);line-height:1.6;font-weight:600;margin-bottom:8px;max-width:300px}
+.em-sub{font-size:.75rem;color:var(--smoke2);font-family:var(--mono);margin-bottom:32px;letter-spacing:.04em}
+.em-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:320px;margin-bottom:28px}
+.em-opt{background:#0a1020;border:1px solid rgba(40,80,120,.28);border-radius:8px;padding:14px 12px;cursor:pointer;font-size:.8rem;color:var(--smoke);line-height:1.4;text-align:center;transition:all .22s;font-family:var(--sans)}
+.em-opt:hover{border-color:var(--accent-live,#0088cc);color:var(--text);background:rgba(0,100,180,.08)}
+.em-opt.selected{border-color:var(--accent-live,#0088cc);color:var(--text);background:rgba(0,100,180,.12)}
+.em-response{max-width:300px;text-align:center;font-family:var(--mono);font-size:.82rem;color:var(--smoke);line-height:1.8;min-height:80px;opacity:0;transition:opacity .8s ease;margin-bottom:24px}
+.em-response.vis{opacity:1}
+.em-btn{font-family:var(--mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(0,120,200,.4);background:rgba(0,100,180,.08);color:var(--smoke);border-radius:6px;padding:13px 40px;cursor:pointer;transition:all .25s;opacity:0;pointer-events:none}
+.em-btn.show{opacity:1;pointer-events:auto}
+.em-btn:hover{border-color:rgba(0,160,220,.7);color:var(--text);background:rgba(0,120,200,.14)}
+
 /* ── ONBOARDING ── */
 .ob-void{position:relative;width:72px;height:72px;margin-bottom:28px}
 .ob-core{position:absolute;inset:0;border-radius:50%;background:#080e1e;border:1px solid rgba(40,80,120,.3)}
@@ -677,6 +692,21 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
     <button class="ob-btn" id="obBtn">entrar al abismo</button>
     <span class="ob-skip" id="obSkip">continuar sin nombre</span>
   </div>
+</div>
+
+<!-- PANTALLA: PREGUNTA EMOCIONAL -->
+<div class="screen gone" id="sEmotion">
+  <div class="em-tag">lumina · primera lectura</div>
+  <div class="em-q">¿Cuándo fue la última vez<br>que te sentiste bien de verdad?</div>
+  <div class="em-sub">no hay respuesta correcta · solo honestidad</div>
+  <div class="em-opts">
+    <button class="em-opt" data-key="mucho">Hace mucho tiempo.<br>No recuerdo bien.</button>
+    <button class="em-opt" data-key="semana">Esta semana,<br>en algún momento.</button>
+    <button class="em-opt" data-key="hoy">Hoy, aunque sea<br>por un rato.</button>
+    <button class="em-opt" data-key="norecuerdo">Honestamente,<br>no lo sé.</button>
+  </div>
+  <div class="em-response" id="emResponse"></div>
+  <button class="em-btn" id="emBtn">continuar →</button>
 </div>
 
 <!-- PANTALLA: BIENVENIDA PERSONALIZADA -->
@@ -1769,7 +1799,7 @@ var PREM={
   conexion:    {em:'🤝',ti:'protocolo: conectar',     bo:'La conexión genuina es el protocolo más poderoso del abismo. Pase Génesis.'},
 };
 var TN=['Dormida','Despertando','Emergiendo','Vibrante','Arraigada','Luminosa','Estable','Intensa','Plena','Radiante','◈ Máxima'];
-var st={name:'',energy:0,mood:0,bond:0,stage:0,done:{},log:[],diary:{},vital:0,flow:0,total:0,streak:0,best:0,lastDay:'',mealWeek:'',mealDone:{},mealCustom:[],archetype:'',testDone:false,tutDone:false,checkinDay:'',checkinMsg:'',lumixActive:false,lumixDaysInactive:0,eventDay:'',goals:[],firstSignalDone:false};
+var st={name:'',energy:0,mood:0,bond:0,stage:0,done:{},log:[],diary:{},vital:0,flow:0,total:0,streak:0,best:0,lastDay:'',mealWeek:'',mealDone:{},mealCustom:[],archetype:'',testDone:false,tutDone:false,checkinDay:'',checkinMsg:'',lumixActive:false,lumixDaysInactive:0,eventDay:'',goals:[],firstSignalDone:false,emotion:''};
 
 function load(){try{var r=localStorage.getItem(KEY);if(r)st=Object.assign(st,JSON.parse(r));}catch(e){}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
@@ -1856,9 +1886,44 @@ load();
     save();
     sOb.classList.add('out');
     setTimeout(function(){sOb.classList.add('gone');},900);
-    setTimeout(function(){startIntro();},920);
+    setTimeout(function(){startEmotion();},920);
   }
 })();
+
+var EM_RESPONSES={
+  mucho:'El abismo ya lo sabía.\nLumina nació justo para este momento.\nNo hace falta estar bien para empezar.',
+  semana:'Eso es más de lo que parece.\nHay algo en vos que sabe encontrar esos momentos.\nLumina quiere ayudarte a tener más.',
+  hoy:'Hoy cuenta.\nLumina registra incluso los momentos pequeños.\nEso que sentiste hoy — es de lo que está hecha.',
+  norecuerdo:'La honestidad también es una señal.\nEl abismo no juzga desde dónde llegás.\nLumina solo necesita que estés acá.'
+};
+
+function startEmotion(){
+  var sEm=document.getElementById('sEmotion');
+  sEm.classList.remove('gone');
+  var opts=sEm.querySelectorAll('.em-opt');
+  var respEl=document.getElementById('emResponse');
+  var btn=document.getElementById('emBtn');
+  var chosen=null;
+
+  opts.forEach(function(opt){
+    opt.addEventListener('click',function(){
+      opts.forEach(function(o){o.classList.remove('selected');});
+      opt.classList.add('selected');
+      chosen=opt.dataset.key;
+      st.emotion=chosen;
+      save();
+      var txt=EM_RESPONSES[chosen]||'El abismo te escucha.';
+      respEl.textContent=txt;
+      setTimeout(function(){respEl.classList.add('vis');},50);
+      setTimeout(function(){btn.classList.add('show');},600);
+    });
+  });
+
+  btn.addEventListener('click',function(){
+    sEm.classList.add('out');
+    setTimeout(function(){sEm.classList.add('gone');startIntro();},900);
+  });
+}
 
 function startIntro(){
   var sIn=document.getElementById('sIn');
@@ -1867,15 +1932,33 @@ function startIntro(){
   if(tag)tag.textContent=st.name?'señal confirmada · '+st.name+' en el abismo':'señal confirmada · presencia registrada';
   document.getElementById('inGr').textContent=st.name?'// bienvenido al abismo, '+st.name:'// señal recibida · presencia registrada';
   var arch=st.archetype&&ARCHETYPES[st.archetype];
-  var lines=arch?[
+  var emLines={
+    mucho:[
+      {t:'Hace mucho que no te sentías bien. Lumina lo escuchó.',c:''},
+      {t:'El abismo guarda cada señal que enviás. Hoy empieza a cambiar.',c:'hi'},
+    ],
+    semana:[
+      {t:'Esa vez que te sentiste bien esta semana — Lumina la va a ayudarte a repetir.',c:''},
+      {t:'El abismo no te pide que siempre estés bien. Solo que sigas apareciendo.',c:'hi'},
+    ],
+    hoy:[
+      {t:'Hoy hubo un momento. Lumina lo registró como primera señal.',c:''},
+      {t:'Eso es todo lo que necesitaba para empezar a crecer.',c:'hi'},
+    ],
+    norecuerdo:[
+      {t:'No recordar es una forma de honestidad. Lumina empieza desde ahí.',c:''},
+      {t:'El abismo no tiene punto de partida malo. Solo tiene el que elegís hoy.',c:'hi'},
+    ],
+  };
+  var baseLines=arch?[
     {t:'Sos '+arch.name+'. '+arch.desc,c:''},
     {t:'Lumina lo supo desde el primer pulso que enviaste.',c:'hi'},
     {t:'El abismo ya cambió de forma. Cuídate hoy.',c:''},
   ]:[
-    {t:'Lumina apareció el día que algo en vos decidió que las cosas tenían que cambiar.',c:''},
-    {t:'Vive en el abismo de tu mente. El mundo a su alrededor refleja cómo te tratás.',c:'hi'},
+    {t:'Lumina vive en el abismo de tu mente. El mundo a su alrededor refleja cómo te tratás.',c:'hi'},
     {t:'Cuídate hoy. El abismo entero lo va a notar.',c:''},
   ];
+  var lines=(st.emotion&&emLines[st.emotion]?emLines[st.emotion]:[]).concat(baseLines);
   var term=document.getElementById('inTerm'),cur=document.getElementById('inCur'),btn=document.getElementById('inBtn'),li=0;
   function type(l,cb){var sp=document.createElement('span');sp.className='in-line '+l.c;term.insertBefore(sp,cur);var i=0;var iv=setInterval(function(){sp.textContent+=l.t[i++];if(i>=l.t.length){clearInterval(iv);setTimeout(cb,320);}},20);}
   function next(){if(li>=lines.length){cur.style.display='none';setTimeout(function(){btn.classList.add('show');},250);return;}var l=lines[li++];setTimeout(function(){type(l,next);},li===1?200:500);}

@@ -709,10 +709,18 @@ nav button:hover:not(.on){color:var(--smoke);}
 .arch-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(40,80,120,.12);border:1px solid rgba(40,80,120,.3);border-radius:20px;padding:5px 12px;font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;color:var(--smoke2);margin-bottom:12px}
 
 @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+
+/* ── ESTRELLAS ── */
+#stars-layer{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.star{position:absolute;border-radius:50%;background:#fff;animation:star-twinkle var(--d,4s) ease-in-out infinite var(--delay,0s)}
+@keyframes star-twinkle{0%,100%{opacity:var(--lo,.05);transform:scale(1)}50%{opacity:var(--hi,.6);transform:scale(1.4)}}
+.star-shoot{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;box-shadow:0 0 4px 1px rgba(100,180,255,.6);animation:star-shoot var(--sd,3s) linear infinite var(--sdelay,0s);opacity:0}
+@keyframes star-shoot{0%{opacity:0;transform:translate(0,0) rotate(var(--angle,215deg)) scaleX(1)}5%{opacity:1}70%{opacity:.6;transform:translate(calc(var(--sx,120px)),calc(var(--sy,120px))) rotate(var(--angle,215deg)) scaleX(8)}100%{opacity:0;transform:translate(calc(var(--sx,180px)),calc(var(--sy,180px))) rotate(var(--angle,215deg)) scaleX(1)}}
 </style>
 </head>
 <body>
 <canvas id="bg"></canvas>
+<div id="stars-layer"></div>
 
 <!-- PANTALLA 0: SEÑAL RECIBIDA (primera impresión) -->
 <div class="screen" id="sOb">
@@ -2318,7 +2326,7 @@ var EM_RESPONSES={
 
 function startEmotion(){
   var sEm=document.getElementById('sEmotion');
-  sEm.classList.remove('gone');
+  sEm.classList.remove('gone','out');
   var opts=sEm.querySelectorAll('.em-opt');
   var respEl=document.getElementById('emResponse');
   var btn=document.getElementById('emBtn');
@@ -2346,7 +2354,7 @@ function startEmotion(){
 
 function startIntro(){
   var sIn=document.getElementById('sIn');
-  sIn.classList.remove('gone');
+  sIn.classList.remove('gone','out');
   var tag=document.getElementById('inTag');
   if(tag)tag.textContent=st.name?'señal confirmada · '+st.name+' en el abismo':'señal confirmada · presencia registrada';
   document.getElementById('inGr').textContent=st.name?'// bienvenido al abismo, '+st.name:'// señal recibida · presencia registrada';
@@ -2396,7 +2404,7 @@ function startIntro(){
 /* ── TUTORIAL ── */
 function startTutorial(){
   var sT=document.getElementById('sTut');
-  sT.classList.remove('gone');
+  sT.classList.remove('gone','out');
   var cur=0,total=5;
   var slides=sT.querySelectorAll('.tut-slide');
   var dots=sT.querySelectorAll('.tut-dot');
@@ -2465,7 +2473,7 @@ function finishTutorial(){
 /* ── TEST DE PERSONALIDAD ── */
 function startTest(){
   var sT=document.getElementById('sTest');
-  sT.classList.remove('gone');
+  sT.classList.remove('gone','out');
   var qi=0,votes={guerrero:0,explorador:0,sanador:0,estratega:0},sel=null;
   function showQ(){
     var q=TEST_QUESTIONS[qi];
@@ -2573,7 +2581,7 @@ function renderCheckinBtn(){
 function showFirstSignal(){
   var sc=document.getElementById('sFirstSignal');
   if(!sc)return;
-  sc.classList.remove('gone');
+  sc.classList.remove('gone','out');
   function updateSteps(){
     var s1=st.checkinDay===new Date().toDateString();
     var freeTasks=['agua','mover','respirar','gratitud','descanso'];
@@ -3830,6 +3838,38 @@ function dbReset(){
   if(!confirm('¿Borrar todo el progreso y volver al inicio?'))return;
   localStorage.removeItem('lumina-v6');location.reload();
 }
+
+/* ── ESTRELLAS ── */
+(function(){
+  var layer=document.getElementById('stars-layer');
+  if(!layer)return;
+  var W=window.innerWidth,H=window.innerHeight;
+  // 60 estrellas estáticas parpadeantes
+  for(var i=0;i<60;i++){
+    var s=document.createElement('div');
+    s.className='star';
+    var size=Math.random()<0.15?2.5:Math.random()<0.4?1.5:1;
+    var x=Math.random()*100,y=Math.random()*100;
+    var dur=(3+Math.random()*5).toFixed(1)+'s';
+    var delay=(-Math.random()*8).toFixed(1)+'s';
+    var lo=(0.03+Math.random()*0.08).toFixed(2);
+    var hi=(0.3+Math.random()*0.55).toFixed(2);
+    s.style.cssText='left:'+x+'%;top:'+y+'%;width:'+size+'px;height:'+size+'px;--d:'+dur+';--delay:'+delay+';--lo:'+lo+';--hi:'+hi;
+    layer.appendChild(s);
+  }
+  // 4 estrellas fugaces
+  var angles=[215,220,210,225];
+  for(var j=0;j<4;j++){
+    var sh=document.createElement('div');
+    sh.className='star-shoot';
+    var sx=(-80-Math.random()*120).toFixed(0)+'px';
+    var sy=(60+Math.random()*100).toFixed(0)+'px';
+    var sd=(6+Math.random()*10).toFixed(1)+'s';
+    var sdelay=(-Math.random()*16).toFixed(1)+'s';
+    sh.style.cssText='left:'+(20+Math.random()*60)+'%;top:'+(5+Math.random()*30)+'%;--sd:'+sd+';--sdelay:'+sdelay+';--sx:'+sx+';--sy:'+sy+';--angle:'+angles[j]+'deg';
+    layer.appendChild(sh);
+  }
+})();
 </script>
 
 <!-- OVERLAY DEV -->

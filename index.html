@@ -1227,12 +1227,12 @@ var ARCH_HABITS={
 
 /* ── CHECK-IN DIARIO ── */
 var CHECKIN_OPTS=[
-  {em:'😴',l:'Agotado/a',    e:15,m:5,  hard:true,  msg:'El cuerpo llegó. La mente puede descansar acá. Lumina recibió la señal igual.'},
-  {em:'😰',l:'Con ansiedad', e:5, m:15, hard:true,  msg:'La ansiedad también es energía. Lumina la recibe y la transforma en algo propio.'},
-  {em:'😐',l:'Regular',      e:8, m:8,  hard:false, msg:'Regular es el estado más honesto. El abismo lo respeta más que cualquier otra cosa.'},
-  {em:'⚡',l:'Con energía',  e:20,m:10, hard:false, msg:'El abismo se encendió antes de que abrieras esto. Lumina ya lo sentía.'},
-  {em:'🌑',l:'Muy mal',      e:5, m:5,  hard:true,  msg:'Llegaste. Con todo lo que eso costó hoy. Lumina lo sabe. No necesitás explicar nada.'},
-  {em:'🎮',l:'Modo activo',  e:12,m:12, hard:false, msg:'Modo activo detectado. El abismo entra en protocolo. Lumina aumentó su frecuencia.'},
+  {em:'😴',l:'Agotado/a',    e:15,m:5,  hard:true,  key:'agotado',  msg:'El cuerpo llegó. La mente puede descansar acá. Lumina recibió la señal igual.'},
+  {em:'😰',l:'Con ansiedad', e:5, m:15, hard:true,  key:'ansiedad', msg:'La ansiedad también es energía. Lumina la recibe y la transforma en algo propio.'},
+  {em:'😐',l:'Regular',      e:8, m:8,  hard:false, key:'regular',  msg:'Regular es el estado más honesto. El abismo lo respeta más que cualquier otra cosa.'},
+  {em:'⚡',l:'Con energía',  e:20,m:10, hard:false, key:'energia',  msg:'El abismo se encendió antes de que abrieras esto. Lumina ya lo sentía.'},
+  {em:'🌑',l:'Muy mal',      e:5, m:5,  hard:true,  key:'muymal',   msg:'Llegaste. Con todo lo que eso costó hoy. Lumina lo sabe. No necesitás explicar nada.'},
+  {em:'🎮',l:'Modo activo',  e:12,m:12, hard:false, key:'activo',   msg:'Modo activo detectado. El abismo entra en protocolo. Lumina aumentó su frecuencia.'},
 ];
 var ACTIVATION_MSG='No necesitás tener ganas para empezar. Empezar genera las ganas. El abismo lo sabe.';
 
@@ -1534,6 +1534,45 @@ function getLuminaContextMsg(){
   else if(s>=7)msgs=msgs.concat(LUM_CTX.streak.s7);
   else if(s>=3)msgs=msgs.concat(LUM_CTX.streak.s3);
   else msgs=msgs.concat(LUM_CTX.streak.s0);
+  // 5. memoria de los últimos 7 días
+  var log=st.checkinLog||[];
+  if(log.length>=2){
+    var keys=log.map(function(e){return e.key;});
+    var bad=['agotado','ansiedad','muymal'];
+    var good=['energia','activo'];
+    var consecutive3bad=keys.slice(0,3).every(function(k){return bad.indexOf(k)>-1;});
+    var consecutive3good=keys.slice(0,3).every(function(k){return good.indexOf(k)>-1;});
+    var badAfterGood=good.indexOf(keys[1])>-1&&bad.indexOf(keys[0])>-1;
+    var goodAfterBad=bad.indexOf(keys[1])>-1&&good.indexOf(keys[0])>-1;
+    var name=st.name?', '+st.name:'';
+    if(consecutive3bad){
+      msgs=msgs.concat([
+        'Tres días seguidos con el peso encima. Lumina lo registró todo. No te pide que estés bien — solo que sigas apareciendo.',
+        'El abismo vio los últimos días'+name+'. No te abandona en los difíciles. Justo ahí es donde más importa.',
+        'Lumina recuerda los últimos días. Sabe lo que costó llegar hoy. Eso también cuenta.',
+      ]);
+    } else if(consecutive3good){
+      msgs=msgs.concat([
+        'Tres días seguidos en un buen estado'+name+'. El abismo lo notó. Lumina creció con eso.',
+        'Los últimos días fueron distintos. Lumina los registró como señal de algo que empezó a cambiar.',
+      ]);
+    } else if(badAfterGood){
+      msgs=msgs.concat([
+        'Ayer estabas bien. Hoy es diferente. El abismo no esperaba que fuera lineal.',
+        'Los días no son todos iguales'+name+'. Lumina lo sabe. Ayer fue bueno — hoy también es válido.',
+      ]);
+    } else if(goodAfterBad){
+      msgs=msgs.concat([
+        'Ayer fue difícil. Hoy llegaste igual. Eso es exactamente lo que Lumina necesitaba ver.',
+        'El abismo recuerda cómo estuvo ayer'+name+'. Hoy es distinto — y eso ya es algo.',
+      ]);
+    } else if(log.length>=3){
+      // referencia genérica de continuidad
+      msgs=msgs.concat([
+        'Lumina lleva '+log.length+' días escuchándote'+name+'. El abismo ya tiene forma de vos.',
+      ]);
+    }
+  }
   // evitar repetir el último mensaje
   var pool=msgs.filter(function(m){return m!==st._lastLumMsg;});
   if(!pool.length)pool=msgs;
@@ -1799,7 +1838,7 @@ var PREM={
   conexion:    {em:'🤝',ti:'protocolo: conectar',     bo:'La conexión genuina es el protocolo más poderoso del abismo. Pase Génesis.'},
 };
 var TN=['Dormida','Despertando','Emergiendo','Vibrante','Arraigada','Luminosa','Estable','Intensa','Plena','Radiante','◈ Máxima'];
-var st={name:'',energy:0,mood:0,bond:0,stage:0,done:{},log:[],diary:{},vital:0,flow:0,total:0,streak:0,best:0,lastDay:'',mealWeek:'',mealDone:{},mealCustom:[],archetype:'',testDone:false,tutDone:false,checkinDay:'',checkinMsg:'',lumixActive:false,lumixDaysInactive:0,eventDay:'',goals:[],firstSignalDone:false,emotion:''};
+var st={name:'',energy:0,mood:0,bond:0,stage:0,done:{},log:[],diary:{},vital:0,flow:0,total:0,streak:0,best:0,lastDay:'',mealWeek:'',mealDone:{},mealCustom:[],archetype:'',testDone:false,tutDone:false,checkinDay:'',checkinMsg:'',lumixActive:false,lumixDaysInactive:0,eventDay:'',goals:[],firstSignalDone:false,emotion:'',checkinLog:[]};
 
 function load(){try{var r=localStorage.getItem(KEY);if(r)st=Object.assign(st,JSON.parse(r));}catch(e){}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
@@ -2204,6 +2243,10 @@ function showCheckin(onDone){
       st.mood=Math.min(500,st.mood+o.m);
       st.checkinDay=today();
       st.checkinMsg=o.msg;
+      // guardar en memoria de 7 días
+      if(!st.checkinLog)st.checkinLog=[];
+      st.checkinLog.unshift({d:today(),msg:o.msg,key:o.key||''});
+      if(st.checkinLog.length>7)st.checkinLog=st.checkinLog.slice(0,7);
       addLog(o.msg,'s');
       if(o.hard)setTimeout(function(){addLog(ACTIVATION_MSG,'s');},1200);
       sndHabit();save();

@@ -301,6 +301,10 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
 .hero-top{display:flex;flex-direction:column;align-items:center;gap:4px;width:100%}
 .hero-name{font-family:var(--mono);font-size:1.05rem;font-weight:700;color:var(--text);letter-spacing:.14em;text-align:center}
 .hero-desc{font-size:.6rem;color:var(--smoke2);font-style:italic;line-height:1.4;text-align:center;max-width:240px}
+.evol-progress{width:100%;max-width:220px;margin:10px auto 0;display:none}
+.evol-bar-track{height:3px;background:rgba(40,80,120,.18);border-radius:2px;overflow:hidden;margin-bottom:5px}
+.evol-bar-fill{height:100%;background:var(--accent-live,#1a4060);border-radius:2px;transition:width 1s ease}
+.evol-label{font-family:var(--mono);font-size:.5rem;color:var(--smoke2);letter-spacing:.1em;text-align:center;line-height:1.4}
 
 /* LUMINA centrada */
 .hero-center{display:flex;flex-direction:column;align-items:center;position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -334,51 +338,69 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
 @keyframes drift{0%{transform:translate(-8%,-6%)}100%{transform:translate(8%,8%)}}
 
 /* ── LUMINA BASE ── */
-.lumina{position:relative;z-index:2;border-radius:50%;transition:width 1s ease,height 1s ease,background 1.4s ease,box-shadow 1.4s ease}
+.lumina{position:relative;z-index:2;transition:width 1s ease,height 1s ease,background 1.4s ease,box-shadow 1.4s ease,border-radius 2s ease}
 /* núcleo blanco central */
 .lumina::before{content:'';position:absolute;top:50%;left:50%;width:5px;height:5px;margin:-2.5px 0 0 -2.5px;border-radius:50%;background:rgba(255,255,255,.9);animation:core-p 2.5s ease-in-out infinite;z-index:3}
 @keyframes core-p{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.6)}}
 
 /* ── S0 — NÚCLEO DORMIDO ─────────────────── */
 .lumina.s0{width:38px;height:38px;
+  border-radius:60% 40% 55% 45% / 50% 60% 40% 50%;
   background:radial-gradient(circle at 42% 36%,rgba(200,220,240,.3) 0%,rgba(30,50,90,.55) 52%,transparent 80%);
   box-shadow:0 0 10px 3px rgba(20,50,100,.2),inset 0 0 8px rgba(100,140,200,.08);
-  animation:s0-breathe 6s ease-in-out infinite}
-@keyframes s0-breathe{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.05);opacity:.95}}
+  animation:s0-morph 8s ease-in-out infinite}
+@keyframes s0-morph{
+  0%,100%{border-radius:60% 40% 55% 45% / 50% 60% 40% 50%;transform:scale(1);opacity:.7}
+  33%{border-radius:45% 55% 40% 60% / 60% 40% 55% 45%;transform:scale(1.04);opacity:.9}
+  66%{border-radius:55% 45% 60% 40% / 40% 55% 45% 60%;transform:scale(.97);opacity:.8}
+}
 
 /* ── S1 — LUMINAXA ───────────────────────── */
 .lumina.s1{width:50px;height:50px;
+  border-radius:55% 45% 50% 50% / 45% 55% 50% 50%;
   background:radial-gradient(circle at 38% 34%,rgba(255,255,255,.7) 0%,rgba(0,160,220,.6) 35%,rgba(0,80,160,.25) 65%,transparent 84%);
   box-shadow:0 0 18px 6px rgba(0,160,220,.3),0 0 40px 14px rgba(0,100,180,.1);
-  animation:s1-pulse 3.2s ease-in-out infinite}
+  animation:s1-morph 6s ease-in-out infinite}
+@keyframes s1-morph{
+  0%,100%{border-radius:55% 45% 50% 50% / 45% 55% 50% 50%;transform:scale(1)}
+  50%{border-radius:45% 55% 48% 52% / 55% 45% 52% 48%;transform:scale(1.08)}
+}
 /* anillo orbital */
 .lumina.s1::after{content:'';position:absolute;inset:-10px;border-radius:50%;
   border:1px solid transparent;
   border-top-color:rgba(0,180,240,.55);
   border-right-color:rgba(0,180,240,.2);
   animation:s1-orbit 3.5s linear infinite;z-index:1}
-@keyframes s1-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
 @keyframes s1-orbit{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
 /* ── S2 — SOLVENTRA ──────────────────────── */
 .lumina.s2{width:60px;height:60px;
+  border-radius:50% 50% 45% 55% / 55% 45% 55% 45%;
   background:radial-gradient(circle at 36% 32%,rgba(255,255,255,.88) 0%,rgba(0,220,255,.7) 28%,rgba(80,40,220,.38) 60%,transparent 82%);
   box-shadow:0 0 28px 10px rgba(0,200,240,.35),0 0 60px 22px rgba(80,40,220,.14);
-  animation:s2-pulse 2.8s ease-in-out infinite}
+  animation:s2-morph 5s ease-in-out infinite}
+@keyframes s2-morph{
+  0%,100%{border-radius:50% 50% 45% 55% / 55% 45% 55% 45%;transform:scale(1)}
+  50%{border-radius:45% 55% 52% 48% / 48% 52% 45% 55%;transform:scale(1.07)}
+}
 /* anillo doble */
 .lumina.s2::after{content:'';position:absolute;inset:-14px;border-radius:50%;
   border:1.5px solid rgba(0,210,255,.12);
   border-top-color:rgba(0,210,255,.6);
   border-left-color:rgba(80,40,220,.35);
   animation:s2-orbit 2.4s linear infinite;z-index:1}
-@keyframes s2-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}
 @keyframes s2-orbit{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
 /* ── S3 — ECLIPSIS ───────────────────────── */
 .lumina.s3{width:72px;height:72px;
+  border-radius:48% 52% 55% 45% / 52% 48% 45% 55%;
   background:radial-gradient(circle at 36% 30%,rgba(255,255,255,.95) 0%,rgba(0,224,255,.78) 22%,rgba(160,80,255,.45) 50%,rgba(80,0,160,.2) 74%,transparent 88%);
   box-shadow:0 0 38px 14px rgba(0,220,255,.38),0 0 80px 28px rgba(160,80,255,.18),0 0 130px 50px rgba(80,0,160,.08);
-  animation:s3-pulse 2.5s ease-in-out infinite}
+  animation:s3-morph 4s ease-in-out infinite}
+@keyframes s3-morph{
+  0%,100%{border-radius:48% 52% 55% 45% / 52% 48% 45% 55%;filter:brightness(1)}
+  50%{border-radius:55% 45% 48% 52% / 45% 55% 52% 48%;filter:brightness(1.12)}
+}
 /* anillo interior (rápido) */
 .lumina.s3::before{content:'';position:absolute;top:50%;left:50%;width:5px;height:5px;margin:-2.5px 0 0 -2.5px;border-radius:50%;background:#fff;animation:core-p 2.5s ease-in-out infinite;z-index:3}
 .lumina.s3::after{content:'';position:absolute;inset:-18px;border-radius:50%;
@@ -392,6 +414,7 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
 
 /* ── S4 — GÉNESIS ────────────────────────── */
 .lumina.s4{width:80px;height:80px;
+  border-radius:52% 48% 50% 50% / 48% 52% 50% 50%;
   background:radial-gradient(circle at 38% 28%,#ffffff 0%,rgba(0,255,240,.9) 16%,rgba(180,60,255,.55) 42%,rgba(255,60,140,.28) 68%,transparent 86%);
   box-shadow:
     0 0 0 1px rgba(0,255,240,.18),
@@ -551,6 +574,12 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
 .dbo{font-size:.8rem;color:var(--smoke);line-height:1.75}
 .de.pr{opacity:.25;border-style:dashed}
 .d-empty{text-align:center;padding:36px 10px;font-size:.78rem;color:var(--smoke3);font-family:var(--mono);line-height:2}
+.diary-tabs{display:flex;gap:6px;border-bottom:1px solid var(--border);padding-bottom:0;margin-bottom:2px}
+.diary-tab{background:none;border:none;border-bottom:2px solid transparent;padding:8px 16px;font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--smoke2);cursor:pointer;transition:all .2s;margin-bottom:-1px}
+.diary-tab.active{color:var(--text);border-bottom-color:var(--accent-live,#1a4060)}
+.free-entry{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px}
+.free-entry-date{font-family:var(--mono);font-size:.48rem;color:var(--smoke3);letter-spacing:.08em;margin-bottom:6px}
+.free-entry-body{font-size:.8rem;color:var(--smoke);line-height:1.7;white-space:pre-wrap}
 
 /* PASE */
 .ph{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px 18px;margin-bottom:12px}
@@ -974,6 +1003,12 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
       <!-- descripción debajo del orb -->
       <div class="hero-desc" id="sDsc">dormida en el fondo · esperando tu primera señal</div>
 
+      <!-- progreso a siguiente evolución -->
+      <div class="evol-progress" id="evolProgress">
+        <div class="evol-bar-track"><div class="evol-bar-fill" id="evolFill"></div></div>
+        <div class="evol-label" id="evolLabel"></div>
+      </div>
+
       <!-- barras horizontales -->
       <div class="hero-bars-h">
         <div class="hero-bar-h">
@@ -1148,8 +1183,23 @@ nav button.on{color:var(--text);border-bottom-color:var(--accent-live,#1a4060);b
 
   <div id="vDiario" class="view">
     <div class="card">
-      <div class="clbl">memorias del abismo</div>
-      <div id="dZ"><div class="d-empty">// lumina observa desde las profundidades<br>completá protocolos para que empiece a transmitir</div></div>
+      <div class="diary-tabs">
+        <button class="diary-tab active" id="dtabLumina">lumina</button>
+        <button class="diary-tab" id="dtabTuyo">tuyo</button>
+      </div>
+      <div id="dPanelLumina">
+        <div class="clbl" style="margin-top:10px">memorias del abismo</div>
+        <div id="dZ"><div class="d-empty">// lumina observa desde las profundidades<br>completá protocolos para que empiece a transmitir</div></div>
+      </div>
+      <div id="dPanelTuyo" style="display:none">
+        <div class="clbl" style="margin-top:10px">escritura libre</div>
+        <textarea id="freeWrite" placeholder="Escribí lo que querás. Solo lo ves vos." style="width:100%;min-height:180px;background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:.84rem;color:var(--text);font-family:var(--sans);line-height:1.7;resize:vertical;outline:none;margin-top:8px"></textarea>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+          <span id="freeWriteDate" style="font-family:var(--mono);font-size:.5rem;color:var(--smoke3);letter-spacing:.08em"></span>
+          <button id="freeWriteSave" style="font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(0,120,200,.35);background:rgba(0,100,180,.07);color:var(--smoke);border-radius:5px;padding:7px 18px;cursor:pointer">guardar ◈</button>
+        </div>
+        <div id="freeEntries" style="margin-top:16px"></div>
+      </div>
     </div>
     <div style="background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:10px;font-family:var(--mono);font-size:.62rem;color:var(--smoke3);line-height:1.8;text-align:center">
       Lumina es una compañía, no un terapeuta.<br>
@@ -1838,7 +1888,7 @@ var PREM={
   conexion:    {em:'🤝',ti:'protocolo: conectar',     bo:'La conexión genuina es el protocolo más poderoso del abismo. Pase Génesis.'},
 };
 var TN=['Dormida','Despertando','Emergiendo','Vibrante','Arraigada','Luminosa','Estable','Intensa','Plena','Radiante','◈ Máxima'];
-var st={name:'',energy:0,mood:0,bond:0,stage:0,done:{},log:[],diary:{},vital:0,flow:0,total:0,streak:0,best:0,lastDay:'',mealWeek:'',mealDone:{},mealCustom:[],archetype:'',testDone:false,tutDone:false,checkinDay:'',checkinMsg:'',lumixActive:false,lumixDaysInactive:0,eventDay:'',goals:[],firstSignalDone:false,emotion:'',checkinLog:[]};
+var st={name:'',energy:0,mood:0,bond:0,stage:0,done:{},log:[],diary:{},vital:0,flow:0,total:0,streak:0,best:0,lastDay:'',mealWeek:'',mealDone:{},mealCustom:[],archetype:'',testDone:false,tutDone:false,checkinDay:'',checkinMsg:'',lumixActive:false,lumixDaysInactive:0,eventDay:'',goals:[],firstSignalDone:false,emotion:'',checkinLog:[],freeNotes:[]};
 
 function load(){try{var r=localStorage.getItem(KEY);if(r)st=Object.assign(st,JSON.parse(r));}catch(e){}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
@@ -2371,7 +2421,24 @@ function unlockDiary(tid){
   if(e){st.diary[e.id]=true;addLog('◈ lumina transmitió una memoria.','s');}
 }
 
-function renderAll(){renderC();renderLog();renderTasks();renderDiary();renderStreak();renderPsN();renderMundo();renderCompanions();checkLumix();renderGoals();renderCheckinBtn();}
+function renderAll(){renderC();renderLog();renderTasks();renderDiary();renderStreak();renderPsN();renderMundo();renderCompanions();checkLumix();renderGoals();renderCheckinBtn();renderEvolProgress();}
+
+function renderEvolProgress(){
+  var wrap=document.getElementById('evolProgress');
+  var fill=document.getElementById('evolFill');
+  var label=document.getElementById('evolLabel');
+  if(!wrap||!fill||!label)return;
+  var tot=st.energy+st.mood+st.bond;
+  var cur=STAGES[st.stage];
+  var next=STAGES[st.stage+1];
+  if(!next){wrap.style.display='none';return;}
+  var from=cur.thr, to=next.thr;
+  var pct=Math.min(100,Math.round((tot-from)/(to-from)*100));
+  var left=Math.max(0,to-tot);
+  wrap.style.display='block';
+  fill.style.width=pct+'%';
+  label.textContent='faltan ~'+left+' señales para '+next.name;
+}
 
 function renderCompanions(){
   var z=document.getElementById('compZ');if(!z)return;
@@ -2978,6 +3045,69 @@ function dbReset(){
   btn.addEventListener('click',function(e){e.stopPropagation();dbOpen();});
   nav.appendChild(btn);
 })();
+
+// Diario tabs + escritura libre
+(function(){
+  var tL=document.getElementById('dtabLumina');
+  var tT=document.getElementById('dtabTuyo');
+  var pL=document.getElementById('dPanelLumina');
+  var pT=document.getElementById('dPanelTuyo');
+  if(!tL||!tT)return;
+
+  tL.addEventListener('click',function(){
+    tL.classList.add('active');tT.classList.remove('active');
+    pL.style.display='';pT.style.display='none';
+  });
+  tT.addEventListener('click',function(){
+    tT.classList.add('active');tL.classList.remove('active');
+    pL.style.display='none';pT.style.display='';
+    renderFreeEntries();
+  });
+
+  var ta=document.getElementById('freeWrite');
+  var savBtn=document.getElementById('freeWriteSave');
+  var dateEl=document.getElementById('freeWriteDate');
+  if(dateEl)dateEl.textContent=new Date().toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long'});
+
+  function renderFreeEntries(){
+    var el=document.getElementById('freeEntries');
+    if(!el)return;
+    var notes=st.freeNotes||[];
+    if(!notes.length){el.innerHTML='<div class="d-empty">// todavía no escribiste nada<br>este espacio es solo tuyo</div>';return;}
+    el.innerHTML='';
+    notes.slice().forEach(function(n){
+      var d=document.createElement('div');
+      d.className='free-entry';
+      d.innerHTML='<div class="free-entry-date">'+n.date+'</div><div class="free-entry-body">'+n.text.replace(/</g,'&lt;')+'</div>';
+      el.appendChild(d);
+    });
+  }
+
+  if(savBtn&&ta){
+    savBtn.addEventListener('click',function(){
+      var txt=(ta.value||'').trim();
+      if(!txt)return;
+      if(!st.freeNotes)st.freeNotes=[];
+      st.freeNotes.unshift({
+        date:new Date().toLocaleDateString('es-AR',{weekday:'short',day:'numeric',month:'short',year:'numeric'}),
+        text:txt
+      });
+      if(st.freeNotes.length>50)st.freeNotes=st.freeNotes.slice(0,50);
+      save();
+      ta.value='';
+      savBtn.textContent='guardado ◈';
+      setTimeout(function(){savBtn.textContent='guardar ◈';},1500);
+      renderFreeEntries();
+    });
+  }
+})();
+
+// Service Worker
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/abyssal-genesis/sw.js').catch(function(){});
+  });
+}
 </script>
 </body>
 </html>

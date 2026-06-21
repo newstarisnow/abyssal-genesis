@@ -303,14 +303,15 @@ nav button:hover:not(.on){color:var(--smoke);}
 .clbl::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--accent-live,#1a4060);flex-shrink:0;transition:background 2s}
 
 /* ── CHECK-IN HERO BUTTON ── */
-.checkin-hero-btn{width:100%;background:rgba(0,100,180,.06);border:1px solid rgba(0,140,220,.2);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .25s;color:var(--text);font-family:var(--sans)}
-.checkin-hero-btn:hover{background:rgba(0,120,200,.12);border-color:rgba(0,160,240,.35)}
-.checkin-hero-btn.done{background:rgba(0,60,20,.08);border-color:rgba(0,160,80,.2)}
-.chb-dot{width:8px;height:8px;border-radius:50%;background:var(--accent-live,#0088cc);flex-shrink:0;animation:dot-blink 2s ease-in-out infinite}
-.checkin-hero-btn.done .chb-dot{background:rgba(0,180,80,.7);animation:none}
-.chb-txt{flex:1;font-size:.68rem;color:var(--smoke);text-align:left;font-family:var(--mono);letter-spacing:.04em}
+.checkin-hero-btn{width:100%;background:rgba(0,100,180,.07);border:1px solid rgba(0,140,220,.25);border-radius:11px;padding:12px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .2s,border-color .2s,transform .12s;color:var(--text);font-family:var(--sans)}
+.checkin-hero-btn:hover{background:rgba(0,120,200,.14);border-color:rgba(0,160,240,.4)}
+.checkin-hero-btn:active{transform:scale(.98)}
+.checkin-hero-btn.done{background:rgba(0,60,20,.1);border-color:rgba(0,160,80,.25)}
+.chb-dot{width:9px;height:9px;border-radius:50%;background:var(--accent-live,#0088cc);flex-shrink:0;animation:dot-blink 2s ease-in-out infinite}
+.checkin-hero-btn.done .chb-dot{background:rgba(0,200,100,.8);animation:none}
+.chb-txt{flex:1;font-size:.74rem;color:var(--smoke);text-align:left;font-family:var(--sans);letter-spacing:.01em}
 .checkin-hero-btn.done .chb-txt{color:var(--smoke2)}
-.chb-em{font-size:.85rem;flex-shrink:0;color:var(--smoke2)}
+.chb-em{font-size:.9rem;flex-shrink:0;color:var(--smoke)}
 
 /* ── LUMIX SCENE ── */
 .lumix-scene-orb{width:80px;height:80px;border-radius:50%;margin:20px auto;
@@ -357,13 +358,13 @@ nav button:hover:not(.on){color:var(--smoke);}
 .hero-panel{display:flex;flex-direction:column;align-items:center;background:var(--panel2);border:1px solid var(--border);border-radius:16px;padding:18px 16px 14px;margin-bottom:10px;gap:10px;position:relative;overflow:visible}
 .hero-panel.flash{animation:hero-flash .6s ease-out}
 
-.hero-top{display:flex;flex-direction:column;align-items:center;gap:4px;width:100%}
-.hero-name{font-family:var(--mono);font-size:1.05rem;font-weight:700;color:var(--text);letter-spacing:.14em;text-align:center}
-.hero-desc{font-size:.6rem;color:var(--smoke2);font-style:italic;line-height:1.4;text-align:center;max-width:240px}
-.evol-progress{width:100%;max-width:220px;margin:10px auto 0;display:none}
-.evol-bar-track{height:3px;background:rgba(40,80,120,.18);border-radius:2px;overflow:hidden;margin-bottom:5px}
+.hero-top{display:flex;flex-direction:column;align-items:center;gap:5px;width:100%}
+.hero-name{font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--text);letter-spacing:.18em;text-align:center}
+.hero-desc{font-size:.7rem;color:var(--smoke);line-height:1.5;text-align:center;max-width:260px}
+.evol-progress{width:100%;max-width:240px;margin:10px auto 0;display:none}
+.evol-bar-track{height:4px;background:rgba(40,80,120,.2);border-radius:2px;overflow:hidden;margin-bottom:6px}
 .evol-bar-fill{height:100%;background:var(--accent-live,#1a4060);border-radius:2px;transition:width 1s ease}
-.evol-label{font-family:var(--mono);font-size:.5rem;color:var(--smoke2);letter-spacing:.1em;text-align:center;line-height:1.4}
+.evol-label{font-family:var(--mono);font-size:.56rem;color:var(--smoke);letter-spacing:.08em;text-align:center;line-height:1.5}
 
 /* LUMINA centrada */
 .hero-center{display:flex;flex-direction:column;align-items:center;position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -376,17 +377,17 @@ nav button:hover:not(.on){color:var(--smoke);}
 .lum-bubble.show{opacity:1}
 
 /* barras horizontales debajo del orb */
-.hero-bars-h{display:flex;flex-direction:column;gap:5px;width:100%}
-.hero-bar-h{display:flex;align-items:center;gap:7px}
-.hbl-h{font-family:var(--mono);font-size:.52rem;color:var(--smoke2);width:10px;text-align:center;flex-shrink:0}
+.hero-bars-h{display:flex;flex-direction:column;gap:7px;width:100%}
+.hero-bar-h{display:flex;align-items:center;gap:9px}
+.hbl-h{font-family:var(--mono);font-size:.6rem;color:var(--smoke);width:12px;text-align:center;flex-shrink:0;font-weight:600}
 .hbar{flex:1;margin:0!important}
-.hbv{font-family:var(--mono);font-size:.52rem;color:var(--smoke2);width:28px;text-align:right;flex-shrink:0}
+.hbv{font-family:var(--mono);font-size:.6rem;color:var(--smoke);width:32px;text-align:right;flex-shrink:0}
 
 /* stats fila */
-.hero-stats{display:flex;width:100%;border-top:1px solid var(--border);padding-top:10px;margin-top:2px}
-.hero-stat{flex:1;text-align:center;display:flex;flex-direction:column;gap:2px}
-.hs-n{font-family:var(--mono);font-size:1.2rem;font-weight:700;color:var(--accent2,#4a90d0)}
-.hs-l{font-size:.48rem;color:var(--smoke2);text-transform:uppercase;letter-spacing:.1em}
+.hero-stats{display:flex;width:100%;border-top:1px solid var(--border);padding-top:12px;margin-top:4px}
+.hero-stat{flex:1;text-align:center;display:flex;flex-direction:column;gap:3px}
+.hs-n{font-family:var(--mono);font-size:1.3rem;font-weight:800;color:var(--accent2,#4a90d0)}
+.hs-l{font-size:.54rem;color:var(--smoke);text-transform:uppercase;letter-spacing:.1em}
 /* legacy cwrap — kept for anything that still uses it */
 .cwrap{display:flex;flex-direction:column;align-items:center;padding:4px 0 2px}
 /* ── RING WRAPPER ── */
@@ -470,27 +471,27 @@ nav button:hover:not(.on){color:var(--smoke);}
 
 .sg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .sb{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:14px 8px;text-align:center;transition:background 2s,border-color 2s}
-.sb-n{font-family:var(--mono);font-size:1.4rem;font-weight:700;color:var(--text);line-height:1}
-.sb-l{font-family:var(--mono);font-size:.52rem;letter-spacing:.08em;text-transform:uppercase;color:var(--smoke2);margin-top:5px}
+.sb-n{font-family:var(--mono);font-size:1.4rem;font-weight:800;color:var(--text);line-height:1}
+.sb-l{font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;color:var(--smoke);margin-top:6px}
 
 .tg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .tr{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:12px;transition:all .3s}
 .tr.on{border-color:var(--accent-live,#1a4060);background:rgba(26,64,96,.08)}
 .tr.lk{opacity:.3}
 .ti{font-size:1.2rem;margin-bottom:5px}
-.tn{font-family:var(--mono);font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;color:var(--smoke2);margin-bottom:3px}
+.tn{font-family:var(--mono);font-size:.6rem;letter-spacing:.07em;text-transform:uppercase;color:var(--smoke);margin-bottom:3px}
 .tr.on .tn{color:var(--text)}
 .tv{font-family:var(--mono);font-size:.76rem;color:var(--text);font-weight:600}
 .tlk{font-family:var(--mono);font-size:.56rem;color:var(--smoke3)}
 
-.le{font-size:.8rem;line-height:1.65;padding:8px 0 8px 12px;border-left:1px solid var(--border);margin-bottom:6px;color:var(--smoke);animation:fade-up .35s ease;font-family:var(--mono)}
+.le{font-size:.82rem;line-height:1.7;padding:8px 0 8px 14px;border-left:2px solid var(--border);margin-bottom:6px;color:var(--smoke);animation:fade-up .35s ease;font-family:var(--mono)}
 .le.g{border-left-color:var(--accent-live,#1a4060);color:var(--text)}
-.le.s{border-left-color:rgba(100,60,180,.4);color:var(--smoke);font-style:italic}
+.le.s{border-left-color:rgba(120,70,200,.5);color:var(--smoke);font-style:italic}
 
-.streak-b{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;transition:all 2s}
-.sf{font-size:1.8rem;line-height:1}
-.si b{font-size:.92rem;color:var(--text);display:block;font-family:var(--mono)}
-.si span{font-size:.72rem;color:var(--smoke)}
+.streak-b{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;transition:background 2s,border-color 2s}
+.sf{font-size:2rem;line-height:1}
+.si b{font-size:.95rem;color:var(--text);display:block;font-family:var(--mono);letter-spacing:.02em}
+.si span{font-size:.76rem;color:var(--smoke)}
 
 .ps-b{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;transition:all 2s}
 .ps-n{font-size:2rem;font-weight:800;color:var(--text);font-family:var(--mono);line-height:1}
@@ -1095,7 +1096,7 @@ nav button:hover:not(.on){color:var(--smoke);}
         <div class="ps-n" id="psN" style="font-size:1.4rem">0</div>
         <div style="font-family:var(--mono);font-size:.5rem;color:var(--smoke2)" id="psTi">hoy</div>
         <span id="psDt" style="display:none"></span>
-        <button id="droneBtn" onclick="(function(){var on=toggleDrone();document.getElementById('droneBtn').style.opacity=on?'1':'.4';document.getElementById('droneBtn').title=on?'apagar ambiente':'activar ambiente';})()" title="activar ambiente" style="font-family:var(--mono);font-size:.44rem;letter-spacing:.1em;background:transparent;border:none;color:var(--smoke3);cursor:pointer;padding:0;opacity:.4;transition:opacity .4s">♪ ambiente</button>
+        <button id="droneBtn" onclick="(function(){var on=toggleDrone();document.getElementById('droneBtn').style.opacity=on?'1':'.45';document.getElementById('droneBtn').title=on?'apagar ambiente':'activar ambiente';})()" title="activar ambiente" style="font-family:var(--mono);font-size:.54rem;letter-spacing:.08em;background:transparent;border:none;color:var(--smoke);cursor:pointer;padding:2px 0;opacity:.45;transition:opacity .35s">♪ ambiente</button>
       </div>
     </div>
 

@@ -1,4 +1,4 @@
-var CACHE='abismo-v1';
+var CACHE='abismo-v2';
 var ASSETS=[
   '/abyssal-genesis/',
   '/abyssal-genesis/index.html',
